@@ -645,6 +645,42 @@ function avatars(who){
   return `<div class="avs">${fams.map(f => `<span class="av" style="background:${FAM[f].c}">${L(FAM[f])}</span>`).join("")}${who.filter(i => !covered.includes(i)).map(i => `<span class="av" style="background:${FAM[P[i].f].c}">${nm(i)}</span>`).join("")}</div>`;
 }
 function kindPill(k){ return k==="b" ? `<span class="pill b">✓ ${LANG==="he"?"סגור":"Booked"}</span>` : k==="p" ? `<span class="pill p">${LANG==="he"?"לסגור":"To book"}</span>` : k==="f" ? `<span class="pill f">${LANG==="he"?"חופשי":"Free time"}</span>` : k==="s" ? `<span class="pill s">${LANG==="he"?"מפוצל":"Split"}</span>` : k==="r" ? `<span class="pill r">💡 ${LANG==="he"?"המלצה":"Idea"}</span>` : ""; }
+/* ---- booking documents (Google Drive) ---- */
+const DOCS = [
+  {m:/^London Eye$/, l:[["כרטיסים","Tickets","https://drive.google.com/file/d/1vStcdQzU0g-4-2dEklxuh7rVwppQKCcM/view"]]},
+  {m:/^Winter Wonderland$/, l:[["כרטיסים","Tickets","https://drive.google.com/file/d/1F1CSq75uhJ3BD9q1Wzl2cdXQVNpiIopH/view"]]},
+  {m:/LY317|Land at Heathrow Terminal 4|LY312/, l:[["כרטיסי טיסה","Boarding passes","https://drive.google.com/drive/folders/1Xs38tchVTtEDrdnz7LhlY3U_yQ8gVHzc"]]},
+  {m:/^Two vans to the hotel$/, l:[["1005001","1005001","https://drive.google.com/file/d/1TSTIg7rUVkkcg6JYC8_G6oi-6oGWmOV_/view"],["1005005","1005005","https://drive.google.com/file/d/15RIzpJGOqwSQ22IoXE64s8OQlp7lBqSe/view"]]},
+  {m:/^Two vans to Luton$/, l:[["1005002","1005002","https://drive.google.com/file/d/1GveFaRfzrT6MHuHErPVk8lgYUAkLGEnv/view"],["1005006","1005006","https://drive.google.com/file/d/1ilYHdhd2V4qjSXnFsgmsiI8Jwe0Y20d0/view"]]},
+  {m:/^Alon's family lands at Heathrow$/, l:[["הסעה","Transfer","https://drive.google.com/file/d/1eXv2rjRiOBMtCmLm8-4qvPiZ1eD99-w-/view"]]},
+  {m:/^Transfer to Heathrow$/, l:[["הסעה","Transfer","https://drive.google.com/file/d/1JNYd0YAdOa-qgoICXCdzGOJmcupSFAdt/view"]]},
+  {m:/^Check-in and 3rd Hanukkah candle$/, l:[["אישור מלון","Hotel confirmation","https://drive.google.com/file/d/1NKNp-uADNXZT2SOTAkfTmH-3SX6Qz983/view"],["חדרים","Rooms","https://drive.google.com/drive/folders/1xyqsKkRIW6t_I9Slc_hnMh0z6C72CHZC"]]}
+];
+function docBtns(e){
+  const d = DOCS.find(x => x.m.test(e.ti.en)); if(!d) return "";
+  return `<div class="actions">${d.l.map(([he,en,u]) => `<a class="act" href="${u}" target="_blank" rel="noopener">🎟️ ${LANG==="he"?he:en}</a>`).join("")}</div>`;
+}
+/* ---- weather (Open-Meteo, free, no key) ---- */
+let WX = store.get("gl_wx", null);
+const WXC = c => c===0?["☀️","בהיר","Clear"]:c<=3?["⛅","מעונן חלקית","Partly cloudy"]:c<=48?["🌫️","ערפל","Fog"]:c<=57?["🌦️","טפטוף","Drizzle"]:c<=67?["🌧️","גשם","Rain"]:c<=77?["🌨️","שלג","Snow"]:c<=82?["🌧️","ממטרים","Showers"]:["⛈️","סופה","Storm"];
+function wxDay(date){ if(!WX || !WX.d) return null; const i = WX.d.time.indexOf(date); if(i < 0) return null; return {max:Math.round(WX.d.temperature_2m_max[i]), min:Math.round(WX.d.temperature_2m_min[i]), p:WX.d.precipitation_probability_max[i], c:WX.d.weather_code[i]}; }
+function wxLine(date){
+  const w = wxDay(date), he = LANG === "he";
+  if(!w) return "";
+  const [ic,h,en] = WXC(w.c);
+  const tips = []; if(w.p >= 50) tips.push(he?"מעיל גשם ומטריה":"rain jacket and umbrella"); if(w.max <= 6) tips.push(he?"כובע וכפפות":"hat and gloves");
+  return `<span class="pill" style="background:var(--surface-2);color:var(--ink)">${ic} ${he?h:en} • ${w.min}°–${w.max}° • ${he?"גשם":"rain"} ${w.p}%</span>${tips.length?` <span class="muted small">${he?"להביא: ":"Bring: "}${tips.join(", ")}</span>`:""}`;
+}
+async function loadWeather(){
+  if(WX && Date.now() - WX.t < 3*3600e3) return;
+  try{
+    const r = await fetch("https://api.open-meteo.com/v1/forecast?latitude=51.5074&longitude=-0.1395&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FLondon&forecast_days=16");
+    if(!r.ok) return; const j = await r.json();
+    WX = {t: Date.now(), d: j.daily}; store.set("gl_wx", WX);
+    if(["now","schedule"].includes(route())) renderView();
+  }catch(e){}
+}
+function wxAvailable(){ return DAYS.some(x => wxDay(x.date)); }
 function evCard(e, isNow){
   const p = e.pl ? PL[e.pl] : null;
   const tile = `var(--c${(E.indexOf(e) % 6) + 1})`;
@@ -652,7 +688,7 @@ function evCard(e, isNow){
     <div class="row" style="justify-content:space-between;gap:6px"><span class="ttl">${esc(L(e.ti))}</span>${kindPill(e.k)}</div>
     ${L(e.su)?`<div class="sub">${esc(L(e.su))}</div>`:""}
     ${avatars(e.who)}
-    ${p?`<div class="sub">📍 ${esc(L(p))}</div>${placeActions(e.pl,true)}`:""}
+    ${p?`<div class="sub">📍 ${esc(L(p))}</div>${placeActions(e.pl,true)}`:""}${docBtns(e)}
   </div></div>`;
 }
 function menorah(n){
@@ -715,10 +751,18 @@ function viewNow(){
     out.push(`<div class="hero"><div class="lbl">${L(DAYS[d])} • ${LANG==="he"?"שעון לונדון":"London time"} <span class="mono">${n.time}</span></div>
       <div class="lbl">${T("nowIs")}</div><div class="ev">${cur ? esc(L(cur.ti)) : T("nothingNow")}</div>
       ${cur && cur.pl ? placeActions(cur.pl,true) : ""}</div>`);
-    if(nxt.length) out.push(`<h3>${T("next")}</h3><div class="nextlist">${nxt.map(e => evCard(e)).join("")}</div>`);
+    if(nxt.length){
+      const e0 = nxt[0], [h0,m0] = e0.t.split(":").map(Number), [h1,m1] = n.time.split(":").map(Number);
+      const mins = (h0*60+m0) - (h1*60+m1), he = LANG === "he", p0 = e0.pl ? PL[e0.pl] : null;
+      const when = mins < 60 ? (he?`בעוד ${mins} דק׳`:`In ${mins} min`) : (he?`בעוד ${Math.floor(mins/60)} ש׳ ו-${mins%60} דק׳`:`In ${Math.floor(mins/60)} h ${mins%60} min`);
+      out.push(`<div class="card stack" style="gap:8px;border:2px solid var(--gold)"><div class="lbl" style="color:var(--gold)">⏱️ ${when}</div><b style="font-size:1.15em">${esc(L(e0.ti))}</b>${p0?`<div class="muted small">📍 ${esc(L(p0))}</div><a class="act primary" style="justify-self:start" href="https://www.google.com/maps/dir/?api=1&destination=${p0.ll[0]},${p0.ll[1]}&travelmode=transit" target="_blank" rel="noopener">🧭 ${he?"הוראות הגעה מהמיקום שלי":"Directions from where I am"}</a>`:""}</div>`);
+      out.push(`<h3>${T("next")}</h3><div class="nextlist">${nxt.map(e => evCard(e)).join("")}</div>`);
+    }
     if(DAYS[d].n) out.push(`<div class="menorah-card">${menorah(DAYS[d].n)}<div>${LANG==="he"?`הערב נר ${DAYS[d].n} של חנוכה • השקיעה בסביבות 15:52`:`Tonight: Hanukkah candle ${DAYS[d].n} • sunset around 15:52`}</div></div>`);
   }
-  out.push(`<div class="card"><div class="row" style="justify-content:space-between"><b>${LANG==="he"?"מזג האוויר בלונדון":"London weather"}</b><a class="act" href="https://www.bbc.com/weather/2643743" target="_blank" rel="noopener">BBC Weather</a></div><div class="muted small">${LANG==="he"?"בדצמבר בדרך כלל 5–9 מעלות, גשם קל וחושך כבר ב-16:00. שכבות, מעיל גשם, כובע וכפפות.":"Usually 5–9°C in December, light rain, dark by 16:00. Layers, rain jacket, hat and gloves."}</div></div>`);
+  { const he = LANG === "he";
+    const rows = DAYS.map(x => wxLine(x.date) ? `<div class="row" style="gap:8px"><b class="mono" style="min-width:68px">${L(x)}</b>${wxLine(x.date)}</div>` : "").join("");
+    out.push(`<div class="card stack" style="gap:6px"><div class="row" style="justify-content:space-between"><b>${he?"מזג האוויר בלונדון":"London weather"}</b><a class="act" href="https://www.bbc.com/weather/2643743" target="_blank" rel="noopener">BBC Weather</a></div>${rows || `<div class="muted small">${he?"התחזית לכל יום תופיע כאן כשבועיים לפני הטיסה. בדצמבר בדרך כלל 5–9 מעלות, גשם קל וחושך כבר ב-16:00.":"A day-by-day forecast appears here about two weeks before the trip. December is usually 5–9°C, light rain, dark by 4pm."}</div>`}</div>`); }
   return `<div class="stack">${out.join("")}</div>`;
 }
 function viewSchedule(){
@@ -745,7 +789,7 @@ function viewSchedule(){
   if(SCHMODE === "attr") return `<div class="stack"><div class="row" style="justify-content:space-between">${mode}</div>${body}</div>`;
   return `<div class="stack"><div class="days" role="group">${days}</div>
     <div class="muted small" style="text-align:center;margin-top:-6px">${LANG==="he"?"⇆ מחליקים לצדדים כדי לעבור בין הימים":"⇆ Swipe sideways to change day"}</div>
-    <div class="row" style="justify-content:space-between;flex-wrap:nowrap;align-items:flex-end"><div style="min-width:0"><h2>${L(d)}</h2><div class="muted">${LANG==="he"?d.tHe:d.tEn}${d.n?` • ${LANG==="he"?"נר":"candle"} ${d.n}`:""}</div></div>${d.n?`<div style="width:120px;flex:none">${menorah(d.n)}</div>`:""}</div>
+    <div class="row" style="justify-content:space-between;flex-wrap:nowrap;align-items:flex-end"><div style="min-width:0"><h2>${L(d)}</h2><div class="muted">${LANG==="he"?d.tHe:d.tEn}${d.n?` • ${LANG==="he"?"נר":"candle"} ${d.n}`:""}</div>${wxLine(d.date)?`<div style="margin-top:6px">${wxLine(d.date)}</div>`:""}</div>${d.n?`<div style="width:120px;flex:none">${menorah(d.n)}</div>`:""}</div>
     <div class="row" style="justify-content:space-between">${mode}</div>${body}</div>`;
 }
 
@@ -1173,6 +1217,9 @@ window.addEventListener("hashchange", () => { closeSheet(); renderTabs(); render
   }, {passive:true});
 })();
 renderAll();
+loadWeather();
+setInterval(() => { if(route() === "now" && !$("sheet").innerHTML) renderView(); }, 60000);
+if("serviceWorker" in navigator && /github\.io$/.test(location.hostname)){ navigator.serviceWorker.register("sw.js").catch(() => {}); }
 (async () => {
   try{
     for(let i = 0; i < 30 && !window.claude; i++) await new Promise(r => setTimeout(r, 100));
