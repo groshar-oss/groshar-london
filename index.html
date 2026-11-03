@@ -488,17 +488,27 @@ const TODO = [
   {id:"boxes",he:"ארוחות בוקר ארוזות ליום שישי – לבקש מהמלון",en:"Packed breakfasts for Friday – ask the hotel"}
 ];
 
+const FOOD_GROUPS = [
+  {k:"hotel", d:null, he:"ליד המלון – מתאים לכל ערב", en:"Near the hotel – any evening"},
+  {k:"d1", d:1, he:"שני 7.12 – צהריים בגדה הדרומית, ליד ה-Eye", en:"Mon 7 Dec – lunch on the South Bank, by the Eye"},
+  {k:"d2", d:2, he:"שלישי 8.12 – צהריים אחרי מצודת לונדון", en:"Tue 8 Dec – lunch after the Tower"},
+  {k:"d3", d:3, he:"רביעי 9.12 – צהריים במרכז, ערב בקובנט גארדן", en:"Wed 9 Dec – lunch in the centre, dinner in Covent Garden"},
+  {k:"d4", d:4, he:"חמישי 10.12 – צהריים בבאטרסי", en:"Thu 10 Dec – lunch at Battersea"}
+];
 const FOOD = [
-  ["Cicchetti Piccadilly","איטלקי • הארוחה המשפחתית","Italian • family dinner","https://sancarlo.co.uk/restaurants/london/cicchetti-piccadilly/"],
-  ["Giraffe Southbank","משפחתי, תפריט ילדים • ליד ה-Eye","Family-friendly, kids' menu • by the Eye","https://www.giraffe.net/menus"],
-  ["Arcade Food Hall – Centre Point","דוכנים מכל העולם","Food stalls from around the world","https://www.arcade-london.com/food-and-drink"],
-  ["Roast – Borough Market","בריטי קלאסי, מעל השוק","Classic British, above the market","https://roast-restaurant.com/menus/"],
-  ["Pizza Pilgrims","פיצה נפוליטנית","Neapolitan pizza","https://www.pizzapilgrims.co.uk/menu/"],
-  ["Seven Dials Market","שוק אוכל מקורה","Covered food market","https://www.sevendialsmarket.com/traders/"],
-  ["Dishoom Covent Garden","הודי, תפריט קבוצתי","Indian, group feast menu","https://www.dishoom.com/journal/covent-garden-menu/"],
-  ["PizzaExpress","פיצה ופסטה, תפריט ילדים","Pizza and pasta, kids' menu","https://www.pizzaexpress.com/our-food/restaurant-menu"],
-  ["Arcade Battersea","פוד-הול בתחנת הכוח","Food hall in the power station","https://www.arcade-london.com/battersea-kitchens"],
-  ["Hard Rock Cafe Piccadilly","אמריקאי, תפריט ילדים","American, kids' menu","https://cafe.hardrock.com/piccadilly/menu.aspx"]
+  ["Cicchetti Piccadilly","איטלקי • 5 דק׳ • הארוחה המשפחתית בשני","Italian • 5 min • the family dinner on Monday","https://sancarlo.co.uk/restaurants/london/cicchetti-piccadilly/","hotel","Cicchetti Piccadilly London"],
+  ["Kingly Court","חצר מסעדות מקורה בקרנבי • 8 דק׳","Covered restaurant courtyard in Carnaby • 8 min","https://www.carnaby.co.uk/kingly-court","hotel","Kingly Court London"],
+  ["Pizza Pilgrims – Kingly St","פיצה נפוליטנית • קרנבי, 8 דק׳","Neapolitan pizza • Carnaby, 8 min","https://www.pizzapilgrims.co.uk/menu/","hotel","Pizza Pilgrims Kingly Street London"],
+  ["PizzaExpress – Piccadilly","פיצה ופסטה, תפריט ילדים • 5 דק׳","Pizza and pasta, kids' menu • 5 min","https://www.pizzaexpress.com/our-food/restaurant-menu","hotel","PizzaExpress Piccadilly London"],
+  ["Hard Rock Cafe Piccadilly","אמריקאי, תפריט ילדים • 10 דק׳","American, kids' menu • 10 min","https://cafe.hardrock.com/piccadilly/menu.aspx","hotel","Hard Rock Cafe Piccadilly London"],
+  ["Giraffe Southbank","משפחתי, תפריט ילדים • ליד ה-Eye","Family-friendly, kids' menu • by the Eye","https://www.giraffe.net/menus","d1","Giraffe Southbank London"],
+  ["Southbank Winter Market","דוכני אוכל חם • 5 דק׳ מה-Eye","Hot food stalls • 5 min from the Eye","https://www.southbankcentre.co.uk","d1","Southbank Centre Winter Market London"],
+  ["Roast – Borough Market","בריטי קלאסי, מעל השוק • 15 דק׳ מהמצודה","Classic British, above the market • 15 min from the Tower","https://roast-restaurant.com/menus/","d2","Roast Borough Market London"],
+  ["Borough Market","דוכנים מכל העולם • אוכלים בעמידה","Stalls from all over the world • eat as you walk","https://boroughmarket.org.uk","d2","Borough Market London"],
+  ["Arcade Food Hall – Centre Point","דוכנים מכל העולם • ליד Hamleys","Food stalls from around the world • near Hamleys","https://www.arcade-london.com/food-and-drink","d3","Arcade Food Hall Centre Point London"],
+  ["Seven Dials Market","שוק אוכל מקורה • 5 דק׳ מהתיאטרון","Covered food market • 5 min from the theatre","https://www.sevendialsmarket.com/traders/","d3","Seven Dials Market London"],
+  ["Dishoom Covent Garden","הודי, תפריט קבוצתי • ארוחה לפני מלך האריות","Indian, group feast menu • dinner before The Lion King","https://www.dishoom.com/journal/covent-garden-menu/","d3","Dishoom Covent Garden London"],
+  ["Arcade Battersea","פוד-הול בתוך תחנת הכוח","Food hall inside the power station","https://www.arcade-london.com/battersea-kitchens","d4","Arcade Battersea Power Station London"]
 ];
 
 const PACK = [
@@ -857,7 +867,7 @@ function viewBookings(){
 
 function viewMore(){
   const he = LANG === "he", S = EDIT ? DRAFT : STATE;
-  const sec = (id, title, inner, open) => `<details class="sec" id="sec-${id}" ${open?"open":""}><summary>${title}</summary><div class="in">${inner}</div></details>`;
+  const sec = (id, title, inner) => `<details class="sec" id="sec-${id}"><summary>${title}</summary><div class="in">${inner}</div></details>`;
   const adultsSel = (kid) => `<select data-buddy="${kid}" style="width:auto;min-width:120px;padding:6px 8px">${ADULTS.concat(["tatiana","davidj"]).map(a => `<option value="${a}" ${S.buddies[kid]===a?"selected":""}>${nm(a)}</option>`).join("")}</select>`;
   const buddies = Object.keys(S.buddies).map(k => `<div class="row" style="justify-content:space-between;border-top:1px solid var(--line);padding-top:8px;flex-wrap:nowrap"><span><b>${nm(k)}</b> <span class="muted small">(${P[k].age})</span></span><span class="row" style="gap:6px;flex-wrap:nowrap"><span class="muted small">${he?"באחריות":"looked after by"}</span>${EDIT ? adultsSel(k) : `<b>${nm(S.buddies[k])}</b>`}</span></div>`).join("");
   const packDone = store.get("gl_pack",{}), huntDone = store.get("gl_hunt",{});
@@ -883,7 +893,6 @@ function viewMore(){
       <div class="card small"><b>${he?"ילד הלך לאיבוד":"If a child gets lost"}</b><br>${he?"1. הילד נשאר במקום ופונה לעובד עם תג או לשוטר ומראה את כרטיס החירום. 2. המבוגר האחראי מתקשר מיד לכולם בקבוצה. 3. בודקים AirTag ב-Find My. 4. בכל אטרקציה קובעים מראש נקודת מפגש.":"1. The child stays put, finds a staff member or police officer and shows their emergency card. 2. The adult in charge calls the group right away. 3. Check the AirTag in Find My. 4. Agree a meeting point at every attraction."}</div>`,true)}
     ${sec("contacts",he?"📞 טלפונים של כולם":"📞 Everyone's phone numbers",["y","d","a","g"].map(f => `<div class="stack" style="gap:6px"><b style="color:${FAM[f].c}">${L(FAM[f])}</b>${fam(f).filter(i => !P[i].kid).map(i => { const ph = S.phones[i]||""; const dig = ph.replace(/[^0-9]/g,""); return `<div style="display:grid;grid-template-columns:minmax(70px,auto) 1fr auto;gap:8px;align-items:center;border-top:1px solid var(--line);padding-top:6px"><span>${nm(i)}</span>${EDIT ? `<input type="tel" data-phone="${i}" value="${esc(ph)}" dir="ltr" style="width:100%;border:1px solid var(--line);border-radius:10px;padding:7px 9px;background:var(--bg);font-size:1rem">` : `<span class="mono small" dir="ltr" style="text-align:end">${esc(ph||"___")}</span>`}${dig&&!EDIT?`<a class="act" href="https://wa.me/${dig}" target="_blank" rel="noopener">WhatsApp</a>`:"<span></span>"}</div>`; }).join("")}</div>`).join("")+`<div class="muted small">${he?"בחו״ל מחייגים עם הקידומת הבינלאומית, כמו שמופיע כאן.":"Abroad, dial with the international prefix as shown."}</div>`,true)}
     ${sec("taxi",he?"🚕 כרטיס לנהג מונית":"🚕 Show the taxi driver",`<div class="taxi"><div style="font-size:.9em">Please take me to</div><div class="a">The Dilly Hotel</div><div class="a" style="font-size:1.4em">21 Piccadilly</div><div class="a" style="font-size:1.4em">London W1J 0BH</div><div style="margin-top:6px">Near Piccadilly Circus</div></div>`)}
-    ${sec("buddies",he?"🤝 מי שומר על מי":"🤝 Who looks after whom",`<div class="muted small">${he?"באטרקציות עמוסות כל ילד צמוד למבוגר אחד שאחראי עליו. זה לא קשור לטלפונים.":"At busy attractions each child sticks with one grown-up who is responsible for them. This isn't about phones."}</div><div class="stack" style="gap:8px">${buddies}</div>`)}
     ${sec("track",he?"📍 AirTag ושיתוף מיקום":"📍 AirTag & location sharing",`
       <div>${he?"אי אפשר להציג מיקום של AirTag בתוך העמוד. כך עובדים עם זה:":"An AirTag's location can't be shown inside this page. Here's how to use it:"}</div>
       <ol style="margin:0;padding-inline-start:20px;display:grid;gap:6px">
@@ -901,7 +910,7 @@ function viewMore(){
       <div class="conv"><label>£ GBP<input id="gbp" type="number" inputmode="decimal" value="10"></label><label>${CUR.sym} ${CUR.code}<input id="ils" type="number" inputmode="decimal" value="${(10*rate).toFixed(2)}"></label></div>
       <label class="field"><span>${he?"שער (1 ליש״ט בשקלים) – אפשר לעדכן":"Rate ($ per £1) – you can change it"}</span><input id="rate" type="number" step="0.01" value="${rate}"></label>
       <div class="muted small">${he?"ברירת מחדל: 4.08, לפי השער ב-27.10.2026. במסעדות מתווספים לרוב 12.5% דמי שירות.":"Default 1.33, the rate on 27 Oct 2026. Restaurants usually add a 12.5% service charge."}</div>`)}
-    ${sec("food",he?"🍽️ איפה לאכול":"🍽️ Where to eat",`<div class="muted small">${he?"ארוחת בוקר כל יום במלון • צהריים וערב חופשיים":"Breakfast at the hotel daily • lunch and dinner are free time"}</div>${FOOD.map(f => `<div class="row" style="justify-content:space-between;border-top:1px solid var(--line);padding-top:8px"><div style="min-width:0"><b dir="ltr">${f[0]}</b><div class="muted small">${he?f[1]:f[2]}</div></div><div class="actions"><a class="act" href="${f[3]}" target="_blank" rel="noopener">${he?"תפריט":"Menu"}</a><a class="act" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(f[0]+" London")}" target="_blank" rel="noopener">${ICON.pin}</a></div></div>`).join("")}`)}
+    ${sec("food",he?"🍽️ איפה לאכול":"🍽️ Where to eat",`<div class="muted small">${he?"ארוחת בוקר כל יום במלון • צהריים וערב חופשיים":"Breakfast at the hotel daily • lunch and dinner are free time"}</div>${FOOD_GROUPS.map(g => `<div class="row" style="justify-content:space-between;margin-top:10px"><b style="color:var(--gold)">${he?g.he:g.en}</b>${g.d!==null?`<button class="act" data-goday="${g.d}">${he?"ללו״ז של היום":"See that day"}</button>`:""}</div>${FOOD.filter(f => f[4]===g.k).map(f => `<div class="row" style="justify-content:space-between;border-top:1px solid var(--line);padding-top:8px"><div style="min-width:0"><b dir="ltr">${f[0]}</b><div class="muted small">${he?f[1]:f[2]}</div></div><div class="actions"><a class="act" href="${f[3]}" target="_blank" rel="noopener">${he?"תפריט":"Menu"}</a><a class="act" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(f[5])}" target="_blank" rel="noopener">${ICON.pin} ${he?"מפה":"Map"}</a></div></div>`).join("")}`).join("")}`)}
     ${sec("album",he?"📸 אלבום משותף":"📸 Shared album",S.album?`<a class="act primary" style="justify-self:start" href="${esc(S.album)}" target="_blank" rel="noopener">${he?"פתיחת האלבום":"Open the album"}</a><ol style="margin:0;padding-inline-start:20px;display:grid;gap:4px"><li>${he?"פותחים את האלבום (בפעם הראשונה לוחצים ״הצטרפות״).":"Open the album (the first time, tap \"Join\")."}</li><li>${he?"לוחצים על + או על סמל התמונה עם הפלוס.":"Tap + or the add-photos icon."}</li><li>${he?"בוחרים תמונות מהגלריה ולוחצים ״הוספה״ – וכולם רואים.":"Pick photos from your gallery and tap \"Add\" – everyone sees them."}</li></ol><div class="muted small">${he?"מצלמים כרגיל במצלמת הטלפון, ואז מוסיפים לאלבום. צריך חשבון גוגל כדי להעלות.":"Take photos with your phone camera as usual, then add them to the album. You need a Google account to upload."}</div>`:`<div class="muted">${he?"יוני יוסיף כאן קישור לאלבום ב-Google Photos.":"Yoni will add a Google Photos album link here."}</div>`)}
     ${sec("pack",he?"🧳 רשימת ציוד (בטלפון הזה)":"🧳 Packing list (on this phone)",PACK.map((p,i) => `<label class="check ${packDone[i]?"done":""}"><input type="checkbox" data-pack="${i}" ${packDone[i]?"checked":""}><span class="lbl">${he?p[0]:p[1]}</span></label>`).join(""))}
     ${sec("kids",he?"🧒 לילדים: ציד אוצרות בלונדון":"🧒 Kids: London treasure hunt",`<div class="row"><div class="bar" style="flex:1"><i style="width:${Math.round(huntN/HUNT.length*100)}%"></i></div><span class="mono small">${huntN}/${HUNT.length}</span></div>${HUNT.map((h,i) => `<label class="check ${huntDone[i]?"done":""}"><input type="checkbox" data-hunt="${i}" ${huntDone[i]?"checked":""}><span class="lbl">${he?h[0]:h[1]}</span></label>`).join("")}`)}
@@ -915,6 +924,7 @@ function editBar(){ return `<div class="editbar"><b style="flex:1">${T("edit")}<
 /* ============ WIRING ============ */
 function wire(v){
   v.querySelectorAll("[data-day]").forEach(b => b.onclick = () => { DAY = +b.dataset.day; renderView(); });
+  v.querySelectorAll("[data-goday]").forEach(b => b.onclick = () => { DAY = +b.dataset.goday; if(SCHMODE === "attr"){ SCHMODE = "list"; store.set("gl_schmode","list"); } location.hash = "schedule"; });
   v.querySelectorAll("[data-kday]").forEach(b => b.onclick = () => { KDAY = +b.dataset.kday; renderView(); });
   v.querySelectorAll("[data-kid]").forEach(b => b.onclick = () => { KID = b.dataset.kid; store.set("gl_kid", KID); renderView(); window.scrollTo(0,0); });
   v.querySelectorAll("[data-mode]").forEach(b => b.onclick = () => { SCHMODE = b.dataset.mode; store.set("gl_schmode",SCHMODE); renderView(); });
