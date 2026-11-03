@@ -220,6 +220,9 @@ h2,h3{color:var(--gold)}
 .act.doc,.ev .body .act.doc{background:#1F2340;color:#FFD166;border:2px solid #FFD166;font-weight:600;box-shadow:0 2px 0 rgba(0,0,0,.35)}
 .act.doc:active{transform:translateY(1px);box-shadow:none}
 @media (max-width:440px){ #topbar .t1{font-size:.92em;line-height:1.2} #topbar .t2{font-size:.72em} #topbar .tbtn{padding-inline:9px;min-width:0} }
+.body.tap{cursor:pointer}
+.morehint{font-size:.8em;opacity:.7;white-space:nowrap}
+.nowttl{font-size:1.25em;font-weight:600;line-height:1.3}
 .qrow{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
 .qrow::-webkit-scrollbar{display:none}
 .qa{flex:none;display:inline-flex;align-items:center;gap:4px;padding:10px 14px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--ink);text-decoration:none;font-size:.95em;white-space:nowrap}
@@ -600,7 +603,7 @@ function londonNow(){
 
 /* ============ VIEW STATE ============ */
 let WHO = store.get("gl_who","all");         // "all" | "f:y" | "p:amber"
-let DAY = 0, SCHMODE = store.get("gl_schmode","list"), MAPMODE = "central", EDIT = false, CANEDIT = false;
+let MAPDAY = "plan", DAY = 0, SCHMODE = store.get("gl_schmode","list"), MAPMODE = "central", EDIT = false, CANEDIT = false;
 let DRAFT = JSON.parse(JSON.stringify(STATE));
 (function(){ const n = londonNow(); const i = DAYS.findIndex(d => d.date === n.date); if(i >= 0) DAY = i; })();
 function whoSet(){ if(WHO === "all") return null; if(WHO.startsWith("f:")) return fam(WHO.slice(2)); if(WHO.startsWith("p:")) return [WHO.slice(2)]; return null; }
@@ -663,10 +666,12 @@ const DOCS = [
   {m:/^Transfer to Heathrow$/, l:[["הסעה","Transfer","https://drive.google.com/file/d/1JNYd0YAdOa-qgoICXCdzGOJmcupSFAdt/view"]]},
   {m:/^Check-in and 3rd Hanukkah candle$/, l:[["אישור מלון","Hotel confirmation","https://drive.google.com/file/d/1NKNp-uADNXZT2SOTAkfTmH-3SX6Qz983/view"],["חדרים","Rooms","https://drive.google.com/drive/folders/1xyqsKkRIW6t_I9Slc_hnMh0z6C72CHZC"]]}
 ];
-function docBtns(e){
+function docLinks(e){
   const d = DOCS.find(x => x.m.test(e.ti.en)); if(!d) return "";
-  return `<div class="actions">${d.l.map(([he,en,u]) => `<a class="act doc" href="${u}" target="_blank" rel="noopener">🎟️ ${LANG==="he"?`פתיחת ${he}`:`Open ${en.toLowerCase()}`} ↗</a>`).join("")}</div>`;
+  return d.l.map(([he,en,u]) => `<a class="act doc" href="${u}" target="_blank" rel="noopener">🎟️ ${LANG==="he"?`פתיחת ${he}`:`Open ${en.toLowerCase()}`} ↗</a>`).join("");
 }
+function docBtns(e){ const l = docLinks(e); return l ? `<div class="actions">${l}</div>` : ""; }
+const dirUrl = p => `https://www.google.com/maps/dir/?api=1&destination=${p.ll[0]},${p.ll[1]}&travelmode=transit`;
 /* ---- weather (Open-Meteo, free, no key) ---- */
 let WX = store.get("gl_wx", null);
 const WXC = c => c===0?["☀️","בהיר","Clear"]:c<=3?["⛅","מעונן חלקית","Partly cloudy"]:c<=48?["🌫️","ערפל","Fog"]:c<=57?["🌦️","טפטוף","Drizzle"]:c<=67?["🌧️","גשם","Rain"]:c<=77?["🌨️","שלג","Snow"]:c<=82?["🌧️","ממטרים","Showers"]:["⛈️","סופה","Storm"];
@@ -745,15 +750,82 @@ function travelLine(e){
   const he = LANG === "he", from = esc(L(PL[t.from.pl]));
   return `<div class="small" style="opacity:.85">${t.walk?"🚶":"🚇"} ${he?`כ-${t.mins} דק׳ ${t.walk?"הליכה":"בתחבורה"} מ${from}`:`~${t.mins} min ${t.walk?"walk":"by transit"} from ${from}`}${t.tight?` <b style="color:#B3261E">⚠️ ${he?"צפוף":"tight"}</b>`:""}</div>`;
 }
+function whoText(who){
+  const he = LANG === "he";
+  if(who.length === IDS.length) return he ? "כולם" : "everyone";
+  const fams = ["g","y","d","a"].filter(f => fam(f).every(i => who.includes(i)));
+  const covered = fams.flatMap(fam);
+  return fams.map(f => L(FAM[f])).concat(who.filter(i => !covered.includes(i)).map(nm)).join(", ");
+}
+const ASK_YONI = () => "https://wa.me/972547559298?text=" + encodeURIComponent(LANG==="he" ? "שאלה על הטיול ללונדון: " : "Question about the London trip: ");
+function icsEsc(t){ return String(t||"").replace(/\\/g,"\\\\").replace(/\n/g,"\\n").replace(/,/g,"\\,").replace(/;/g,"\;"); }
+function buildICS(id){
+  const he = LANG === "he";
+  const mine = E.filter(e => e.k !== "r" && e.who.includes(id)).sort((a,b) => a.d - b.d || a.t.localeCompare(b.t));
+  const stamp = new Date().toISOString().replace(/[-:]/g,"").slice(0,15) + "Z";
+  const dt = (date, t) => date.replace(/-/g,"") + "T" + t.replace(":","") + "00Z"; // December in London = UTC
+  const add = (date, t, mins) => { const d0 = new Date(date + "T" + t + ":00Z"); d0.setUTCMinutes(d0.getUTCMinutes() + mins); return d0.toISOString().replace(/[-:]/g,"").slice(0,15) + "Z"; };
+  const lines = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Groshar//London 2026//HE","CALSCALE:GREGORIAN","METHOD:PUBLISH","X-WR-CALNAME:" + (he ? "לונדון 2026 – " : "London 2026 – ") + nm(id)];
+  mine.forEach((e, i) => {
+    const date = DAYS[e.d].date, next = mine.slice(i+1).find(x => x.d === e.d && x.t > e.t);
+    let mins = 90; if(next){ const [a,b] = e.t.split(":").map(Number), [c,d] = next.t.split(":").map(Number); mins = Math.max(30, Math.min(180, (c*60+d)-(a*60+b))); }
+    const p = e.pl ? PL[e.pl] : null;
+    lines.push("BEGIN:VEVENT", "UID:groshar-" + id + "-" + e.d + "-" + e.t.replace(":","") + "-" + i + "@groshar-london", "DTSTAMP:" + stamp,
+      "DTSTART:" + dt(date, e.t), "DTEND:" + add(date, e.t, mins),
+      "SUMMARY:" + icsEsc(L(e.ti)),
+      "DESCRIPTION:" + icsEsc([L(e.su), (he?"עם: ":"With: ") + whoText(e.who), "https://groshar-oss.github.io/groshar-london/"].filter(Boolean).join("\n")));
+    if(p) lines.push("LOCATION:" + icsEsc(p.q || p.en), "GEO:" + p.ll[0] + ";" + p.ll[1]);
+    lines.push("BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:" + icsEsc(L(e.ti)),"TRIGGER:-PT30M","END:VALARM","END:VEVENT");
+  });
+  lines.push("END:VCALENDAR");
+  return lines.join("\r\n");
+}
+async function downloadICS(id, btn){
+  const he = LANG === "he", blob = new Blob([buildICS(id)], {type:"text/calendar;charset=utf-8"});
+  const name = "london-2026-" + P[id].en.toLowerCase().replace(/[^a-z]+/g,"-") + ".ics";
+  try{
+    const dl = window.claude ? await window.claude.use("downloads") : null;
+    if(dl){ await dl.save({filename: name, data: blob}); }
+    else { const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); a.remove(); }
+    if(btn) btn.textContent = he ? "✓ נשמר – פותחים את הקובץ ומאשרים הוספה ליומן" : "✓ Saved – open the file and add it to your calendar";
+  }catch(e){ if(btn) btn.textContent = he ? "לא הצלחתי לשמור – נסו שוב" : "Couldn't save – try again"; }
+}
+function icsCard(){
+  const he = LANG === "he", owners = IDS.filter(id => !P[id].kid);
+  const me = WHO.startsWith("p:") ? WHO.slice(2) : store.get("gl_me", "");
+  return `<div class="card stack" style="gap:8px;border:2px solid var(--c2)"><b>📅 ${he?"הלו״ז שלי ביומן של הטלפון":"My schedule in my phone's calendar"}</b>
+    <div class="muted small">${he?"כל הפעילויות שלך עם תזכורת חצי שעה לפני – עובד גם בלי אינטרנט. אם הלו״ז ישתנה, פשוט מוסיפים שוב.":"All your activities with a reminder 30 min before – works offline too. If the plan changes, just add it again."}</div>
+    <div class="row" style="gap:8px;flex-wrap:nowrap"><select id="icsMe" style="flex:1;min-width:0;font:inherit;padding:10px;border-radius:12px;background:var(--surface-2);color:var(--ink);border:1px solid var(--line)"><option value="">${he?"מי אני?":"Who am I?"}</option>${owners.map(id => `<option value="${id}" ${id===me?"selected":""}>${nm(id)}</option>`).join("")}</select>
+    <button class="act primary" id="icsGo">${he?"הוספה ליומן":"Add to calendar"}</button></div></div>`;
+}
+function morningText(d){
+  const he = LANG === "he", day = DAYS[d];
+  const evs = E.filter(e => e.d === d && e.k !== "r");
+  const w = wxDay(day.date);
+  const wl = w ? (() => { const [ic,h,en] = WXC(w.c); return `${ic} ${he?h:en} ${w.min}°–${w.max}° • ${he?"גשם":"rain"} ${w.p}%`; })() : "";
+  const head = he ? `☀️ בוקר טוב! ${L(day)}${day.n?` • הערב נר ${day.n} 🕎`:""}` : `☀️ Good morning! ${L(day)}${day.n?` • Hanukkah candle ${day.n} tonight 🕎`:""}`;
+  const lines = evs.map(e => `${e.t} ${L(e.ti)} – ${whoText(e.who)}`);
+  return [head, wl, "", he?"📋 התוכנית להיום:":"📋 Today's plan:", ...lines, "", he?"🏨 הלו״ז המלא, מפות וכפתור 🆘 באפליקציה:":"🏨 Full plan, maps and 🆘 in the app:", "https://groshar-oss.github.io/groshar-london/"].filter((x,i,a) => x !== "" || a[i-1] !== "").join("\n");
+}
+let MDAY = null;
+function morningCard(){
+  const he = LANG === "he", n = londonNow();
+  if(MDAY === null){ const td = DAYS.findIndex(x => x.date === n.date); MDAY = td >= 0 ? td : 1; }
+  const txt = morningText(MDAY);
+  return `<div class="days" role="group">${DAYS.map((x,i) => `<button class="day" data-mday="${i}" aria-pressed="${i===MDAY}"><b>${he?["א׳","ב׳","ג׳","ד׳","ה׳","ו׳"][i]:["Sun","Mon","Tue","Wed","Thu","Fri"][i]}</b><span>${x.date.slice(8)}.12</span></button>`).join("")}</div>
+    <div class="card small" style="white-space:pre-wrap;max-height:260px;overflow:auto">${esc(txt)}</div>
+    <div class="row"><a class="act primary" href="https://wa.me/?text=${encodeURIComponent(txt)}" target="_blank" rel="noopener">💬 ${he?"שליחה לקבוצה בוואטסאפ":"Send to the WhatsApp group"}</a><button class="act" id="mCopy">📋 ${he?"העתקה":"Copy"}</button></div>
+    <div class="muted small">${he?"באנגלית למשפחת אלון – מחליפים שפה למעלה (EN) ושולחים שוב.":"Hebrew version – switch language at the top and send again."}</div>`;
+}
 function evCard(e, isNow){
   const p = e.pl ? PL[e.pl] : null;
   const tile = `var(--c${(E.indexOf(e) % 6) + 1})`;
-  return `<div class="ev k-${e.k}${isNow?" now":""}"><div class="time">${e.t}</div><div class="body" style="--tile:${tile}">
+  return `<div class="ev k-${e.k}${isNow?" now":""}"><div class="time">${e.t}</div><div class="body${p?" tap":""}" style="--tile:${tile}"${p?` data-cardplace="${e.pl}"`:""}>
     <div class="row" style="justify-content:space-between;gap:6px"><span class="ttl">${esc(L(e.ti))}</span>${kindPill(e.k)}</div>
     ${L(e.su)?`<div class="sub">${esc(L(e.su))}</div>`:""}
     ${travelLine(e)}
     ${avatars(e.who)}
-    ${p?`<div class="sub">📍 ${esc(L(p))}</div>${placeActions(e.pl,true)}`:""}${docBtns(e)}
+    ${p?`<div class="row" style="justify-content:space-between;gap:6px;flex-wrap:nowrap"><span class="sub" style="min-width:0">📍 ${esc(L(p))}</span><span class="morehint">${LANG==="he"?"פרטים ›":"Details ›"}</span></div><div class="actions"><a class="act primary" href="${dirUrl(p)}" target="_blank" rel="noopener">🧭 ${LANG==="he"?"הגעה":"Directions"}</a>${docLinks(e)}</div>`:docBtns(e)}
   </div></div>`;
 }
 function menorah(n){
@@ -794,18 +866,20 @@ function kidView(id){
 }
 function viewNow(){
   if(KID && KIDS.includes(KID)) return kidView(KID);
-  const n = londonNow(); const out = [];
+  const n = londonNow(), he = LANG === "he", out = [];
   if(L(STATE.announce)) out.push(`<div class="notice"><h3>${T("fromOrganizer")} <span class="muted small mono">${esc(STATE.announceDate||"")}</span></h3><div>${esc(L(STATE.announce))}</div></div>`);
-  if(STATE.waGroup) out.push(`<a class="act primary" style="justify-self:start" href="${esc(STATE.waGroup)}" target="_blank" rel="noopener">💬 ${LANG==="he"?"לקבוצת הוואטסאפ של הטיול":"Trip WhatsApp group"}</a>`);
-  out.push(quickRow());
-  out.push(`<div class="card row" style="justify-content:space-between"><span>${LANG==="he"?"מצב ילדים":"Kids' mode"}</span><span class="row" style="gap:6px">${KIDS.slice(0,5).map(k => `<button class="chip" data-kid="${k}">${nm(k)}</button>`).join("")}</span></div>`);
+  out.push(`<div class="row">${STATE.waGroup?`<a class="act primary" href="${esc(STATE.waGroup)}" target="_blank" rel="noopener">💬 ${he?"קבוצת הוואטסאפ":"WhatsApp group"}</a>`:""}<a class="act" href="${ASK_YONI()}" target="_blank" rel="noopener">❓ ${he?"שאלה ליוני":"Ask Yoni"}</a></div>`);
+  const kidsCard = `<div class="card row" style="justify-content:space-between"><span>${he?"מצב ילדים":"Kids' mode"}</span><span class="row" style="gap:6px">${KIDS.map(k => `<button class="chip" data-kid="${k}">${nm(k)}</button>`).join("")}</span></div>`;
+  const wxRows = (dates) => dates.map(x => wxLine(x.date) ? `<div class="row" style="gap:8px"><b class="mono" style="min-width:68px">${L(x)}</b>${wxLine(x.date)}</div>` : "").join("");
+  const wxCard = (dates) => { const rows = wxRows(dates); return `<div class="card stack" style="gap:6px"><div class="row" style="justify-content:space-between"><b>${he?"מזג האוויר בלונדון":"London weather"}</b><a class="act" href="https://www.bbc.com/weather/2643743" target="_blank" rel="noopener">BBC Weather</a></div>${rows || `<div class="muted small">${he?"התחזית לכל יום תופיע כאן כשבועיים לפני הטיסה. בדצמבר בדרך כלל 5–9 מעלות, גשם קל וחושך כבר ב-16:00.":"A day-by-day forecast appears here about two weeks before the trip. December is usually 5–9°C, light rain, dark by 4pm."}</div>`}</div>`; };
   const start = DAYS[0].date, end = DAYS[5].date;
   if(n.date < start){
     const days = Math.ceil((Date.UTC(2026,11,6) - Date.now()) / 864e5);
-    out.push(`<div class="menorah-card">${menorah(3)}<div>${LANG==="he"?"בערב הנחיתה – נר שלישי של חנוכה":"Landing night – the 3rd Hanukkah candle"}</div></div>`);
-    out.push(`<div class="hero"><div class="lbl">${LANG==="he"?"ספירה לאחור":"Countdown"}</div><div class="big">${days} <span style="font-size:.45em">${T("countdown")}</span></div><div>${LANG==="he"?"ראשון 6.12 – המראה ב-17:00 (LY317) • משפחת אלון נוחתת ב-10:40":"Sun 6 Dec – LY317 takes off 17:00 Israel time • Alon's family lands 10:40"}</div></div>`);
-    out.push(`<h3>${LANG==="he"?"היום הראשון":"First day"}</h3>`);
-    out.push(`<div class="nextlist">${E.filter(e => e.d===0 && visible(e)).map(e => evCard(e)).join("")}</div>`);
+    out.push(`<div class="hero"><div class="lbl">${he?"ספירה לאחור":"Countdown"}</div><div class="big">${days} <span style="font-size:.45em">${T("countdown")}</span></div><div>${he?"ראשון 6.12 – המראה ב-17:00 (LY317) • משפחת אלון נוחתת ב-10:40":"Sun 6 Dec – LY317 takes off 17:00 Israel time • Alon's family lands 10:40"}</div><a class="act" style="justify-self:start" href="#schedule">${he?"ללו״ז המלא ›":"Full schedule ›"}</a></div>`);
+    out.push(icsCard());
+    out.push(wxCard(DAYS));
+    out.push(kidsCard);
+    out.push(`<div class="menorah-card">${menorah(3)}<div>${he?"בערב הנחיתה – נר שלישי של חנוכה":"Landing night – the 3rd Hanukkah candle"}</div></div>`);
   } else if(n.date > end){
     out.push(`<div class="hero"><div class="big">${T("tripOver")}</div></div>`);
   } else {
@@ -813,22 +887,22 @@ function viewNow(){
     const today = E.filter(e => e.k !== "r" && e.d === d && visible(e));
     const cur = today.filter(e => e.t <= n.time).slice(-1)[0];
     const nxt = today.filter(e => e.t > n.time).slice(0,3);
-    out.push(`<div class="hero"><div class="lbl">${L(DAYS[d])} • ${LANG==="he"?"שעון לונדון":"London time"} <span class="mono">${n.time}</span></div>
-      <div class="lbl">${T("nowIs")}</div><div class="ev">${cur ? esc(L(cur.ti)) : T("nothingNow")}</div>
-      ${cur && cur.pl ? placeActions(cur.pl,true) : ""}</div>`);
     if(nxt.length){
       const e0 = nxt[0], [h0,m0] = e0.t.split(":").map(Number), [h1,m1] = n.time.split(":").map(Number);
-      const mins = (h0*60+m0) - (h1*60+m1), he = LANG === "he", p0 = e0.pl ? PL[e0.pl] : null;
+      const mins = (h0*60+m0) - (h1*60+m1), p0 = e0.pl ? PL[e0.pl] : null;
       const when = mins < 60 ? (he?`בעוד ${mins} דק׳`:`In ${mins} min`) : (he?`בעוד ${Math.floor(mins/60)} ש׳ ו-${mins%60} דק׳`:`In ${Math.floor(mins/60)} h ${mins%60} min`);
-      out.push(`<div class="card stack" style="gap:8px;border:2px solid var(--gold)"><div class="lbl" style="color:var(--gold)">⏱️ ${when}</div><b style="font-size:1.15em">${esc(L(e0.ti))}</b>${p0?`<div class="muted small">📍 ${esc(L(p0))}</div><a class="act primary" style="justify-self:start" href="https://www.google.com/maps/dir/?api=1&destination=${p0.ll[0]},${p0.ll[1]}&travelmode=transit" target="_blank" rel="noopener">🧭 ${he?"הוראות הגעה מהמיקום שלי":"Directions from where I am"}</a>`:""}</div>`);
-      out.push(`<h3>${T("next")}</h3><div class="nextlist">${nxt.map(e => evCard(e)).join("")}</div>`);
+      out.push(`<div class="card stack" style="gap:8px;border:2px solid var(--gold)"><div class="lbl" style="color:var(--gold)">⏱️ ${when}</div><div class="nowttl">${esc(L(e0.ti))}</div>${p0?`<div class="muted small">📍 ${esc(L(p0))}</div><a class="act primary" style="justify-self:start" href="${dirUrl(p0)}" target="_blank" rel="noopener">🧭 ${he?"הוראות הגעה מהמיקום שלי":"Directions from where I am"}</a>`:""}</div>`);
     }
-    if(DAYS[d].n) out.push(`<div class="menorah-card">${menorah(DAYS[d].n)}<div>${LANG==="he"?`הערב נר ${DAYS[d].n} של חנוכה • השקיעה בסביבות 15:52`:`Tonight: Hanukkah candle ${DAYS[d].n} • sunset around 15:52`}</div></div>`);
+    out.push(`<div class="hero"><div class="lbl">${L(DAYS[d])} • ${he?"שעון לונדון":"London time"} <span class="mono">${n.time}</span></div>
+      <div class="lbl">${T("nowIs")}</div><div class="nowttl">${cur ? esc(L(cur.ti)) : T("nothingNow")}</div>
+      ${cur && cur.pl ? `<div class="actions"><a class="act" href="${dirUrl(PL[cur.pl])}" target="_blank" rel="noopener">🧭 ${he?"הגעה":"Directions"}</a>${docLinks(cur)}</div>` : ""}</div>`);
+    out.push(quickRow());
+    out.push(tubeCard());
+    if(nxt.length) out.push(`<h3>${T("next")}</h3><div class="nextlist">${nxt.map(e => evCard(e)).join("")}</div>`);
+    if(DAYS[d].n) out.push(`<div class="menorah-card">${menorah(DAYS[d].n)}<div>${he?`הערב נר ${DAYS[d].n} של חנוכה • השקיעה בסביבות 15:52`:`Tonight: Hanukkah candle ${DAYS[d].n} • sunset around 15:52`}</div></div>`);
+    out.push(kidsCard);
+    out.push(wxCard([DAYS[d]].concat(DAYS[d+1] ? [DAYS[d+1]] : [])));
   }
-  out.push(tubeCard());
-  { const he = LANG === "he";
-    const rows = DAYS.map(x => wxLine(x.date) ? `<div class="row" style="gap:8px"><b class="mono" style="min-width:68px">${L(x)}</b>${wxLine(x.date)}</div>` : "").join("");
-    out.push(`<div class="card stack" style="gap:6px"><div class="row" style="justify-content:space-between"><b>${he?"מזג האוויר בלונדון":"London weather"}</b><a class="act" href="https://www.bbc.com/weather/2643743" target="_blank" rel="noopener">BBC Weather</a></div>${rows || `<div class="muted small">${he?"התחזית לכל יום תופיע כאן כשבועיים לפני הטיסה. בדצמבר בדרך כלל 5–9 מעלות, גשם קל וחושך כבר ב-16:00.":"A day-by-day forecast appears here about two weeks before the trip. December is usually 5–9°C, light rain, dark by 4pm."}</div>`}</div>`); }
   return `<div class="stack">${out.join("")}</div>`;
 }
 function viewSchedule(){
@@ -865,6 +939,11 @@ const PARKS = [[51.5025,51.5125,-0.1900,-0.1520],[51.5015,51.5075,-0.1480,-0.140
 const STREETS = [["Piccadilly",[[51.5027,-0.1527],[51.5072,-0.1430],[51.5100,-0.1347]]],["Regent St",[[51.5100,-0.1347],[51.5110,-0.1375],[51.5125,-0.1395],[51.5152,-0.1418]]],["Oxford St",[[51.5148,-0.1505],[51.5152,-0.1418],[51.5163,-0.1307]]],["Strand",[[51.5074,-0.1270],[51.5100,-0.1220],[51.5128,-0.1175]]],["The Mall",[[51.5016,-0.1405],[51.5065,-0.1283]]],["Whitehall",[[51.5065,-0.1278],[51.5008,-0.1262]]],["Shaftesbury Ave",[[51.5100,-0.1347],[51.5125,-0.1300],[51.5140,-0.1265]]],["Charing Cross Rd",[[51.5085,-0.1283],[51.5125,-0.1293],[51.5160,-0.1300]]]];
 const DAYCOL = {h:"#D4A933","1":"#3A6EA5","2":"#B3261E","3":"#6B2C6E","4":"#2E7D5B",r:"#7A8294"};
 function viewMap(){
+  if(!["plan","all"].includes(MAPDAY)){
+    const cnt = m => Object.entries(PL).filter(([id,p]) => id !== "hotel" && p.m === m && p.day === MAPDAY).length;
+    const cur = MAPMODE === "central" ? 1 : 2, other = cur === 1 ? 2 : 1;
+    if(cnt(cur) === 0 && cnt(other) > 0) MAPMODE = other === 1 ? "central" : "wide";
+  }
   const ext = MAPMODE === "central" ? [51.4985,51.5185,-0.1505,-0.1110] : [51.4730,51.5600,-0.1950,0.0250];
   const K = 111.32*Math.cos(51.5*Math.PI/180), KY = 110.57;
   const W = (ext[3]-ext[2])*K, H = (ext[1]-ext[0])*KY, S = 1000/W;
@@ -877,7 +956,8 @@ function viewMap(){
   svg += `<polyline points="${pts(THAMES)}" fill="none" stroke="var(--map-river)" stroke-width="${MAPMODE==="central"?26:12}" stroke-linecap="round" stroke-linejoin="round"/>`;
   if(MAPMODE === "central") STREETS.forEach(([n,p]) => { const i = Math.floor((p.length-1)/2); const a = p[i], b = p[i+1]; let ang = Math.atan2(Y(b[0])-Y(a[0]), X(b[1])-X(a[1]))*180/Math.PI; if(ang>90) ang-=180; if(ang<-90) ang+=180; const cx = (X(a[1])+X(b[1]))/2, cy = (Y(a[0])+Y(b[0]))/2; svg += `<text x="${cx}" y="${cy}" transform="rotate(${ang.toFixed(1)} ${cx} ${cy})" font-size="15" fill="var(--map-label)" text-anchor="middle" dominant-baseline="middle" font-style="italic" direction="ltr">${n}</text>`; });
   if(MAPMODE === "wide"){ const a = [X(-0.1505),Y(51.5185),X(-0.1110),Y(51.4985)]; svg += `<rect x="${a[0]}" y="${a[1]}" width="${a[2]-a[0]}" height="${a[3]-a[1]}" fill="none" stroke="#D4A933" stroke-width="3" stroke-dasharray="10 7"/>`; }
-  const list = Object.entries(PL).filter(([id,p]) => p.m === (MAPMODE==="central"?1:2) || (MAPMODE==="wide" && id==="hotel"));
+  const dayOk = p => MAPDAY === "all" || (MAPDAY === "plan" ? p.day !== "r" : p.day === MAPDAY);
+  const list = Object.entries(PL).filter(([id,p]) => (p.m === (MAPMODE==="central"?1:2) || (MAPMODE==="wide" && id==="hotel")) && (id === "hotel" || dayOk(p)));
   list.forEach(([id,p]) => { const x = X(p.ll[1]), y = Y(p.ll[0]); const r = MAPMODE==="central"?27:21;
     svg += id==="hotel" ? `<g class="pin" tabindex="0" data-place="${id}" role="button" aria-label="${esc(L(p))}"><circle cx="${x}" cy="${y}" r="${r+3}" fill="#D4A933" stroke="#0F1B3D" stroke-width="3"/><text x="${x}" y="${y+1}" font-size="${r}" text-anchor="middle" dominant-baseline="middle" fill="#0F1B3D">★</text></g>`
       : `<g class="pin" tabindex="0" data-place="${id}" role="button" aria-label="${esc(L(p))}"><circle cx="${x}" cy="${y}" r="${r}" fill="${DAYCOL[p.day]}" stroke="#fff" stroke-width="3"/><text x="${x}" y="${y+1}" font-size="${r*0.95}" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#fff" font-family="IBM Plex Mono, monospace">${p.n}</text></g>`; });
@@ -885,8 +965,8 @@ function viewMap(){
   const km = MAPMODE==="central"?0.5:2; svg += `<line x1="24" y1="${vh-24}" x2="${24+km*S}" y2="${vh-24}" stroke="var(--ink)" stroke-width="4"/><text x="${24+km*S/2}" y="${vh-34}" font-size="16" text-anchor="middle" fill="var(--ink)">${km} km</text></svg>`;
   const leg = list.map(([id,p]) => `<button class="lg" data-place="${id}">${id==="hotel"?`<span class="num" style="background:#D4A933;color:#0F1B3D">★</span>`:`<span class="num" style="background:${DAYCOL[p.day]}">${p.n}</span>`}<span>${esc(L(p))}</span></button>`).join("");
   const off = Object.entries(PL).filter(([id,p]) => p.m === 0).map(([id,p]) => `<button class="lg" data-place="${id}"><span class="num" style="background:${DAYCOL[p.day]};${p.day==="h"?"color:#0F1B3D":""}">${p.n}</span><span>${esc(L(p))}</span></button>`).join("");
-  const key = [["1",LANG==="he"?"יום 1":"Day 1"],["2",LANG==="he"?"יום 2":"Day 2"],["3",LANG==="he"?"יום 3":"Day 3"],["4",LANG==="he"?"יום 4":"Day 4"],["r",LANG==="he"?"המלצות":"Ideas"]].map(([k,t]) => `<span class="row" style="gap:4px"><span class="dot" style="background:${DAYCOL[k]}"></span><span class="small">${t}</span></span>`).join("");
-  return `<div class="stack"><div class="row" style="justify-content:space-between"><div class="mode"><button data-mapmode="central" aria-pressed="${MAPMODE==="central"}">${T("central")}</button><button data-mapmode="wide" aria-pressed="${MAPMODE==="wide"}">${T("wide")}</button></div><div class="row">${key}</div></div>
+  const key = [["plan",LANG==="he"?"התוכנית":"The plan",null],["1",LANG==="he"?"יום 1":"Day 1","1"],["2",LANG==="he"?"יום 2":"Day 2","2"],["3",LANG==="he"?"יום 3":"Day 3","3"],["4",LANG==="he"?"יום 4":"Day 4","4"],["r",LANG==="he"?"💡 המלצות":"💡 Ideas","r"],["all",LANG==="he"?"הכל":"All",null]].map(([k,t,c]) => `<button class="chip" data-mapday="${k}" aria-pressed="${MAPDAY===k}">${c?`<span class="dot" style="background:${DAYCOL[c]}"></span>`:""}${t}</button>`).join("");
+  return `<div class="stack"><div class="row" style="justify-content:space-between"><div class="mode"><button data-mapmode="central" aria-pressed="${MAPMODE==="central"}">${T("central")}</button><button data-mapmode="wide" aria-pressed="${MAPMODE==="wide"}">${T("wide")}</button></div></div><div class="qrow">${key}</div>
     <div class="mapbox">${svg}</div><div class="muted small">${T("tapPin")} • ${T("mapNote")}</div>
     <div class="legend">${leg}</div><h3>${T("offmap")}</h3><div class="legend">${off}</div></div>`;
 }
@@ -1034,6 +1114,9 @@ function viewMore(){
   const kidCards = Object.keys(parentsOf).map(k => `<div class="card stack" style="direction:ltr;text-align:left"><b style="font-size:1.1em">My name is ${P[k].en} (${P[k].he})</b><div>I'm staying at <b>The Dilly hotel, 21 Piccadilly, London W1J 0BH</b></div><div>Please call my parents:<br>${parentsOf[k].map(p => `${P[p].en}: <span class="mono">${esc(S.phones[p]||"___")}</span>`).join("<br>")}</div><button class="act" data-card="${k}">${he?"שמירה כתמונה להדפסה":"Save as image to print"}</button></div>`).join("");
   return `<div class="stack">
     ${EDIT?sec("announce",he?"✏️ עדכון מהמארגן":"✏️ Organizer update",`<label class="field"><span>עברית</span><textarea id="annHe" rows="3">${esc(S.announce.he)}</textarea></label><label class="field"><span>English – ${he?"מתורגם אוטומטית מהעברית כששומרים":"translated automatically from Hebrew on save"}</span><textarea id="annEn" rows="3" dir="ltr">${esc(S.announce.en)}</textarea></label><div class="row"><button class="act" id="transBtn">🌐 ${he?"תרגום לאנגלית עכשיו":"Translate to English now"}</button><span class="muted small" id="transMsg"></span></div><label class="field"><span>${he?"קישור לאלבום תמונות":"Photo album link"}</span><input id="albumIn" type="url" dir="ltr" value="${esc(S.album)}"></label><label class="field"><span>${he?"קישור הזמנה לקבוצת הוואטסאפ":"WhatsApp group invite link"}</span><input id="waIn" type="url" dir="ltr" value="${esc(S.waGroup||"")}" placeholder="https://chat.whatsapp.com/..."></label>`,true):""}
+    ${sec("ics",he?"📅 הלו״ז שלי ביומן של הטלפון":"📅 My schedule in my phone's calendar",icsCard())}
+    ${sec("morning",he?"📋 הודעת בוקר לקבוצה":"📋 Morning message for the group",morningCard())}
+    ${sec("ask",he?"❓ שאלה ליוני":"❓ Ask Yoni",`<a class="act primary" style="justify-self:start" href="${ASK_YONI()}" target="_blank" rel="noopener">💬 ${he?"שליחת שאלה ליוני בוואטסאפ":"Send Yoni a question on WhatsApp"}</a>`)}
     ${sec("emergency",he?"🚨 חירום":"🚨 Emergency",`<button class="sosbig" data-sos="1" style="margin-bottom:10px">🆘 ${he?"קריאת מצוקה לקבוצת המשפחה":"Emergency alert to the family group"}</button>
       <div class="actions"><a class="act primary" style="background:var(--bus);border-color:var(--bus)" href="https://wa.me/447511223617" target="_blank" rel="noopener">💬 ${he?"שגרירות – חירום 24/7":"Embassy – 24/7 emergency"}</a><a class="act primary" href="https://wa.me/447538989360" target="_blank" rel="noopener">💬 ${he?"חברת ההסעות":"Transfer company"}</a><a class="act" href="https://wa.me/447498316363" target="_blank" rel="noopener">💬 ${he?"שגרירות – קונסולרי":"Embassy – consular"}</a></div>
       <dl class="kv"><dt>${he?"חירום (משטרה, אמבולנס)":"Emergency (police, ambulance)"}</dt><dd><span class="mono" dir="ltr">999 / 112</span></dd>
@@ -1085,6 +1168,11 @@ function wire(v){
   v.querySelectorAll("[data-mode]").forEach(b => b.onclick = () => { SCHMODE = b.dataset.mode; store.set("gl_schmode",SCHMODE); renderView(); });
   const as = v.querySelector("#attrSel"); if(as) as.onchange = () => { ATTR = as.value; store.set("gl_attr", ATTR); renderView(); };
   v.querySelectorAll("[data-mapmode]").forEach(b => b.onclick = () => { MAPMODE = b.dataset.mapmode; renderView(); });
+  v.querySelectorAll("[data-mapday]").forEach(b => b.onclick = () => { MAPDAY = b.dataset.mapday; renderView(); });
+  v.querySelectorAll("[data-cardplace]").forEach(b => b.onclick = ev => { if(ev.target.closest("a,button,select,input")) return; openPlace(b.dataset.cardplace); });
+  const ig = v.querySelector("#icsGo"); if(ig) ig.onclick = () => { const id = v.querySelector("#icsMe").value; if(!id){ v.querySelector("#icsMe").focus(); return; } store.set("gl_me", id); downloadICS(id, ig); };
+  v.querySelectorAll("[data-mday]").forEach(b => b.onclick = () => { MDAY = +b.dataset.mday; const box = document.querySelector("#sec-morning .in"); if(box){ box.innerHTML = morningCard(); wire(v); } else renderView(); });
+  const mc = v.querySelector("#mCopy"); if(mc) mc.onclick = async () => { try{ await navigator.clipboard.writeText(morningText(MDAY)); mc.textContent = "✓"; }catch(e){ mc.textContent = "✗"; } };
   v.querySelectorAll("[data-place]").forEach(b => { b.onclick = () => openPlace(b.dataset.place); b.onkeydown = e => { if(e.key==="Enter"||e.key===" "){ e.preventDefault(); openPlace(b.dataset.place); } }; });
   v.querySelectorAll("[data-pack]").forEach(c => c.onchange = () => { const s = store.get("gl_pack",{}); s[c.dataset.pack] = c.checked; store.set("gl_pack",s); c.closest(".check").classList.toggle("done",c.checked); });
   v.querySelectorAll("[data-hunt]").forEach(c => c.onchange = () => { const s = store.get("gl_hunt",{}); s[c.dataset.hunt] = c.checked; store.set("gl_hunt",s); renderView(); const d = $("sec-kids"); if(d) d.open = true; });
