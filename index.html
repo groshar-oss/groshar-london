@@ -215,6 +215,8 @@ h2,h3{color:var(--gold)}
 .ev.k-r .body .pill.r{background:transparent;color:var(--c5)}
 .ev.k-r .body .act{background:var(--surface-2);color:var(--ink)}
 .ev.k-r .body .act.primary{background:var(--c5);color:var(--tile-ink)}
+.tbtn.sos{background:#E63946;border-color:#E63946;color:#fff;font-size:1.05em;padding-inline:12px}
+.sosbig{display:block;width:100%;background:#E63946;color:#fff;border:0;border-radius:18px;padding:16px;font:inherit;font-size:1.15em;text-align:center;text-decoration:none;cursor:pointer}
 .cell.k-r{border:1px dashed var(--c5);background:transparent}
 </style>
 </head>
@@ -603,8 +605,10 @@ function renderTop(){
   document.documentElement.lang = LANG; document.documentElement.dir = LANG === "he" ? "rtl" : "ltr";
   const big = document.documentElement.classList.contains("big");
   $("topbar").innerHTML = `<div class="brand">${logo(42)}<div style="min-width:0"><div class="t1">${LANG==="he"?"משפחת גרושר בלונדון":"The Groshars in London"}</div><div class="t2">${LANG==="he"?"6–11 בדצמבר 2026":"6–11 December 2026"}</div></div></div>
+    <button class="tbtn sos" id="sosBtn" aria-label="${LANG==="he"?"קריאת מצוקה":"Emergency alert"}">🆘</button>
     <button class="tbtn" id="bigBtn" aria-pressed="${big}" title="${T("big")}">A+</button>
     <button class="tbtn" id="langBtn">${LANG==="he"?"English":"עברית"}</button>`;
+  $("sosBtn").onclick = openSOS;
   $("langBtn").onclick = () => { LANG = LANG === "he" ? "en" : "he"; try{ localStorage.setItem("gl_lang", LANG); }catch(e){} renderAll(); };
   $("bigBtn").onclick = () => { document.documentElement.classList.toggle("big"); store.set("gl_big", document.documentElement.classList.contains("big")); renderTop(); };
 }
@@ -806,6 +810,40 @@ function viewByAttraction(){
     <select id="attrSel" style="font:inherit;padding:10px 12px;border-radius:14px;background:var(--surface);color:var(--ink);border:1px solid var(--line)">${opts}</select></label>
     ${placeActions(ATTR,false)}<div class="stack">${evs.map(e => eventDetail(e,false)).join("")}</div>`;
 }
+function openSOS(){
+  const he = LANG === "he";
+  const phoneOwners = IDS.filter(id => !P[id].kid);
+  let me = WHO.startsWith("p:") ? WHO.slice(2) : store.get("gl_me", "");
+  const opts = `<option value="">${he?"מי אני?":"Who am I?"}</option>` + phoneOwners.map(id => `<option value="${id}" ${id===me?"selected":""}>${nm(id)}</option>`).join("");
+  $("sheet").innerHTML = `<div class="scrim" id="scrim"><div class="sheet stack" role="dialog" aria-modal="true" aria-label="SOS">
+    <button class="tbtn close" id="closeSheet">${T("close")}</button>
+    <h2 style="color:#FF8FA3">🆘 ${he?"קריאת מצוקה":"Emergency alert"}</h2>
+    <div>${he?"ההודעה תישלח לקבוצת הוואטסאפ של המשפחה, עם המיקום שלך במפה.":"This sends a message with your location on a map to the family WhatsApp group."}</div>
+    <div class="card small" style="border-color:#E63946">${he?"בסכנה אמיתית מתקשרים קודם למשטרה או לאמבולנס:":"In real danger, call the police or an ambulance first:"} <a class="act" href="tel:999" style="margin-inline-start:6px">📞 999</a></div>
+    <label class="field"><span>${he?"מי שולח":"Who's sending"}</span><select id="sosMe">${opts}</select></label>
+    <div id="sosBody"><button class="sosbig" id="sosGo">${he?"📍 לאתר מיקום ולהכין הודעה":"📍 Get my location and prepare the message"}</button></div>
+    <div class="muted small">${he?"בטלפון יופיעו שני אישורים: גישה למיקום, ואחר כך בוחרים בוואטסאפ את קבוצת המשפחה ולוחצים שלח.":"Your phone will ask for location access; then pick the family group in WhatsApp and press send."}</div>
+  </div></div>`;
+  $("closeSheet").onclick = closeSheet; $("scrim").onclick = ev => { if(ev.target.id === "scrim") closeSheet(); };
+  $("sosMe").onchange = () => store.set("gl_me", $("sosMe").value);
+  $("sosGo").onclick = () => {
+    const who = $("sosMe").value ? nm($("sosMe").value) : (he?"מישהו מהמשפחה":"Someone in the family");
+    const t = new Intl.DateTimeFormat("en-GB",{timeZone:"Europe/London",hour:"2-digit",minute:"2-digit"}).format(new Date());
+    const ready = (loc) => {
+      const msg = he
+        ? `🆘 קריאת מצוקה מ${who}!\n${loc ? `המיקום שלי: https://maps.google.com/?q=${loc.lat},${loc.lng}\n(דיוק של כ-${loc.acc} מטר)` : "לא הצלחתי לשתף מיקום – תתקשרו אליי!"}\nשעה בלונדון: ${t}`
+        : `🆘 Emergency alert from ${who}!\n${loc ? `My location: https://maps.google.com/?q=${loc.lat},${loc.lng}\n(accurate to about ${loc.acc} m)` : "Couldn't share my location – call me!"}\nLondon time: ${t}`;
+      $("sosBody").innerHTML = `<a class="sosbig" href="https://wa.me/?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">${he?"💬 פתיחת וואטסאפ ← בוחרים את קבוצת המשפחה":"💬 Open WhatsApp → pick the family group"}</a>
+        <div class="card small" style="white-space:pre-wrap;margin-top:8px">${esc(msg)}</div>`;
+    };
+    $("sosGo").disabled = true; $("sosGo").textContent = he ? "מאתר מיקום…" : "Finding your location…";
+    if(!navigator.geolocation){ ready(null); return; }
+    navigator.geolocation.getCurrentPosition(
+      pos => ready({lat: pos.coords.latitude.toFixed(5), lng: pos.coords.longitude.toFixed(5), acc: Math.round(pos.coords.accuracy)}),
+      () => ready(null),
+      {enableHighAccuracy: true, timeout: 10000, maximumAge: 60000});
+  };
+}
 function openPlace(id){
   const p = PL[id]; if(!p) return;
   const evs = E.filter(e => e.pl === id);
@@ -880,7 +918,7 @@ function viewMore(){
   const kidCards = Object.keys(parentsOf).map(k => `<div class="card stack" style="direction:ltr;text-align:left"><b style="font-size:1.1em">My name is ${P[k].en} (${P[k].he})</b><div>I'm staying at <b>The Dilly hotel, 21 Piccadilly, London W1J 0BH</b></div><div>Please call my parents:<br>${parentsOf[k].map(p => `${P[p].en}: <span class="mono">${esc(S.phones[p]||"___")}</span>`).join("<br>")}</div><button class="act" data-card="${k}">${he?"שמירה כתמונה להדפסה":"Save as image to print"}</button></div>`).join("");
   return `<div class="stack">
     ${EDIT?sec("announce",he?"✏️ עדכון מהמארגן":"✏️ Organizer update",`<label class="field"><span>עברית</span><textarea id="annHe" rows="3">${esc(S.announce.he)}</textarea></label><label class="field"><span>English – ${he?"מתורגם אוטומטית מהעברית כששומרים":"translated automatically from Hebrew on save"}</span><textarea id="annEn" rows="3" dir="ltr">${esc(S.announce.en)}</textarea></label><div class="row"><button class="act" id="transBtn">🌐 ${he?"תרגום לאנגלית עכשיו":"Translate to English now"}</button><span class="muted small" id="transMsg"></span></div><label class="field"><span>${he?"קישור לאלבום תמונות":"Photo album link"}</span><input id="albumIn" type="url" dir="ltr" value="${esc(S.album)}"></label><label class="field"><span>${he?"קישור הזמנה לקבוצת הוואטסאפ":"WhatsApp group invite link"}</span><input id="waIn" type="url" dir="ltr" value="${esc(S.waGroup||"")}" placeholder="https://chat.whatsapp.com/..."></label>`,true):""}
-    ${sec("emergency",he?"🚨 חירום":"🚨 Emergency",`
+    ${sec("emergency",he?"🚨 חירום":"🚨 Emergency",`<button class="sosbig" data-sos="1" style="margin-bottom:10px">🆘 ${he?"קריאת מצוקה לקבוצת המשפחה":"Emergency alert to the family group"}</button>
       <div class="actions"><a class="act primary" style="background:var(--bus);border-color:var(--bus)" href="https://wa.me/447511223617" target="_blank" rel="noopener">💬 ${he?"שגרירות – חירום 24/7":"Embassy – 24/7 emergency"}</a><a class="act primary" href="https://wa.me/447538989360" target="_blank" rel="noopener">💬 ${he?"חברת ההסעות":"Transfer company"}</a><a class="act" href="https://wa.me/447498316363" target="_blank" rel="noopener">💬 ${he?"שגרירות – קונסולרי":"Embassy – consular"}</a></div>
       <dl class="kv"><dt>${he?"חירום (משטרה, אמבולנס)":"Emergency (police, ambulance)"}</dt><dd><span class="mono" dir="ltr">999 / 112</span></dd>
       <dt>${he?"ייעוץ רפואי לא דחוף":"Non-urgent medical advice"}</dt><dd><span class="mono" dir="ltr">NHS 111</span></dd>
@@ -924,6 +962,7 @@ function editBar(){ return `<div class="editbar"><b style="flex:1">${T("edit")}<
 /* ============ WIRING ============ */
 function wire(v){
   v.querySelectorAll("[data-day]").forEach(b => b.onclick = () => { DAY = +b.dataset.day; renderView(); });
+  v.querySelectorAll("[data-sos]").forEach(b => b.onclick = openSOS);
   v.querySelectorAll("[data-goday]").forEach(b => b.onclick = () => { DAY = +b.dataset.goday; if(SCHMODE === "attr"){ SCHMODE = "list"; store.set("gl_schmode","list"); } location.hash = "schedule"; });
   v.querySelectorAll("[data-kday]").forEach(b => b.onclick = () => { KDAY = +b.dataset.kday; renderView(); });
   v.querySelectorAll("[data-kid]").forEach(b => b.onclick = () => { KID = b.dataset.kid; store.set("gl_kid", KID); renderView(); window.scrollTo(0,0); });
