@@ -650,23 +650,27 @@ function menorah(n){
 }
 function bus(w){ return `<svg width="${w}" viewBox="0 0 96 64" role="img" aria-label="London bus"><rect x="4" y="4" width="84" height="48" rx="10" fill="#E63946"/>${[12,30,48,66].map(x=>`<rect x="${x}" y="12" width="14" height="12" rx="3" fill="#FFE29A"/>`).join("")}${[12,30,48].map(x=>`<rect x="${x}" y="30" width="14" height="12" rx="3" fill="#FFE29A"/>`).join("")}<rect x="68" y="30" width="12" height="18" rx="2" fill="#0E1638"/><circle cx="24" cy="54" r="8" fill="#2B356B"/><circle cx="70" cy="54" r="8" fill="#2B356B"/></svg>`; }
 const KIDS = ["dor","niv","imri","ziv","raz","itamar","eitan"];
-let KID = store.get("gl_kid","");
+let KID = store.get("gl_kid",""), KDAY = null;
 function kidView(id){
   const he = LANG === "he", n = londonNow();
-  let d = DAYS.findIndex(x => x.date === n.date); const before = n.date < DAYS[0].date;
-  if(d < 0) d = before ? 1 : 5;
+  let td = DAYS.findIndex(x => x.date === n.date); const before = n.date < DAYS[0].date;
+  if(td < 0) td = before ? 1 : 5;
+  if(KDAY === null || KDAY < 0 || KDAY >= DAYS.length) KDAY = td;
+  const d = KDAY, isToday = !before && d === td;
+  const dayChips = `<div class="days" role="group">${DAYS.map((x,i) => `<button class="day" data-kday="${i}" aria-pressed="${i===d}"><b>${he?["א׳","ב׳","ג׳","ד׳","ה׳","ו׳"][i]:["Sun","Mon","Tue","Wed","Thu","Fri"][i]}</b><span>${x.date.slice(8)}.12</span></button>`).join("")}</div><div class="muted small" style="text-align:center;margin-top:-6px">${he?"⇆ מחליקים לצדדים כדי לעבור בין הימים":"⇆ Swipe sideways to change day"}</div>`;
   const days = Math.ceil((Date.UTC(2026,11,6) - Date.now()) / 864e5);
   const left = 5 - d;
   const evs = E.filter(e => e.k !== "r" && e.d === d && e.who.includes(id) && !/ארוחת בוקר|Breakfast/.test(e.ti.en));
   const huntDone = store.get("gl_hunt",{}); const hn = HUNT.filter((h,i) => huntDone[i]).length;
   const buddy = STATE.buddies[id];
   const candles = DAYS[d].n || 0;
-  const tiles = evs.slice(0,5).map((e,i) => `<div class="ktile" style="background:var(--c${(i%6)+1})"><span class="kt mono">${e.t}</span><span style="min-width:0"><b style="font-size:1.1em;font-weight:400">${esc(L(e.ti))}</b>${L(e.su)?`<span style="display:block;font-size:.82em;opacity:.8">${esc(L(e.su))}</span>`:""}</span></div>`).join("");
+  const tiles = evs.map((e,i) => `<div class="ktile" style="background:var(--c${(i%6)+1})"><span class="kt mono">${e.t}</span><span style="min-width:0"><b style="font-size:1.1em;font-weight:400">${esc(L(e.ti))}</b>${L(e.su)?`<span style="display:block;font-size:.82em;opacity:.8">${esc(L(e.su))}</span>`:""}</span></div>`).join("");
   return `<div class="stack">
     <div class="row" style="justify-content:space-between"><div class="row">${KIDS.map(k => `<button class="chip" data-kid="${k}" aria-pressed="${k===id}">${nm(k)}</button>`).join("")}</div><button class="tbtn" data-kid="">${he?"חזרה למבוגרים":"Grown-up view"}</button></div>
     <div class="kidhead"><div style="flex:1;min-width:0"><div class="hi">${he?"היי":"Hi"} ${nm(id)}!</div><div class="muted">${before ? (he?`עוד ${days} ימים ללונדון!`:`${days} days until London!`) : (he?`${L(DAYS[d])} • ${left>0?`עוד ${left} לילות בלונדון`:"היום טסים הביתה"}`:`${L(DAYS[d])} • ${left>0?`${left} more nights in London`:"flying home today"}`)}</div></div>${bus(84)}</div>
-    ${candles?`<div class="menorah-card">${menorah(candles)}<div style="font-size:1.2em">${he?`הלילה מדליקים <span style="color:var(--gold)">${candles} נרות</span>!`:`Tonight we light <span style="color:var(--gold)">${candles} candles</span>!`}</div>${candles<8?`<div class="muted small">${he?`עוד ${8-candles} לילות – כל השמונה`:`${8-candles} more nights until all eight`}</div>`:""}</div>`:""}
-    <h3>${before ? (he?"מה נעשה ביום הראשון?":"What will we do on day one?") : (he?"מה עושים היום?":"What are we doing today?")}</h3>
+    ${candles?`<div class="menorah-card">${menorah(candles)}<div style="font-size:1.2em">${he?`${isToday?"הלילה":`ב${L(DAYS[d])}`} מדליקים <span style="color:var(--gold)">${candles} נרות</span>!`:`${isToday?"Tonight":`On ${L(DAYS[d])}`} we light <span style="color:var(--gold)">${candles} candles</span>!`}</div>${candles<8?`<div class="muted small">${he?`עוד ${8-candles} לילות – כל השמונה`:`${8-candles} more nights until all eight`}</div>`:""}</div>`:""}
+    ${dayChips}
+    <h3>${isToday ? (he?"מה עושים היום?":"What are we doing today?") : (he?`מה עושים ב${L(DAYS[d])}?`:`What are we doing on ${L(DAYS[d])}?`)}</h3>
     <div class="stack" style="gap:9px">${tiles || `<div class="card">${he?"יום רגוע!":"A quiet day!"}</div>`}</div>
     <div class="kgrid">
       <a class="kbox" href="#more" style="text-decoration:none"><span>${he?"ציד אוצרות":"Treasure hunt"}</span><span style="font-size:1.6em;color:var(--c4)">${hn}/${HUNT.length}</span><span class="bar"><i style="width:${Math.round(hn/HUNT.length*100)}%;background:var(--c4)"></i></span></a>
@@ -911,6 +915,7 @@ function editBar(){ return `<div class="editbar"><b style="flex:1">${T("edit")}<
 /* ============ WIRING ============ */
 function wire(v){
   v.querySelectorAll("[data-day]").forEach(b => b.onclick = () => { DAY = +b.dataset.day; renderView(); });
+  v.querySelectorAll("[data-kday]").forEach(b => b.onclick = () => { KDAY = +b.dataset.kday; renderView(); });
   v.querySelectorAll("[data-kid]").forEach(b => b.onclick = () => { KID = b.dataset.kid; store.set("gl_kid", KID); renderView(); window.scrollTo(0,0); });
   v.querySelectorAll("[data-mode]").forEach(b => b.onclick = () => { SCHMODE = b.dataset.mode; store.set("gl_schmode",SCHMODE); renderView(); });
   const as = v.querySelector("#attrSel"); if(as) as.onchange = () => { ATTR = as.value; store.set("gl_attr", ATTR); renderView(); };
@@ -1096,7 +1101,8 @@ window.addEventListener("hashchange", () => { closeSheet(); renderTabs(); render
   const v = $("view");
   v.addEventListener("touchstart", e => {
     sx = null;
-    if(route() !== "schedule" || SCHMODE === "attr" || e.touches.length !== 1) return;
+    const kid = route() === "now" && KID && P[KID];
+    if(!(kid || (route() === "schedule" && SCHMODE !== "attr")) || e.touches.length !== 1) return;
     if(e.target.closest(".grid-who, .days, select, input, textarea")) return;
     sx = e.touches[0].clientX; sy = e.touches[0].clientY;
   }, {passive:true});
@@ -1105,9 +1111,12 @@ window.addEventListener("hashchange", () => { closeSheet(); renderTabs(); render
     const t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy; sx = null;
     if(Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
     const next = LANG === "he" ? dx > 0 : dx < 0;
-    const nd = Math.max(0, Math.min(DAYS.length - 1, DAY + (next ? 1 : -1)));
-    if(nd === DAY) return;
-    DAY = nd; renderView();
+    const kid = route() === "now" && KID && P[KID];
+    const cur = kid ? KDAY : DAY;
+    const nd = Math.max(0, Math.min(DAYS.length - 1, cur + (next ? 1 : -1)));
+    if(nd === cur) return;
+    if(kid) KDAY = nd; else DAY = nd;
+    renderView();
     const vv = $("view"); vv.style.transition = "none"; vv.style.opacity = ".35"; vv.style.transform = `translateX(${(dx > 0 ? -1 : 1) * 24}px)`;
     requestAnimationFrame(() => { vv.style.transition = "opacity .2s, transform .2s"; vv.style.opacity = "1"; vv.style.transform = "none"; });
     const days = vv.querySelector(".days [aria-pressed=\"true\"]"); if(days) days.scrollIntoView({block:"nearest", inline:"center"});
