@@ -372,10 +372,10 @@ ev(4,"08:00",ALL,"ארוחת בוקר במלון","Breakfast at the hotel","",""
 ev(4,"09:30",ALL,"Uber Boat לבאטרסי","Uber Boat to Battersea","מרציף וסטמינסטר","From Westminster Pier","pier");
 ev(4,"10:30",ALL,"Lift 109 והחלקה על הקרח","Lift 109 & ice skating","מעלית בתוך הארובה","A lift inside the chimney","battersea","p");
 ev(4,"12:30",ALL,"צהריים חופשי","Free lunch","הצעה: Arcade Battersea בתוך תחנת הכוח","Idea: Arcade Battersea inside the power station","battersea","f");
-ev(4,"14:00",without(ALONF,["tatiana","davidj","rose"]).concat(["dor","niv","itamar"]),"יציאה למאדאם טוסו","Leave for Madame Tussauds","מבאטרסי: קו Northern לאמבנקמנט, ואז Bakerloo ל-Baker Street • כ-30 דק׳","From Battersea: Northern line to Embankment, then Bakerloo to Baker Street • ~30 min","tussauds");
-ev(4,"14:30",without(ALONF,["tatiana","davidj","rose"]).concat(["dor","niv","itamar"]),"מאדאם טוסו","Madame Tussauds","כשעתיים • כרטיסים עם שעת כניסה: ___","About 2 hours • timed tickets: ___","tussauds","p");
-ev(4,"14:30",["amber","tatiana","davidj","rose"],"F1 Arcade","F1 Arcade","ליד סנט פול • מתחת לגיל 18 רק עד 18:00 – לסיים עד 17:45","Near St Paul's • under-18s only until 6pm – finish by 5:45pm","f1","p");
-ev(4,"14:30",without(ADULTS.concat(LITTLE),["alon","liz","ziv"]),"אחה״צ חופשי ליד המלון","Free afternoon near the hotel","שנ״צ לפעוטות • מי שרוצה: Fortnum & Mason, Burlington Arcade, רחוב ריג׳נט","Naps for the little ones • ideas: Fortnum & Mason, Burlington Arcade, Regent St","hotel","f");
+ev(4,"14:00",["alon","liz","ziv","sandra","dor","niv"],"יציאה למאדאם טוסו","Leave for Madame Tussauds","מבאטרסי: קו Northern לאמבנקמנט, ואז Bakerloo ל-Baker Street • כ-30 דק׳","From Battersea: Northern line to Embankment, then Bakerloo to Baker Street • ~30 min","tussauds");
+ev(4,"14:30",["alon","liz","ziv","sandra","dor","niv"],"מאדאם טוסו","Madame Tussauds","כשעתיים • כרטיסים עם שעת כניסה: ___","About 2 hours • timed tickets: ___","tussauds","p");
+ev(4,"14:30",["amber","tatiana","davidj","rose","itamar","eitan","yoni"],"F1 Arcade","F1 Arcade","ליד סנט פול • מתחת לגיל 18 רק עד 18:00 – לסיים עד 17:45","Near St Paul's • under-18s only until 6pm – finish by 5:45pm","f1","p");
+ev(4,"14:30",["david","dani","dan","hadar","imri","raz"],"אחה״צ חופשי ליד המלון","Free afternoon near the hotel","שנ״צ לפעוטות • מי שרוצה: Fortnum & Mason, Burlington Arcade, רחוב ריג׳נט","Naps for the little ones • ideas: Fortnum & Mason, Burlington Arcade, Regent St","hotel","f");
 ev(4,"17:30",ALL,"ארוחת ערב חופשית – מוקדם","Early free dinner","כולם במלון עד 19:30","Everyone back by 19:30","","f");
 ev(4,"19:30",ALL,"נר שביעי, אריזה ושינה","7th candle, packing, bed","מזוודות סגורות עד 20:00 • ארוחות בוקר ארוזות","Bags closed by 20:00 • packed breakfasts","hotel");
 // Day 5
@@ -396,8 +396,8 @@ const TODO = [
   {id:"lionking",he:"מלך האריות – 6 כרטיסים, רביעי 19:30",en:"The Lion King – 6 tickets, Wed 19:30",u:"https://thelionking.co.uk"},
   {id:"arsenal",he:"ארסנל – ריאל מדריד: 3 כרטיסים",en:"Arsenal v Real Madrid: 3 tickets",u:"https://www.arsenal.com/tickets"},
   {id:"wonderlab",he:"Wonderlab – 4 ילדים + מלווה, שלישי 8.12 14:30 (נסגר ב-16:00 באותו יום)",en:"Wonderlab – 4 kids + an adult, Tue 8 Dec 14:30 (closes 16:00 that day)",u:"https://www.sciencemuseum.org.uk"},
-  {id:"tussauds",he:"מאדאם טוסו – 7 כרטיסים, חמישי 14:30 (אלון, ליז, איתן, זיו, דור, ניב ואיתמר)",en:"Madame Tussauds – 7 tickets, Thu 14:30 (Alon, Liz, Eitan, Ziv, Dor, Niv, Itamar)",u:"https://www.madametussauds.com/london/"},
-  {id:"f1",he:"F1 Arcade – 4 נהגים, חמישי 14:30 (אמבר, טטיאנה, דיוויד ורוז)",en:"F1 Arcade – 4 drivers, Thu 14:30 (Amber, Tatiana, David, Rose)",u:"https://f1arcade.com/uk/london"},
+  {id:"tussauds",he:"מאדאם טוסו – 6 כרטיסים, חמישי 14:30 (סנדרה, אלון, ליז, זיו, דור וניב)",en:"Madame Tussauds – 6 tickets, Thu 14:30 (Sandra, Alon, Liz, Ziv, Dor, Niv)",u:"https://www.madametussauds.com/london/"},
+  {id:"f1",he:"F1 Arcade – 7 נהגים, חמישי 14:30 (יוני, אמבר, איתמר, טטיאנה, דיוויד, רוז ואיתן)",en:"F1 Arcade – 7 drivers, Thu 14:30 (Yoni, Amber, Itamar, Tatiana, David, Rose, Eitan)",u:"https://f1arcade.com/uk/london"},
   {id:"tower",he:"מצודת לונדון – שלישי 09:00",en:"Tower of London – Tue 09:00",u:"https://www.hrp.org.uk/tower-of-london/"},
   {id:"lift109",he:"Lift 109 + Glide – חמישי",en:"Lift 109 + Glide – Thu",u:"https://batterseapowerstation.co.uk"},
   {id:"eta",he:"ETA – אישור כניסה לכל 19 המשתתפים",en:"UK ETA for all 19 travellers",u:"https://www.gov.uk/guidance/apply-for-an-electronic-travel-authorisation-eta"},
