@@ -624,10 +624,12 @@ function viewNow(){
 function viewSchedule(){
   const d = DAYS[DAY];
   const days = DAYS.map((x,i) => `<button class="day" data-day="${i}" aria-pressed="${i===DAY}"><b>${LANG==="he"?["א׳","ב׳","ג׳","ד׳","ה׳","ו׳"][i]:["Sun","Mon","Tue","Wed","Thu","Fri"][i]}</b><span>${x.date.slice(8)}.12</span></button>`).join("");
-  const mode = `<div class="mode"><button data-mode="list" aria-pressed="${SCHMODE==="list"}">${T("viewList")}</button><button data-mode="grid" aria-pressed="${SCHMODE==="grid"}">${T("viewGrid")}</button></div>`;
+  const mode = `<div class="mode"><button data-mode="list" aria-pressed="${SCHMODE==="list"}">${T("viewList")}</button><button data-mode="grid" aria-pressed="${SCHMODE==="grid"}">${T("viewGrid")}</button><button data-mode="attr" aria-pressed="${SCHMODE==="attr"}">${LANG==="he"?"לפי אטרקציה":"By attraction"}</button></div>`;
   const n = londonNow();
   let body;
-  if(SCHMODE === "grid"){
+  if(SCHMODE === "attr"){
+    body = viewByAttraction();
+  } else if(SCHMODE === "grid"){
     const evs = E.filter(e => e.d === DAY);
     const times = [...new Set(evs.map(e => e.t))].sort();
     const cols = ["y","d","a","g"];
@@ -640,6 +642,7 @@ function viewSchedule(){
     const nowIdx = n.date === d.date ? evs.map(e => e.t <= n.time).lastIndexOf(true) : -1;
     body = evs.length ? `<div class="stack">${evs.map((e,i) => evCard(e, i === nowIdx)).join("")}</div>` : `<div class="card muted">${LANG==="he"?"אין פעילויות לבחירה הזו ביום הזה":"Nothing for this selection on this day"}</div>`;
   }
+  if(SCHMODE === "attr") return `<div class="stack"><div class="row" style="justify-content:space-between">${mode}</div>${body}</div>`;
   return `<div class="stack"><div class="days" role="group">${days}</div>
     <div class="row" style="justify-content:space-between;flex-wrap:nowrap;align-items:flex-end"><div style="min-width:0"><h2>${L(d)}</h2><div class="muted">${LANG==="he"?d.tHe:d.tEn}${d.n?` • ${LANG==="he"?"נר":"candle"} ${d.n}`:""}</div></div>${d.n?`<div style="width:120px;flex:none">${menorah(d.n)}</div>`:""}</div>
     <div class="row" style="justify-content:space-between">${mode}</div>${body}</div>`;
@@ -676,6 +679,37 @@ function viewMap(){
     <div class="mapbox">${svg}</div><div class="muted small">${T("tapPin")} • ${T("mapNote")}</div>
     <div class="legend">${leg}</div><h3>${T("offmap")}</h3><div class="legend">${off}</div></div>`;
 }
+function othersAt(e){
+  const groups = new Map();
+  IDS.filter(id => !e.who.includes(id)).forEach(id => {
+    const mine = E.filter(x => x !== e && x.d === e.d && x.who.includes(id));
+    const before = mine.filter(x => x.t <= e.t); const pick = before.length ? before[before.length-1] : mine[0];
+    const key = pick || null; if(!groups.has(key)) groups.set(key, []); groups.get(key).push(id);
+  });
+  return [...groups.entries()];
+}
+function eventDetail(e, showPlace){
+  const he = LANG === "he", p = e.pl ? PL[e.pl] : null;
+  const others = othersAt(e);
+  return `<div class="card stack" style="gap:6px"><div class="row" style="justify-content:space-between;gap:6px"><b class="mono" style="color:var(--gold)">${L(DAYS[e.d])} • ${e.t}</b>${kindPill(e.k)}</div>
+    <b>${esc(L(e.ti))}</b>${showPlace&&p?`<span class="muted small">📍 ${esc(L(p))}</span>`:""}
+    <div class="small muted">${he?"מי שם:":"Who's there:"}</div>${avatars(e.who)}
+    ${others.length?`<div class="small muted" style="margin-top:4px">${he?"ובאותו זמן, השאר:":"Meanwhile, everyone else:"}</div>
+      <div class="stack" style="gap:4px">${others.map(([x,ppl]) => `<div class="small" style="border-inline-start:3px solid var(--line);padding-inline-start:8px"><b>${x?esc(L(x.ti)):(he?"אין פעילות ביומן":"Nothing scheduled")}</b>${x&&x.pl&&PL[x.pl]&&x.pl!==e.pl?` <span class="muted">• ${esc(L(PL[x.pl]))}</span>`:""}${x&&x.t!==e.t?` <span class="muted mono">(${x.t})</span>`:""}<br>${ppl.map(nm).join(", ")}</div>`).join("")}</div>`
+      : `<div class="small" style="color:var(--park)">${he?"כל ה-19 ביחד":"All 19 together"}</div>`}
+  </div>`;
+}
+let ATTR = store.get("gl_attr", "");
+function viewByAttraction(){
+  const he = LANG === "he";
+  const ids = []; E.forEach(e => { if(e.pl && PL[e.pl] && !["hotel","lhr","ltn"].includes(e.pl) && !ids.includes(e.pl)) ids.push(e.pl); });
+  if(!ids.includes(ATTR)) ATTR = ids[0];
+  const opts = ids.map(id => `<option value="${id}" ${id===ATTR?"selected":""}>${esc(L(PL[id]))}</option>`).join("");
+  const evs = E.filter(e => e.pl === ATTR);
+  return `<label class="stack" style="gap:4px"><span class="small muted">${he?"בוחרים אטרקציה:":"Pick an attraction:"}</span>
+    <select id="attrSel" style="font:inherit;padding:10px 12px;border-radius:14px;background:var(--surface);color:var(--ink);border:1px solid var(--line)">${opts}</select></label>
+    ${placeActions(ATTR,false)}<div class="stack">${evs.map(e => eventDetail(e,false)).join("")}</div>`;
+}
 function openPlace(id){
   const p = PL[id]; if(!p) return;
   const evs = E.filter(e => e.pl === id);
@@ -684,7 +718,7 @@ function openPlace(id){
     <div class="row"><span class="num" style="background:${DAYCOL[p.day]};${p.day==="h"?"color:#0F1B3D":""}">${id==="hotel"?"★":p.n}</span><h2>${esc(L(p))}</h2></div>
     <div>${esc(LANG==="he"?p.tHe:p.tEn)}</div>
     ${placeActions(id,false)}
-    ${evs.length?`<div class="stack">${evs.map(e => `<div class="card small"><b class="mono">${L(DAYS[e.d])} ${e.t}</b> – ${esc(L(e.ti))}</div>`).join("")}</div>`:""}
+    ${evs.length?`<div class="stack">${evs.map(e => eventDetail(e,false)).join("")}</div>`:""}
     <a class="small" href="https://citymapper.com/directions?endcoord=${p.ll[0]}%2C${p.ll[1]}&endname=${encodeURIComponent(p.en)}" target="_blank" rel="noopener">Citymapper</a>
   </div></div>`;
   $("closeSheet").onclick = closeSheet; $("scrim").onclick = ev => { if(ev.target.id === "scrim") closeSheet(); };
@@ -797,6 +831,7 @@ function wire(v){
   v.querySelectorAll("[data-day]").forEach(b => b.onclick = () => { DAY = +b.dataset.day; renderView(); });
   v.querySelectorAll("[data-kid]").forEach(b => b.onclick = () => { KID = b.dataset.kid; store.set("gl_kid", KID); renderView(); window.scrollTo(0,0); });
   v.querySelectorAll("[data-mode]").forEach(b => b.onclick = () => { SCHMODE = b.dataset.mode; store.set("gl_schmode",SCHMODE); renderView(); });
+  const as = v.querySelector("#attrSel"); if(as) as.onchange = () => { ATTR = as.value; store.set("gl_attr", ATTR); renderView(); };
   v.querySelectorAll("[data-mapmode]").forEach(b => b.onclick = () => { MAPMODE = b.dataset.mapmode; renderView(); });
   v.querySelectorAll("[data-place]").forEach(b => { b.onclick = () => openPlace(b.dataset.place); b.onkeydown = e => { if(e.key==="Enter"||e.key===" "){ e.preventDefault(); openPlace(b.dataset.place); } }; });
   v.querySelectorAll("[data-pack]").forEach(c => c.onchange = () => { const s = store.get("gl_pack",{}); s[c.dataset.pack] = c.checked; store.set("gl_pack",s); c.closest(".check").classList.toggle("done",c.checked); });
