@@ -305,6 +305,14 @@ const PL = {
     tHe:"קו Piccadilly ישיר מהמלון • תיק עד A4 בלבד, אין שמירת חפצים • להגיע שעה לפני",tEn:"Piccadilly line direct from the hotel • bags A4 size max, no storage • arrive an hour early"},
   battersea:{n:23,m:2,day:"4",he:"תחנת הכוח באטרסי – Lift 109",en:"Battersea Power Station – Lift 109",ll:[51.4818,-0.1445],w:"https://batterseapowerstation.co.uk",
     tHe:"Lift 109 בכרטיס עם שעה • החלקה Glide – לוודא שפועל",tEn:"Lift 109 is timed-ticket • Glide ice rink – check it's open"},
+  southbank:{n:32,m:1,day:"1",he:"שוק החורף בסאות׳בנק",en:"Southbank Centre Winter Market",ll:[51.5062,-0.1167],w:"https://www.southbankcentre.co.uk",
+    tHe:"5 דק׳ הליכה מה-London Eye • דוכני אוכל ומתנות • 11:00–22:00 • כניסה חופשית",tEn:"5 min walk from the London Eye • food and gift stalls • 11:00–22:00 • free entry"},
+  leicester:{n:33,m:1,day:"1",he:"לסטר סקוור – שוק חג המולד ורחבת החלקה",en:"Leicester Square – Christmas market & ice rink",ll:[51.5103,-0.1301],w:"https://www.leicestersquare.london",
+    tHe:"7 דק׳ הליכה מהמלון • שוק וזיקוקי אורות 10:00–22:00 • LEGO ו-M&M's ממש ליד",tEn:"7 min walk from the hotel • market and lights 10:00–22:00 • LEGO and M&M's right there"},
+  somerset:{n:34,m:1,day:"r",he:"החלקה על הקרח בסומרסט האוס",en:"Skate at Somerset House",ll:[51.5110,-0.1172],w:"https://www.somersethouse.org.uk/skate-times-tickets-faqs",
+    tHe:"סשנים של 45 דק׳, האחרון הרגיל 21:00 • מבוגר מ-£13, ילד עד 12 מ-£11 + £1.50 עמלה",tEn:"45-min sessions, last regular one 21:00 • adult from £13, child 12 and under from £11 + £1.50 fee"},
+  kew:{n:35,m:2,day:"r",he:"Christmas at Kew – שביל אורות",en:"Christmas at Kew – light trail",ll:[51.4787,-0.2956],w:"https://www.kew.org/kew-gardens/whats-on/christmas",
+    tHe:"16:20–22:00 • מבוגר מ-£25, ילד מ-£20, עד גיל 4 חינם • כ-40 דק׳ ברכבת מהמלון",tEn:"4:20–10pm • adult from £25, child from £20, under-4s free • ~40 min by train from the hotel"},
   sealife:{n:31,m:1,day:"4",he:"האקווריום SEA LIFE",en:"SEA LIFE London Aquarium",ll:[51.5022,-0.1192],w:"https://www.visitsealife.com/london/",
     tHe:"בבניין County Hall ליד ה-London Eye • מקורה, מתאים לפעוטות ועגלות • פתוח 10:00–18:00 • לבדוק אם מתחת לגיל 3 בחינם",tEn:"In County Hall next to the London Eye • indoors, great for toddlers and buggies • open 10:00–18:00 • check if under-3s are free"},
   tussauds:{n:28,m:2,day:"4",he:"מאדאם טוסו",en:"Madame Tussauds",ll:[51.5229,-0.1551],w:"https://www.madametussauds.com/london/",
@@ -329,6 +337,7 @@ const ev = (d,t,who,he,en,suHe,suEn,pl,k) => E.push({d,t,who,ti:{he,en},su:{he:s
 // Day 0
 ev(0,"10:40",ALONF,"משפחת אלון נוחתת בהית׳רו","Alon's family lands at Heathrow","Delta 5921 • הסעה 1005790 למלון","Delta 5921 • transfer 1005790 to the hotel","lhr","b");
 ev(0,"12:30",ALONF,"הגעה למלון והשארת מזוודות","Arrive at the hotel, leave bags","אחה״צ חופשי ליד המלון: גרין פארק, Fortnum & Mason","Free afternoon nearby: Green Park, Fortnum & Mason","hotel","f");
+ev(0,"17:00",ALONF,"אופציה לערב: אורות ושוק בלסטר סקוור","Evening option: lights and market in Leicester Square","7 דק׳ הליכה מהמלון, פתוח עד 22:00 • לחזור מוקדם, מחר יום מלא","7 min walk from the hotel, open until 22:00 • back early, big day tomorrow","leicester","s");
 ev(0,"15:00",ISR,"המראה מתל אביב – LY317","Take-off from Tel Aviv – LY317","17:00 שעון ישראל • YCWT59 + YDVYSX","17:00 Israel time • YCWT59 + YDVYSX","","b");
 ev(0,"20:25",ISR,"נחיתה בהית׳רו, טרמינל 4","Land at Heathrow Terminal 4","אחרי המזוודות: לצאת לנקודת App & Private Hire Pick-Up, Zone 1, ולהתקשר לנהג","After bags: go out to App & Private Hire Pick-Up, Zone 1, and call the driver","lhr","b");
 ev(0,"21:25",ISR,"2 רכבים למלון","Two vans to the hotel","1005001 + 1005005 • £128 לרכב במזומן • כ-50 דק׳","1005001 + 1005005 • £128 per van in cash • ~50 min","lhr","b");
@@ -339,10 +348,12 @@ ev(1,"10:00",ALL,"גרין פארק וארמון בקינגהאם","Green Park &
 ev(1,"11:30",ALL,"ביג בן, הפרלמנט וגשר וסטמינסטר","Big Ben, Parliament & Westminster Bridge","הליכה לגדה הדרומית","Walk to the South Bank","bigben");
 ev(1,"12:30",ALL,"צהריים חופשי בגדה הדרומית","Free lunch on the South Bank","נפגשים ב-14:30 ליד ה-Eye","Meet at 14:30 by the Eye","eye","f");
 ev(1,"15:00",ALL,"London Eye","London Eye","הזמנה R128336856 • 19 כרטיסים","Booking R128336856 • 19 tickets","eye","b");
-ev(1,"16:30",LITTLE.concat(["dani","hadar","liz"]),"פעוטות חוזרים למלון","Little ones back to the hotel","מנוחה ואמבטיה לפני הארוחה","Rest and bath before dinner","hotel","s");
-ev(1,"16:30",without(ALL,LITTLE.concat(["dani","hadar","liz"])),"אורות החג ברחוב ריג׳נט וקרנבי","Christmas lights on Regent St & Carnaby","LEGO ו-M&M's בלסטר סקוור – הכול ליד המלון","LEGO & M&M's in Leicester Sq – all near the hotel","regent","s");
-ev(1,"18:30",ALL,"נר רביעי במלון","4th candle at the hotel","","","hotel");
-ev(1,"19:00",ALL,"ארוחת ערב משפחתית – כל ה-19","Family dinner – all 19 of us","Cicchetti Piccadilly, חדר פרטי • בקשת הזמנה בתהליך","Cicchetti Piccadilly, private room • booking in progress","cicchetti","p");
+ev(1,"16:00",LITTLE.concat(["dani","hadar","liz"]),"פעוטות חוזרים למלון","Little ones back to the hotel","מ-Waterloo בקו Jubilee לגרין פארק, או מונית • מנוחה ואמבטיה ומגיעים ישר למסעדה ב-19:00","Jubilee line from Waterloo to Green Park, or a taxi • rest and bath, then straight to the restaurant at 19:00","hotel","s");
+ev(1,"16:00",without(ALL,LITTLE.concat(["dani","hadar","liz"])),"שוק החורף בסאות׳בנק","Southbank Centre Winter Market","5 דק׳ הליכה מה-Eye • משהו חם לשתות ולנשנש","5 min walk from the Eye • something warm to drink and a snack","southbank","f");
+ev(1,"17:00",without(ALL,LITTLE.concat(["dani","hadar","liz"])),"הליכה באורות החג: לסטר סקוור, ריג׳נט וקרנבי","Christmas lights walk: Leicester Sq, Regent St & Carnaby","חוצים את הנהר בגשר הרגלי Hungerford ← טרפלגר ← לסטר סקוור (LEGO, M&M's) ← ריג׳נט וקרנבי • משם 5 דק׳ למסעדה","Cross the river on the Hungerford footbridge → Trafalgar Sq → Leicester Sq (LEGO, M&M's) → Regent St & Carnaby • then 5 min to the restaurant","leicester","f");
+ev(1,"19:00",ALL,"ארוחת ערב משפחתית – כל ה-19","Family dinner – all 19 of us","Cicchetti Piccadilly, חדר פרטי • נפגשים ישר במסעדה","Cicchetti Piccadilly, private room • meet at the restaurant","cicchetti","p");
+ev(1,"20:45",ALL,"נר רביעי במלון","4th candle at the hotel","5 דק׳ מהמסעדה • מדליקים יחד ואז מי שרוצה ממשיך","5 min from the restaurant • light together, then whoever wants carries on","hotel");
+ev(1,"21:00",TEENS,"אופציה לצעירים: לסטר סקוור בלילה","Option for the young ones: Leicester Square at night","שוק חג המולד ורחבת החלקה עד 22:00, 7 דק׳ הליכה • או החלקה בסומרסט האוס (סשן 21:00) • כל מי שרוצה מצטרף • מבוגר אחראי: ___","Christmas market and ice rink until 22:00, 7 min walk • or skating at Somerset House (21:00 session) • anyone can join • adult in charge: ___","leicester","s");
 // Day 2
 ev(2,"08:00",ALL,"ארוחת בוקר במלון","Breakfast at the hotel","","","hotel");
 ev(2,"09:00",ALL,"מצודת לונדון","Tower of London","קודם תכשיטי הכתר","Crown Jewels first","tower","p");
