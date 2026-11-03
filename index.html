@@ -251,7 +251,7 @@ const DAYS = [
   {date:"2026-12-07", he:"שני 7.12", en:"Mon 7 Dec", n:4, tHe:"בקינגהאם, וסטמינסטר ו-London Eye", tEn:"Buckingham, Westminster & London Eye"},
   {date:"2026-12-08", he:"שלישי 8.12", en:"Tue 8 Dec", n:5, tHe:"מצודת לונדון ו-Winter Wonderland", tEn:"Tower of London & Winter Wonderland"},
   {date:"2026-12-09", he:"רביעי 9.12", en:"Wed 9 Dec", n:6, tHe:"יום מפוצל: שופינג ו-Gravity לנוער, Hamleys לקטנים, שלוש תוכניות ערב", tEn:"Split day: shopping & Gravity for the teens, Hamleys for the little ones, three evening plans"},
-  {date:"2026-12-10", he:"חמישי 10.12", en:"Thu 10 Dec", n:7, tHe:"באטרסי, מאדאם טוסו, F1 והתארגנות", tEn:"Battersea, Madame Tussauds, F1 & packing"},
+  {date:"2026-12-10", he:"חמישי 10.12", en:"Thu 10 Dec", n:7, tHe:"באטרסי, טוסו, F1, אקווריום והתארגנות", tEn:"Battersea, Tussauds, F1, aquarium & packing"},
   {date:"2026-12-11", he:"שישי 11.12", en:"Fri 11 Dec", n:0, tHe:"טיסה הביתה", tEn:"Flying home"}
 ];
 
@@ -305,6 +305,8 @@ const PL = {
     tHe:"קו Piccadilly ישיר מהמלון • תיק עד A4 בלבד, אין שמירת חפצים • להגיע שעה לפני",tEn:"Piccadilly line direct from the hotel • bags A4 size max, no storage • arrive an hour early"},
   battersea:{n:23,m:2,day:"4",he:"תחנת הכוח באטרסי – Lift 109",en:"Battersea Power Station – Lift 109",ll:[51.4818,-0.1445],w:"https://batterseapowerstation.co.uk",
     tHe:"Lift 109 בכרטיס עם שעה • החלקה Glide – לוודא שפועל",tEn:"Lift 109 is timed-ticket • Glide ice rink – check it's open"},
+  sealife:{n:31,m:1,day:"4",he:"האקווריום SEA LIFE",en:"SEA LIFE London Aquarium",ll:[51.5022,-0.1192],w:"https://www.visitsealife.com/london/",
+    tHe:"בבניין County Hall ליד ה-London Eye • מקורה, מתאים לפעוטות ועגלות • פתוח 10:00–18:00 • לבדוק אם מתחת לגיל 3 בחינם",tEn:"In County Hall next to the London Eye • indoors, great for toddlers and buggies • open 10:00–18:00 • check if under-3s are free"},
   tussauds:{n:28,m:2,day:"4",he:"מאדאם טוסו",en:"Madame Tussauds",ll:[51.5229,-0.1551],w:"https://www.madametussauds.com/london/",
     tHe:"ליד תחנת Baker Street – 2 תחנות בקו Jubilee מגרין פארק • כרטיס עם שעת כניסה, להזמין מראש • כשעתיים",tEn:"Next to Baker Street station – 2 stops on the Jubilee line from Green Park • timed tickets, book ahead • about 2 hours"},
   science:{n:24,m:2,day:"2",he:"מוזיאון המדע – Wonderlab",en:"Science Museum – Wonderlab",ll:[51.4978,-0.1745],w:"https://www.sciencemuseum.org.uk",
@@ -376,7 +378,8 @@ ev(4,"12:30",ALL,"צהריים חופשי","Free lunch","הצעה: Arcade Batter
 ev(4,"14:00",["alon","liz","ziv","sandra","dor","niv"],"יציאה למאדאם טוסו","Leave for Madame Tussauds","מבאטרסי: קו Northern לאמבנקמנט, ואז Bakerloo ל-Baker Street • כ-30 דק׳","From Battersea: Northern line to Embankment, then Bakerloo to Baker Street • ~30 min","tussauds");
 ev(4,"14:30",["alon","liz","ziv","sandra","dor","niv"],"מאדאם טוסו","Madame Tussauds","כשעתיים • כרטיסים עם שעת כניסה: ___","About 2 hours • timed tickets: ___","tussauds","p");
 ev(4,"14:30",["amber","tatiana","davidj","rose","itamar","eitan","yoni"],"F1 Arcade","F1 Arcade","ליד סנט פול • מתחת לגיל 18 רק עד 18:00 – לסיים עד 17:45","Near St Paul's • under-18s only until 6pm – finish by 5:45pm","f1","p");
-ev(4,"14:30",["david","dani","dan","hadar","imri","raz"],"אחה״צ חופשי ליד המלון","Free afternoon near the hotel","שנ״צ לפעוטות • מי שרוצה: Fortnum & Mason, Burlington Arcade, רחוב ריג׳נט","Naps for the little ones • ideas: Fortnum & Mason, Burlington Arcade, Regent St","hotel","f");
+ev(4,"14:00",["david","dani","dan","hadar","imri","raz"],"Uber Boat מבאטרסי ל-London Eye","Uber Boat from Battersea to the London Eye","מהרציף של תחנת הכוח ישר לרציף London Eye • כ-20 דק׳, נוח עם עגלות","From the Power Station pier straight to London Eye pier • ~20 min, easy with buggies","pier");
+ev(4,"14:30",["david","dani","dan","hadar","imri","raz"],"האקווריום SEA LIFE","SEA LIFE London Aquarium","כרישים, פינגווינים ומנהרת דגים • כשעה וחצי • משם 15 דק׳ במונית/Jubilee חזרה למלון לשנ״צ","Sharks, penguins and a fish tunnel • about 1½ hours • then 15 min by taxi/Jubilee line back to the hotel for naps","sealife","p");
 ev(4,"17:30",ALL,"ארוחת ערב חופשית – מוקדם","Early free dinner","כולם במלון עד 19:30","Everyone back by 19:30","","f");
 ev(4,"19:30",ALL,"נר שביעי, אריזה ושינה","7th candle, packing, bed","מזוודות סגורות עד 20:00 • ארוחות בוקר ארוזות","Bags closed by 20:00 • packed breakfasts","hotel");
 // Day 5
@@ -397,6 +400,7 @@ const TODO = [
   {id:"lionking",he:"מלך האריות – 6 כרטיסים, רביעי 19:30",en:"The Lion King – 6 tickets, Wed 19:30",u:"https://thelionking.co.uk"},
   {id:"arsenal",he:"ארסנל – ריאל מדריד: 3 כרטיסים",en:"Arsenal v Real Madrid: 3 tickets",u:"https://www.arsenal.com/tickets"},
   {id:"wonderlab",he:"Wonderlab – 4 ילדים + מלווה, שלישי 8.12 14:30 (נסגר ב-16:00 באותו יום)",en:"Wonderlab – 4 kids + an adult, Tue 8 Dec 14:30 (closes 16:00 that day)",u:"https://www.sciencemuseum.org.uk"},
+  {id:"sealife",he:"SEA LIFE – חמישי 14:30: סבא דוד, דני, דן, הדר + אימרי ורז (לבדוק כרטיס חינם מתחת לגיל 3)",en:"SEA LIFE – Thu 14:30: Grandpa David, Dani, Dan, Hadar + Imri and Raz (check free under-3 entry)",u:"https://www.visitsealife.com/london/"},
   {id:"tussauds",he:"מאדאם טוסו – 6 כרטיסים, חמישי 14:30 (סנדרה, אלון, ליז, זיו, דור וניב)",en:"Madame Tussauds – 6 tickets, Thu 14:30 (Sandra, Alon, Liz, Ziv, Dor, Niv)",u:"https://www.madametussauds.com/london/"},
   {id:"f1",he:"F1 Arcade – 7 נהגים, חמישי 14:30 (יוני, אמבר, איתמר, טטיאנה, דיוויד, רוז ואיתן)",en:"F1 Arcade – 7 drivers, Thu 14:30 (Yoni, Amber, Itamar, Tatiana, David, Rose, Eitan)",u:"https://f1arcade.com/uk/london"},
   {id:"tower",he:"מצודת לונדון – שלישי 09:00",en:"Tower of London – Tue 09:00",u:"https://www.hrp.org.uk/tower-of-london/"},
