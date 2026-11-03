@@ -80,6 +80,7 @@ main{padding-block:14px 8px}
 .pill.p{background:var(--pending-bg);color:var(--pending)}
 .pill.f{background:var(--surface-2);color:var(--muted)}
 .pill.s{background:var(--info-bg);color:var(--thames)}
+.pill.r{background:transparent;color:var(--c5);border:1px dashed var(--c5)}
 
 /* now */
 .hero{background:var(--navy);color:var(--bg);border-radius:20px;padding:18px;display:grid;gap:8px;position:relative;overflow:hidden}
@@ -208,6 +209,13 @@ h2,h3{color:var(--gold)}
 .ktile .kt{width:54px;height:46px;border-radius:14px;background:#FFFFFF;display:grid;place-items:center;font-size:.95em;flex:none}
 .kgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .kbox{background:var(--surface);border:2px solid var(--c4);border-radius:22px;padding:12px 14px;display:grid;gap:4px;text-align:start;color:var(--ink);cursor:pointer;font:inherit}
+.ev.k-r .body{background:transparent!important;color:var(--ink)!important;border:2px dashed var(--c5)!important}
+.ev.k-r .time{color:var(--c5)}
+.ev.k-r .body .sub{color:var(--muted)}
+.ev.k-r .body .pill.r{background:transparent;color:var(--c5)}
+.ev.k-r .body .act{background:var(--surface-2);color:var(--ink)}
+.ev.k-r .body .act.primary{background:var(--c5);color:var(--tile-ink)}
+.cell.k-r{border:1px dashed var(--c5);background:transparent}
 </style>
 </head>
 <body>
@@ -283,8 +291,8 @@ const PL = {
     tHe:"משלמים בכרטיס אשראי בשער • שייט לבאטרסי",tEn:"Tap in with a card • boat to Battersea"},
   fortnum:{n:12,m:1,day:"r",he:"Fortnum & Mason – חלונות חג",en:"Fortnum & Mason – Christmas windows",ll:[51.5083,-0.1378],w:"https://www.fortnumandmason.com",
     tHe:"2 דק׳ מהמלון • ארקייד ברלינגטון ממול",tEn:"2 min from the hotel • Burlington Arcade opposite"},
-  somerset:{n:13,m:1,day:"r",he:"סומרסט האוס – החלקה על הקרח",en:"Somerset House – ice skating",ll:[51.5110,-0.1172],w:"https://www.somersethouse.org.uk",
-    tHe:"פתוח 11.11.26–10.1.27 • ילדים מ-£11 • עזרי החלקה לילדים",tEn:"Open 11 Nov 26 – 10 Jan 27 • kids from £11 • skate aids for children"},
+  somerset:{n:13,m:1,day:"r",he:"סומרסט האוס – החלקה על הקרח",en:"Somerset House – ice skating",ll:[51.5110,-0.1172],w:"https://www.somersethouse.org.uk/skate-times-tickets-faqs",
+    tHe:"סשנים של 45 דק׳, האחרון הרגיל 21:00 • מבוגר מ-£13, ילד עד 12 מ-£11 + £1.50 עמלה",tEn:"45-min sessions, last regular one 21:00 • adult from £13, child 12 and under from £11 + £1.50 fee"},
   savoy:{n:14,m:1,day:"r",he:"Paddington המחזמר – Savoy",en:"Paddington The Musical – Savoy",ll:[51.5103,-0.1205],
     tHe:"מומלץ מגיל 6, מתחת לגיל 4 לא נכנסים • 2:45 שעות",tEn:"Recommended 6+, no under-4s • 2h45"},
   trafalgar:{n:15,m:1,day:"r",he:"כיכר טרפלגר",en:"Trafalgar Square",ll:[51.5080,-0.1281],
@@ -309,8 +317,6 @@ const PL = {
     tHe:"5 דק׳ הליכה מה-London Eye • דוכני אוכל ומתנות • 11:00–22:00 • כניסה חופשית",tEn:"5 min walk from the London Eye • food and gift stalls • 11:00–22:00 • free entry"},
   leicester:{n:33,m:1,day:"1",he:"לסטר סקוור – שוק חג המולד ורחבת החלקה",en:"Leicester Square – Christmas market & ice rink",ll:[51.5103,-0.1301],w:"https://www.leicestersquare.london",
     tHe:"7 דק׳ הליכה מהמלון • שוק וזיקוקי אורות 10:00–22:00 • LEGO ו-M&M's ממש ליד",tEn:"7 min walk from the hotel • market and lights 10:00–22:00 • LEGO and M&M's right there"},
-  somerset:{n:34,m:1,day:"r",he:"החלקה על הקרח בסומרסט האוס",en:"Skate at Somerset House",ll:[51.5110,-0.1172],w:"https://www.somersethouse.org.uk/skate-times-tickets-faqs",
-    tHe:"סשנים של 45 דק׳, האחרון הרגיל 21:00 • מבוגר מ-£13, ילד עד 12 מ-£11 + £1.50 עמלה",tEn:"45-min sessions, last regular one 21:00 • adult from £13, child 12 and under from £11 + £1.50 fee"},
   kew:{n:35,m:2,day:"r",he:"Christmas at Kew – שביל אורות",en:"Christmas at Kew – light trail",ll:[51.4787,-0.2956],w:"https://www.kew.org/kew-gardens/whats-on/christmas",
     tHe:"16:20–22:00 • מבוגר מ-£25, ילד מ-£20, עד גיל 4 חינם • כ-40 דק׳ ברכבת מהמלון",tEn:"4:20–10pm • adult from £25, child from £20, under-4s free • ~40 min by train from the hotel"},
   sealife:{n:31,m:1,day:"4",he:"האקווריום SEA LIFE",en:"SEA LIFE London Aquarium",ll:[51.5022,-0.1192],w:"https://www.visitsealife.com/london/",
@@ -337,6 +343,8 @@ const ev = (d,t,who,he,en,suHe,suEn,pl,k) => E.push({d,t,who,ti:{he,en},su:{he:s
 // Day 0
 ev(0,"10:40",ALONF,"משפחת אלון נוחתת בהית׳רו","Alon's family lands at Heathrow","Delta 5921 • הסעה 1005790 למלון","Delta 5921 • transfer 1005790 to the hotel","lhr","b");
 ev(0,"12:30",ALONF,"הגעה למלון והשארת מזוודות","Arrive at the hotel, leave bags","אחה״צ חופשי ליד המלון: גרין פארק, Fortnum & Mason","Free afternoon nearby: Green Park, Fortnum & Mason","hotel","f");
+ev(0,"14:30",ALONF,"המלצה: חלונות החג של Fortnum & Mason","Idea: Fortnum & Mason Christmas windows","3 דק׳ הליכה מהמלון • חנות הממתקים והתה המפורסמת","3 min walk from the hotel • the famous tea and sweets shop","fortnum","r");
+ev(0,"16:30",ALONF,"המלצה: Christmas at Kew – שביל אורות","Idea: Christmas at Kew light trail","כ-40 דק׳ ברכבת • מבוגר מ-£25, ילד מ-£20, עד גיל 4 חינם • רק אם יש כוח אחרי הטיסה","~40 min by train • adult from £25, child from £20, under-4s free • only if you have energy after the flight","kew","r");
 ev(0,"17:00",ALONF,"אופציה לערב: אורות ושוק בלסטר סקוור","Evening option: lights and market in Leicester Square","7 דק׳ הליכה מהמלון, פתוח עד 22:00 • לחזור מוקדם, מחר יום מלא","7 min walk from the hotel, open until 22:00 • back early, big day tomorrow","leicester","s");
 ev(0,"15:00",ISR,"המראה מתל אביב – LY317","Take-off from Tel Aviv – LY317","17:00 שעון ישראל • YCWT59 + YDVYSX","17:00 Israel time • YCWT59 + YDVYSX","","b");
 ev(0,"20:25",ISR,"נחיתה בהית׳רו, טרמינל 4","Land at Heathrow Terminal 4","אחרי המזוודות: לצאת לנקודת App & Private Hire Pick-Up, Zone 1, ולהתקשר לנהג","After bags: go out to App & Private Hire Pick-Up, Zone 1, and call the driver","lhr","b");
@@ -353,15 +361,19 @@ ev(1,"16:00",without(ALL,LITTLE.concat(["dani","hadar","liz"])),"שוק החור
 ev(1,"17:00",without(ALL,LITTLE.concat(["dani","hadar","liz"])),"הליכה באורות החג: לסטר סקוור, ריג׳נט וקרנבי","Christmas lights walk: Leicester Sq, Regent St & Carnaby","חוצים את הנהר בגשר הרגלי Hungerford ← טרפלגר ← לסטר סקוור (LEGO, M&M's) ← ריג׳נט וקרנבי • משם 5 דק׳ למסעדה","Cross the river on the Hungerford footbridge → Trafalgar Sq → Leicester Sq (LEGO, M&M's) → Regent St & Carnaby • then 5 min to the restaurant","leicester","f");
 ev(1,"19:00",ALL,"ארוחת ערב משפחתית – כל ה-19","Family dinner – all 19 of us","Cicchetti Piccadilly, חדר פרטי • נפגשים ישר במסעדה","Cicchetti Piccadilly, private room • meet at the restaurant","cicchetti","p");
 ev(1,"20:45",ALL,"נר רביעי במלון","4th candle at the hotel","5 דק׳ מהמסעדה • מדליקים יחד ואז מי שרוצה ממשיך","5 min from the restaurant • light together, then whoever wants carries on","hotel");
+ev(1,"21:00",TEENS,"המלצה: החלקה בסומרסט האוס","Idea: skating at Somerset House","סשן 21:00–21:45 • 10 דק׳ במונית • מבוגר מ-£13, ילד מ-£11 • להזמין מראש","21:00–21:45 session • 10 min by taxi • adult from £13, child from £11 • book ahead","somerset","r");
 ev(1,"21:00",TEENS,"אופציה לצעירים: לסטר סקוור בלילה","Option for the young ones: Leicester Square at night","שוק חג המולד ורחבת החלקה עד 22:00, 7 דק׳ הליכה • או החלקה בסומרסט האוס (סשן 21:00) • כל מי שרוצה מצטרף • מבוגר אחראי: ___","Christmas market and ice rink until 22:00, 7 min walk • or skating at Somerset House (21:00 session) • anyone can join • adult in charge: ___","leicester","s");
 // Day 2
 ev(2,"08:00",ALL,"ארוחת בוקר במלון","Breakfast at the hotel","","","hotel");
 ev(2,"09:00",ALL,"מצודת לונדון","Tower of London","קודם תכשיטי הכתר","Crown Jewels first","tower","p");
 ev(2,"11:30",ALL,"גשר טאואר","Tower Bridge","","","towerbridge");
+ev(2,"12:30",ALL,"המלצה: שוק לידנהול + תצפית Sky Garden","Idea: Leadenhall Market + Sky Garden viewpoint","10 דק׳ הליכה מהמצודה • Sky Garden חינם אבל חובה להזמין מראש","10 min walk from the Tower • Sky Garden is free but must be booked ahead","leadenhall","r");
 ev(2,"12:30",ALL,"צהריים חופשי","Free lunch","הצעה: שוק בורו, 15 דק׳ לאורך הנהר","Idea: Borough Market, 15 min along the river","borough","f");
 ev(2,"14:00",without(ALL,["dor","niv","itamar","eitan"]),"חזרה למלון למנוחה","Back to the hotel to rest","שנ״צ לקטנים, בגדים חמים","Naps for the little ones, warm clothes","hotel");
+ev(2,"14:00",without(ALL,["dor","niv","itamar","eitan"]),"המלצה: מוזיאון הטבע – הדינוזאורים","Idea: Natural History Museum – dinosaurs","במקום מנוחה, למי שרוצה • חינם, כדאי להזמין שעה • ליד ה-Wonderlab ו-15 דק׳ הליכה לווינטר וונדרלנד","Instead of resting, for anyone keen • free, book a slot • next to Wonderlab and 15 min walk to Winter Wonderland","nhm","r");
 ev(2,"14:00",["dor","niv","itamar","eitan"],"Wonderlab במוזיאון המדע","Wonderlab at the Science Museum","מטאואר היל בקו District ישר לסאות׳ קנזינגטון • ב-8.12 נסגר ב-16:00 • ב-15:50 הולכים 15 דק׳ לווינטר וונדרלנד • מבוגר מלווה: ___","District line from Tower Hill straight to South Kensington • closes 16:00 on 8 Dec • at 15:50 walk 15 min to Winter Wonderland • adult with them: ___","science","p");
 ev(2,"16:00",ALL,"Winter Wonderland","Winter Wonderland","כניסה בין 16:00 ל-17:00 • הזמנה 130427698 • 15 דק׳ הליכה","Entry between 16:00 and 17:00 • booking 130427698 • 15 min walk","ww","b");
+ev(2,"19:30",without(ALL,LITTLE),"המלצה: Paddington המחזמר","Idea: Paddington The Musical","תיאטרון Savoy, 5 דק׳ מהמלון • במקום הערב בווינטר וונדרלנד, למי שרוצה • לבדוק מקומות ומחירים","Savoy Theatre, 5 min from the hotel • instead of the evening at Winter Wonderland, for anyone keen • check seats and prices","savoy","r");
 ev(2,"19:00",ALL,"ערב חופשי ונר חמישי","Free evening & 5th candle","אפשר לאכול במתחם • פעוטות חוזרים ראשונים","Eat inside the park • little ones head back first","ww","f");
 // Day 3
 ev(3,"08:00",ALL,"ארוחת בוקר במלון","Breakfast at the hotel","","","hotel");
@@ -564,7 +576,7 @@ function avatars(who){
   if(who.length === IDS.length) return `<div class="avs"><span class="av" style="background:var(--navy);color:var(--bg)">${T("everyone")}</span></div>`;
   return `<div class="avs">${fams.map(f => `<span class="av" style="background:${FAM[f].c}">${L(FAM[f])}</span>`).join("")}${who.filter(i => !covered.includes(i)).map(i => `<span class="av" style="background:${FAM[P[i].f].c}">${nm(i)}</span>`).join("")}</div>`;
 }
-function kindPill(k){ return k==="b" ? `<span class="pill b">✓ ${LANG==="he"?"סגור":"Booked"}</span>` : k==="p" ? `<span class="pill p">${LANG==="he"?"לסגור":"To book"}</span>` : k==="f" ? `<span class="pill f">${LANG==="he"?"חופשי":"Free time"}</span>` : k==="s" ? `<span class="pill s">${LANG==="he"?"מפוצל":"Split"}</span>` : ""; }
+function kindPill(k){ return k==="b" ? `<span class="pill b">✓ ${LANG==="he"?"סגור":"Booked"}</span>` : k==="p" ? `<span class="pill p">${LANG==="he"?"לסגור":"To book"}</span>` : k==="f" ? `<span class="pill f">${LANG==="he"?"חופשי":"Free time"}</span>` : k==="s" ? `<span class="pill s">${LANG==="he"?"מפוצל":"Split"}</span>` : k==="r" ? `<span class="pill r">💡 ${LANG==="he"?"המלצה":"Idea"}</span>` : ""; }
 function evCard(e, isNow){
   const p = e.pl ? PL[e.pl] : null;
   const tile = `var(--c${(E.indexOf(e) % 6) + 1})`;
@@ -591,7 +603,7 @@ function kidView(id){
   if(d < 0) d = before ? 1 : 5;
   const days = Math.ceil((Date.UTC(2026,11,6) - Date.now()) / 864e5);
   const left = 5 - d;
-  const evs = E.filter(e => e.d === d && e.who.includes(id) && !/ארוחת בוקר|Breakfast/.test(e.ti.en));
+  const evs = E.filter(e => e.k !== "r" && e.d === d && e.who.includes(id) && !/ארוחת בוקר|Breakfast/.test(e.ti.en));
   const huntDone = store.get("gl_hunt",{}); const hn = HUNT.filter((h,i) => huntDone[i]).length;
   const buddy = STATE.buddies[id];
   const candles = DAYS[d].n || 0;
@@ -624,7 +636,7 @@ function viewNow(){
     out.push(`<div class="hero"><div class="big">${T("tripOver")}</div></div>`);
   } else {
     const d = DAYS.findIndex(x => x.date === n.date);
-    const today = E.filter(e => e.d === d && visible(e));
+    const today = E.filter(e => e.k !== "r" && e.d === d && visible(e));
     const cur = today.filter(e => e.t <= n.time).slice(-1)[0];
     const nxt = today.filter(e => e.t > n.time).slice(0,3);
     out.push(`<div class="hero"><div class="lbl">${L(DAYS[d])} • ${LANG==="he"?"שעון לונדון":"London time"} <span class="mono">${n.time}</span></div>
@@ -697,7 +709,7 @@ function viewMap(){
 function othersAt(e){
   const groups = new Map();
   IDS.filter(id => !e.who.includes(id)).forEach(id => {
-    const mine = E.filter(x => x !== e && x.d === e.d && x.who.includes(id));
+    const mine = E.filter(x => x !== e && x.k !== "r" && x.d === e.d && x.who.includes(id));
     const before = mine.filter(x => x.t <= e.t); const pick = before.length ? before[before.length-1] : mine[0];
     const key = pick || null; if(!groups.has(key)) groups.set(key, []); groups.get(key).push(id);
   });
