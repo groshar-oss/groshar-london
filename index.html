@@ -217,6 +217,8 @@ h2,h3{color:var(--gold)}
 .ev.k-r .body .act.primary{background:var(--c5);color:var(--tile-ink)}
 .tbtn.sos{background:#E63946;border-color:#E63946;color:#fff;font-size:1.05em;padding-inline:12px}
 .sosbig{display:block;width:100%;background:#E63946;color:#fff;border:0;border-radius:18px;padding:16px;font:inherit;font-size:1.15em;text-align:center;text-decoration:none;cursor:pointer}
+.act.doc,.ev .body .act.doc{background:#1F2340;color:#FFD166;border:2px solid #FFD166;font-weight:600;box-shadow:0 2px 0 rgba(0,0,0,.35)}
+.act.doc:active{transform:translateY(1px);box-shadow:none}
 .cell.k-r{border:1px dashed var(--c5);background:transparent}
 </style>
 </head>
@@ -658,7 +660,7 @@ const DOCS = [
 ];
 function docBtns(e){
   const d = DOCS.find(x => x.m.test(e.ti.en)); if(!d) return "";
-  return `<div class="actions">${d.l.map(([he,en,u]) => `<a class="act" href="${u}" target="_blank" rel="noopener">🎟️ ${LANG==="he"?he:en}</a>`).join("")}</div>`;
+  return `<div class="actions">${d.l.map(([he,en,u]) => `<a class="act doc" href="${u}" target="_blank" rel="noopener">🎟️ ${LANG==="he"?`פתיחת ${he}`:`Open ${en.toLowerCase()}`} ↗</a>`).join("")}</div>`;
 }
 /* ---- weather (Open-Meteo, free, no key) ---- */
 let WX = store.get("gl_wx", null);
