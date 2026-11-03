@@ -820,7 +820,7 @@ function morningCard(){
 function evCard(e, isNow){
   const p = e.pl ? PL[e.pl] : null;
   const tile = `var(--c${(E.indexOf(e) % 6) + 1})`;
-  return `<div class="ev k-${e.k}${isNow?" now":""}"><div class="time">${e.t}</div><div class="body${p?" tap":""}" style="--tile:${tile}"${p?` data-cardplace="${e.pl}"`:""}>
+  return `<div class="ev k-${e.k}${isNow?" now":""}"><div class="time">${e.t}</div><div class="body tap" style="--tile:${tile}" data-cardev="${E.indexOf(e)}">
     <div class="row" style="justify-content:space-between;gap:6px"><span class="ttl">${esc(L(e.ti))}</span>${kindPill(e.k)}</div>
     ${L(e.su)?`<div class="sub">${esc(L(e.su))}</div>`:""}
     ${travelLine(e)}
@@ -1040,6 +1040,21 @@ function openSOS(){
   };
   if(me) $("sosGo").click();
 }
+function openEvent(i){
+  const e = E[i]; if(!e) return;
+  const he = LANG === "he", p = e.pl ? PL[e.pl] : null;
+  $("sheet").innerHTML = `<div class="scrim" id="scrim"><div class="sheet stack" role="dialog" aria-modal="true" aria-label="${esc(L(e.ti))}">
+    <button class="tbtn close" id="closeSheet">${T("close")}</button>
+    <div class="row" style="justify-content:space-between;gap:6px"><b class="mono" style="color:var(--gold)">${L(DAYS[e.d])} • ${e.t}</b>${kindPill(e.k)}</div>
+    <h2 style="margin:0">${esc(L(e.ti))}</h2>
+    ${L(e.su)?`<div>${esc(L(e.su))}</div>`:""}
+    ${travelLine(e)}
+    ${p?`<div class="card stack" style="gap:6px"><b>📍 ${esc(L(p))}</b>${(he?p.tHe:p.tEn)?`<div class="muted small">${esc(he?p.tHe:p.tEn)}</div>`:""}${placeActions(e.pl,false)}</div>`:""}
+    ${docBtns(e)}
+    ${eventDetail(e,false).replace(/<div class="row" style="justify-content:space-between;gap:6px"><b class="mono"[\s\S]*?<\/div>\s*<b>[\s\S]*?<\/b>/, "")}
+  </div></div>`;
+  $("closeSheet").onclick = closeSheet; $("scrim").onclick = ev => { if(ev.target.id === "scrim") closeSheet(); };
+}
 function openPlace(id){
   const p = PL[id]; if(!p) return;
   const evs = E.filter(e => e.pl === id);
@@ -1169,7 +1184,7 @@ function wire(v){
   const as = v.querySelector("#attrSel"); if(as) as.onchange = () => { ATTR = as.value; store.set("gl_attr", ATTR); renderView(); };
   v.querySelectorAll("[data-mapmode]").forEach(b => b.onclick = () => { MAPMODE = b.dataset.mapmode; renderView(); });
   v.querySelectorAll("[data-mapday]").forEach(b => b.onclick = () => { MAPDAY = b.dataset.mapday; renderView(); });
-  v.querySelectorAll("[data-cardplace]").forEach(b => b.onclick = ev => { if(ev.target.closest("a,button,select,input")) return; openPlace(b.dataset.cardplace); });
+  v.querySelectorAll("[data-cardev]").forEach(b => b.onclick = ev => { if(ev.target.closest("a,button,select,input")) return; openEvent(+b.dataset.cardev); });
   const ig = v.querySelector("#icsGo"); if(ig) ig.onclick = () => { const id = v.querySelector("#icsMe").value; if(!id){ v.querySelector("#icsMe").focus(); return; } store.set("gl_me", id); downloadICS(id, ig); };
   v.querySelectorAll("[data-mday]").forEach(b => b.onclick = () => { MDAY = +b.dataset.mday; const box = document.querySelector("#sec-morning .in"); if(box){ box.innerHTML = morningCard(); wire(v); } else renderView(); });
   const mc = v.querySelector("#mCopy"); if(mc) mc.onclick = async () => { try{ await navigator.clipboard.writeText(morningText(MDAY)); mc.textContent = "✓"; }catch(e){ mc.textContent = "✗"; } };
