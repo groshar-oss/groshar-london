@@ -1,0 +1,991 @@
+<!doctype html>
+<html lang="he">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0E1638">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Groshar London">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="robots" content="noindex,nofollow">
+<title>Groshar London 2026</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2252%22 r=%2247%22 fill=%22%230F1B3D%22/%3E%3Cpath d=%22M65.3 39.1 A20 20 0 1 0 69.3 57.2 L53 57.2%22 fill=%22none%22 stroke=%22%23D4A933%22 stroke-width=%228%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M50 1.5 C55 7 56 11.5 50 15 C44 11.5 45 7 50 1.5Z%22 fill=%22%23E4572E%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Varela+Round&family=IBM+Plex+Sans+Hebrew:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style id="app-style">
+/* Layout: phone-first app — sticky brand bar, scrolling view, fixed bottom tab bar. Look: "Hanukkah night" — deep navy sky with snow, candle-coloured tiles, one committed dark design. */
+:root{
+  --navy:#FFD166; --gold:#FFD166; --gold-soft:#262B63; --bus:#E63946; --thames:#7FD1FF; --park:#8EF0B8;
+  --bg:#0E1638; --surface:#18225A; --surface-2:#232E6E; --ink:#FFFFFF; --muted:#B9C2E8; --line:#2E3A7A;
+  --on-accent:#0E1638; --pending:#FFB86B; --pending-bg:#3B2F52; --ok-bg:#16404A; --bad-bg:#3D1F45; --info-bg:#232E6E;
+  --fam-g:#FFD166; --fam-y:#7FD1FF; --fam-d:#8EF0B8; --fam-a:#FF8FA3;
+  --c1:#FFD166; --c2:#7FD1FF; --c3:#FF8FA3; --c4:#8EF0B8; --c5:#C9A7FF; --c6:#FFB86B; --tile-ink:#1F2340;
+  --map-land:#18225A; --map-park:#1F4A45; --map-river:#2D5C8F; --map-street:#2B3672; --map-label:#8F99C8;
+  --font-display:"Varela Round","IBM Plex Sans Hebrew",system-ui,sans-serif;
+  --font-body:"Varela Round","IBM Plex Sans Hebrew",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --fs:16px; color-scheme:dark;
+}
+:root.big{--fs:19px}
+*{box-sizing:border-box}
+body{background-color:var(--bg);background-image:radial-gradient(rgba(255,255,255,.45) 1px,transparent 1.6px),radial-gradient(rgba(255,255,255,.28) 1.4px,transparent 2px);background-size:140px 140px,210px 210px;background-position:0 0,70px 110px;background-attachment:fixed;color:var(--ink);font-family:var(--font-body);font-size:var(--fs);line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 calc(84px + env(safe-area-inset-bottom,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:var(--thames)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.wrap{max-width:760px;margin:0 auto}
+h1,h2,h3{font-family:var(--font-display);font-weight:400;text-wrap:balance;margin:0;line-height:1.2}
+h2{font-size:1.45em;color:var(--navy)}
+h3{font-size:1.15em;color:var(--navy)}
+.muted{color:var(--muted)}
+.small{font-size:.85em}
+.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums;unicode-bidi:isolate}
+.stack{display:flex;flex-direction:column;gap:12px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+
+/* top bar */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:10px 8px;border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:10px}
+.brand{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
+.brand svg{width:42px;height:42px;flex:none}
+.brand .t1{font-family:var(--font-display);font-size:1.1em;color:var(--navy);line-height:1.1}
+.brand .t2{font-size:.75em;color:var(--muted);letter-spacing:.04em}
+.tbtn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 11px;font-size:.85em;cursor:pointer;min-height:36px}
+.tbtn[aria-pressed="true"]{background:var(--navy);color:var(--bg);border-color:var(--navy)}
+
+/* who picker */
+.who{display:flex;gap:6px;overflow-x:auto;padding-block:10px 4px;scrollbar-width:none}
+.who::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;cursor:pointer;font-size:.88em;white-space:nowrap;min-height:36px;display:inline-flex;align-items:center;gap:6px}
+.chip[aria-pressed="true"]{background:var(--navy);color:var(--bg);border-color:var(--navy)}
+.dot{width:9px;height:9px;border-radius:50%;flex:none}
+.sep{flex:none;width:1px;background:var(--line);margin-inline:2px}
+
+/* tabs */
+.tabs{position:fixed;inset:auto 0 0 0;z-index:6;background:var(--surface);border-top:1px solid var(--line);
+  padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px))}
+.tabs .wrap{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.tab{border:0;background:none;padding:6px 2px;border-radius:12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.72em;color:var(--muted);min-height:52px}
+.tab svg{width:22px;height:22px}
+.tab[aria-current="page"]{color:var(--navy);background:var(--surface-2);font-weight:600}
+
+main{padding-block:14px 8px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px}
+.notice{border-radius:14px;padding:12px 14px;background:var(--gold-soft);border:1px solid color-mix(in srgb,var(--gold) 40%,transparent)}
+.notice h3{font-size:1em;margin-bottom:4px}
+.pill{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:2px 9px;font-size:.75em;font-weight:600;white-space:nowrap}
+.pill.b{background:var(--ok-bg);color:var(--park)}
+.pill.p{background:var(--pending-bg);color:var(--pending)}
+.pill.f{background:var(--surface-2);color:var(--muted)}
+.pill.s{background:var(--info-bg);color:var(--thames)}
+
+/* now */
+.hero{background:var(--navy);color:var(--bg);border-radius:20px;padding:18px;display:grid;gap:8px;position:relative;overflow:hidden}
+.hero .big{font-family:var(--font-display);font-size:2.6em;line-height:1;color:var(--gold)}
+.hero .lbl{font-size:.8em;letter-spacing:.06em;text-transform:uppercase;opacity:.85}
+.hero .ev{font-size:1.15em;font-weight:600}
+.hero a{color:var(--gold)}
+.nextlist{display:grid;gap:8px}
+
+/* schedule */
+.days{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.days::-webkit-scrollbar{display:none}
+.day{flex:none;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:6px 12px;cursor:pointer;text-align:center;min-width:64px}
+.day b{display:block;font-family:var(--font-display);font-weight:400;font-size:1.05em}
+.day span{font-size:.75em;color:var(--muted)}
+.day[aria-pressed="true"]{background:var(--navy);color:var(--bg);border-color:var(--navy)}
+.day[aria-pressed="true"] span{color:inherit;opacity:.8}
+.mode{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--surface)}
+.mode button{border:0;background:none;padding:6px 12px;cursor:pointer;font-size:.85em;min-height:34px}
+.mode button[aria-pressed="true"]{background:var(--surface-2);font-weight:600;color:var(--navy)}
+.ev{display:grid;grid-template-columns:58px 1fr;gap:10px;align-items:start}
+.ev .time{font-family:var(--font-mono);font-weight:600;color:var(--navy);padding-top:14px;text-align:center;font-size:.95em}
+.ev .body{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 12px 10px;min-width:0;display:grid;gap:6px}
+.ev.k-b .body{background:var(--ok-bg);border-color:transparent}
+.ev.k-p .body{background:var(--pending-bg);border-color:transparent}
+.ev .body .av{box-shadow:0 0 0 1.5px rgba(31,35,64,.45)}
+.ev.now .body{outline:3px solid var(--gold)}
+.ev .ttl{font-weight:600;font-size:1.02em}
+.ev .sub{color:var(--muted);font-size:.88em}
+.avs{display:flex;flex-wrap:wrap;gap:4px}
+.av{font-size:.72em;border-radius:999px;padding:1px 8px;color:#fff;font-weight:600}
+.actions{display:flex;flex-wrap:wrap;gap:6px}
+.act{display:inline-flex;align-items:center;gap:5px;text-decoration:none;border-radius:999px;padding:6px 11px;font-size:.82em;font-weight:600;border:1px solid var(--line);background:var(--surface);color:var(--navy);cursor:pointer;min-height:34px}
+.act svg{width:15px;height:15px;flex:none}
+.act.primary{background:var(--navy);color:var(--bg);border-color:var(--navy)}
+.grid-who{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.grid-who table{border-collapse:collapse;width:100%;min-width:560px;font-size:.85em}
+.grid-who th,.grid-who td{border-bottom:1px solid var(--line);padding:8px;vertical-align:top;text-align:start}
+.grid-who th{position:sticky;top:0;background:var(--surface-2);font-weight:600}
+.grid-who td.t{font-family:var(--font-mono);white-space:nowrap;color:var(--navy);font-weight:600}
+.cell{border-radius:8px;padding:4px 7px;background:var(--surface-2)}
+.cell.k-b{background:var(--ok-bg)} .cell.k-p{background:var(--pending-bg)}
+
+/* map */
+.mapbox{background:var(--map-land);border-radius:16px;overflow:hidden;border:1px solid var(--line)}
+.mapbox svg{display:block;width:100%;height:auto}
+.pin{cursor:pointer}
+.pin:focus-visible circle{stroke:var(--gold);stroke-width:4}
+.legend{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px}
+.lg{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:7px 10px;cursor:pointer;text-align:start;min-height:40px}
+.num{width:24px;height:24px;border-radius:50%;display:inline-grid;place-items:center;color:#fff;font-size:.72em;font-weight:700;flex:none;font-family:var(--font-mono)}
+
+/* sheet */
+.scrim{position:fixed;inset:0;background:rgba(5,10,25,.45);z-index:20;display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:var(--surface);width:100%;max-width:760px;border-radius:20px 20px 0 0;max-height:85vh;overflow:auto;
+  padding:18px max(18px,env(safe-area-inset-right,0px)) calc(18px + env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-left,0px));display:grid;gap:12px}
+.sheet .close{justify-self:end}
+
+/* lists */
+.check{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.check input{width:22px;height:22px;flex:none;margin-top:2px;accent-color:var(--park)}
+.check.done .lbl{text-decoration:line-through;color:var(--muted)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:.92em}
+.kv dt{color:var(--muted)} .kv dd{margin:0;font-weight:500;min-width:0;overflow-wrap:break-word}
+@media (max-width:560px){.kv{grid-template-columns:1fr;gap:2px}.kv dt{font-size:.85em;margin-top:8px}.kv dt:first-child{margin-top:0}}
+details.sec{background:var(--surface);border:1px solid var(--line);border-radius:16px}
+details.sec>summary{cursor:pointer;padding:14px;font-family:var(--font-display);font-size:1.1em;color:var(--navy);list-style:none;display:flex;align-items:center;gap:10px}
+details.sec>summary::-webkit-details-marker{display:none}
+details.sec>summary::after{content:"+";margin-inline-start:auto;font-family:var(--font-body);color:var(--muted)}
+details.sec[open]>summary::after{content:"−"}
+details.sec>.in{padding:0 14px 14px;display:grid;gap:10px}
+.taxi{background:#fff;color:#000;border:3px solid #000;border-radius:14px;padding:18px;text-align:center;direction:ltr;font-family:Arial,sans-serif}
+.taxi .a{font-size:1.9em;font-weight:800;line-height:1.15}
+.bar{height:10px;border-radius:999px;background:var(--surface-2);overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--park)}
+.conv{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.conv label{display:grid;gap:4px;font-size:.85em;color:var(--muted)}
+.conv input,.field input,.field textarea,.field select{width:100%;border:1px solid var(--line);border-radius:10px;padding:9px 10px;background:var(--bg);font-size:1rem}
+.field{display:grid;gap:4px;font-size:.88em}
+.editbar{position:sticky;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:4;background:var(--navy);color:var(--bg);border-radius:14px;padding:10px 12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.editbar button{border:0;border-radius:999px;padding:7px 14px;font-weight:600;cursor:pointer}
+.save{background:var(--gold);color:#1a1300}
+.ghost{background:transparent;color:inherit;border:1px solid currentColor!important}
+.blessing{font-size:1.15em;line-height:1.8}
+.fab{position:fixed;z-index:7;inset-inline-end:max(16px,env(safe-area-inset-right,0px));bottom:calc(78px + env(safe-area-inset-bottom,0px));border:0;border-radius:999px;background:var(--gold);color:#1a1300;font-weight:700;padding:12px 16px;box-shadow:0 6px 18px rgba(0,0,0,.25);cursor:pointer;display:flex;align-items:center;gap:8px;min-height:48px}
+.chat{display:flex;flex-direction:column;gap:10px;height:min(78vh,640px)}
+.msgs{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding:4px}
+.msg{max-width:88%;padding:9px 12px;border-radius:14px;white-space:pre-wrap;overflow-wrap:break-word;line-height:1.45}
+.msg.me{align-self:flex-end;background:var(--navy);color:var(--bg)}
+.msg.ai{align-self:flex-start;background:var(--surface-2)}
+.msg.note{align-self:center;background:transparent;color:var(--muted);font-size:.85em;text-align:center}
+.chatin{display:flex;gap:8px;align-items:flex-end}
+.chatin textarea{flex:1;min-width:0;resize:none;border:1px solid var(--line);border-radius:12px;padding:10px;background:var(--bg);font-size:1rem}
+.chatin button{border:0;border-radius:12px;padding:10px 14px;font-weight:700;cursor:pointer;background:var(--navy);color:var(--bg);min-height:44px}
+.sugs{display:flex;gap:6px;flex-wrap:wrap}
+@media (min-width:700px){ .ev{grid-template-columns:70px 1fr} }
+@media (prefers-reduced-motion:no-preference){ .sheet{animation:up .22s ease-out} @keyframes up{from{transform:translateY(30px);opacity:.6}to{transform:none;opacity:1}} }
+
+/* Hanukkah-night overrides */
+h2,h3{color:var(--gold)}
+.top{background:rgba(14,22,56,.94);backdrop-filter:blur(6px)}
+.tabs{background:#070C24;border-top:0;border-radius:22px 22px 0 0}
+.tab{color:#B9C2E8}
+.tab[aria-current="page"]{color:var(--gold);background:var(--surface)}
+.chip,.tbtn,.day,.mode,.lg,.card,details.sec,.check{background:var(--surface);border-color:var(--line)}
+.chip[aria-pressed="true"],.tbtn[aria-pressed="true"],.day[aria-pressed="true"]{background:var(--gold);color:var(--on-accent);border-color:var(--gold)}
+.av{color:var(--tile-ink)}
+.notice{background:var(--surface);border:2px solid var(--gold)}
+.hero{background:var(--surface);color:var(--ink);border:2px solid var(--line)}
+.hero .big{color:var(--gold)}
+.ev .time{color:var(--gold)}
+.ev .body,.ev.k-b .body,.ev.k-p .body{background:var(--tile,var(--c1));color:var(--tile-ink);border:0;border-radius:20px}
+.ev .body .sub{color:rgba(31,35,64,.78)}
+.ev .body .pill{background:rgba(255,255,255,.75);color:var(--tile-ink)}
+.ev .body .act{background:#FFFFFF;color:var(--tile-ink);border-color:transparent}
+.ev .body .act.primary{background:var(--tile-ink);color:#FFFFFF}
+.ev.now .body{outline:3px solid #FFFFFF;outline-offset:2px}
+.act{background:var(--surface-2);color:var(--ink);border-color:var(--line)}
+.act.primary{background:var(--gold);color:var(--on-accent);border-color:var(--gold)}
+.editbar{background:var(--surface-2);color:var(--ink);border:2px solid var(--gold)}
+.menorah-card{background:var(--surface);border-radius:26px;padding:14px 16px 12px;display:grid;justify-items:center;gap:4px;text-align:center}
+.menorah-card svg{width:100%;max-width:320px;height:auto}
+.kidhead{display:flex;align-items:center;gap:12px}
+.kidhead .hi{font-family:var(--font-display);font-size:1.9em;line-height:1.1}
+.ktile{display:flex;align-items:center;gap:12px;border-radius:22px;padding:11px 14px;color:var(--tile-ink);text-decoration:none}
+.ktile .kt{width:54px;height:46px;border-radius:14px;background:#FFFFFF;display:grid;place-items:center;font-size:.95em;flex:none}
+.kgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.kbox{background:var(--surface);border:2px solid var(--c4);border-radius:22px;padding:12px 14px;display:grid;gap:4px;text-align:start;color:var(--ink);cursor:pointer;font:inherit}
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap" id="topbar"></div></header>
+<div class="wrap"><nav class="who" id="who" aria-label="Who"></nav><main id="view"></main></div>
+<nav class="tabs" aria-label="Sections"><div class="wrap" id="tabs"></div></nav>
+<div id="sheet"></div>
+<script type="application/json" id="state">{"announce":{"he":"שלום לכולם, אשמח להערות שלכם והצעות לשיפור לפני הטיסה","en":"Hi everyone, I'd love your comments and suggestions for improvements before the flight."},"announceDate":"2026-11-03","album":"https://photos.app.goo.gl/qavX1LHXGVLppSWY7","done":{"cicchetti":false,"luton":false,"mammamia":false,"gravity":false,"lionking":false,"arsenal":false,"wonderlab":false,"tower":false,"lift109":false,"eta":false,"cash":false,"wwinfant":false,"boxes":false},"phones":{"david":"+972 54-752-8210","sandra":"+972 50-752-8210","yoni":"+972 54-755-9298","dani":"+972 52-801-1512","amber":"+972 54-478-5736","itamar":"+972 53-420-8651","dan":"+972 54-539-1558","hadar":"+972 50-823-9094","alon":"+1 305-748-7775","liz":"+1 941-218-2336","tatiana":"+1 941-290-8059","davidj":"+1 941-290-2688","rose":"","eitan":"+1 941-302-4406"},"buddies":{"imri":"dani","raz":"hadar","ziv":"liz","dor":"hadar","niv":"dan","itamar":"yoni","eitan":"alon"},"waGroup":"https://chat.whatsapp.com/D2eT3VeS55v5BrL108KNuO"}</script>
+<script id="app-script">
+(function(){
+"use strict";
+/* ============ DATA ============ */
+const STATE = JSON.parse(document.getElementById("state").textContent);
+const HEAD_TAGS = '<title>Groshar London 2026</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2252%22 r=%2247%22 fill=%22%230F1B3D%22/%3E%3Cpath d=%22M65.3 39.1 A20 20 0 1 0 69.3 57.2 L53 57.2%22 fill=%22none%22 stroke=%22%23D4A933%22 stroke-width=%228%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M50 1.5 C55 7 56 11.5 50 15 C44 11.5 45 7 50 1.5Z%22 fill=%22%23E4572E%22/%3E%3C/svg%3E">\n<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Varela+Round&family=IBM+Plex+Sans+Hebrew:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">\n';
+const BODY_TAGS = '<header class="top"><div class="wrap" id="topbar"></div></header>\n<div class="wrap"><nav class="who" id="who" aria-label="Who"></nav><main id="view"></main></div>\n<nav class="tabs" aria-label="Sections"><div class="wrap" id="tabs"></div></nav>\n<div id="sheet"></div>\n';
+const RESET = ':root{color-scheme:light;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}';
+
+const FAM = {
+  g:{he:"סבא וסבתא",en:"Grandparents",c:"var(--fam-g)"},
+  y:{he:"יוני ודני",en:"Yoni & Dani",c:"var(--fam-y)"},
+  d:{he:"דן והדר",en:"Dan & Hadar",c:"var(--fam-d)"},
+  a:{he:"אלון וליז",en:"Alon & Liz",c:"var(--fam-a)"}
+};
+const P = {
+  david:{he:"סבא דוד",en:"Grandpa David",f:"g"}, sandra:{he:"סבתא סנדרה",en:"Grandma Sandra",f:"g"},
+  yoni:{he:"יוני",en:"Yoni",f:"y"}, dani:{he:"דני",en:"Dani",f:"y"}, amber:{he:"אמבר",en:"Amber",f:"y",age:15}, itamar:{he:"איתמר",en:"Itamar",f:"y",age:12}, imri:{he:"אימרי",en:"Imri",f:"y",age:2.5,kid:1},
+  dan:{he:"דן",en:"Dan",f:"d"}, hadar:{he:"הדר",en:"Hadar",f:"d"}, dor:{he:"דור",en:"Dor",f:"d",age:7,kid:1}, niv:{he:"ניב",en:"Niv",f:"d",age:5,kid:1}, raz:{he:"רז",en:"Raz",f:"d",age:1,kid:1},
+  alon:{he:"אלון",en:"Alon",f:"a"}, liz:{he:"ליז",en:"Liz",f:"a"}, tatiana:{he:"טטיאנה",en:"Tatiana",f:"a",age:19}, davidj:{he:"דיוויד",en:"David",f:"a",age:17}, rose:{he:"רוז",en:"Rose",f:"a",age:14}, eitan:{he:"איתן",en:"Eitan",f:"a",age:12}, ziv:{he:"זיו",en:"Ziv",f:"a",age:2.5,kid:1}
+};
+const IDS = Object.keys(P);
+const fam = f => IDS.filter(i => P[i].f === f);
+const ALL = IDS, ALONF = fam("a"), ISR = IDS.filter(i => P[i].f !== "a");
+const TEENS = ["amber","itamar","tatiana","davidj","rose","eitan"];
+const ADULTS = ["david","sandra","yoni","dani","dan","hadar","alon","liz"];
+const LITTLE = ["imri","raz","ziv"];
+const without = (a, b) => a.filter(x => !b.includes(x));
+
+const DAYS = [
+  {date:"2026-12-06", he:"ראשון 6.12", en:"Sun 6 Dec", n:3, tHe:"נחיתה וצ׳ק-אין", tEn:"Arrival & check-in"},
+  {date:"2026-12-07", he:"שני 7.12", en:"Mon 7 Dec", n:4, tHe:"בקינגהאם, וסטמינסטר ו-London Eye", tEn:"Buckingham, Westminster & London Eye"},
+  {date:"2026-12-08", he:"שלישי 8.12", en:"Tue 8 Dec", n:5, tHe:"מצודת לונדון ו-Winter Wonderland", tEn:"Tower of London & Winter Wonderland"},
+  {date:"2026-12-09", he:"רביעי 9.12", en:"Wed 9 Dec", n:6, tHe:"יום מפוצל: שופינג ו-Gravity לנוער, Hamleys לקטנים, שלוש תוכניות ערב", tEn:"Split day: shopping & Gravity for the teens, Hamleys for the little ones, three evening plans"},
+  {date:"2026-12-10", he:"חמישי 10.12", en:"Thu 10 Dec", n:7, tHe:"באטרסי, מאדאם טוסו, F1 והתארגנות", tEn:"Battersea, Madame Tussauds, F1 & packing"},
+  {date:"2026-12-11", he:"שישי 11.12", en:"Fri 11 Dec", n:0, tHe:"טיסה הביתה", tEn:"Flying home"}
+];
+
+/* places: n = pin number, m = 1 central map / 2 wide map / 0 off-map, day = colour, w = website */
+const PL = {
+  hotel:{n:0,m:1,day:"h",he:"המלון – The Dilly",en:"Hotel – The Dilly",q:"The Dilly Hotel, 21 Piccadilly, London W1J 0BH",ll:[51.5094,-0.1365],
+    tHe:"21 Piccadilly • ארוחת בוקר כלולה כל בוקר",tEn:"21 Piccadilly • breakfast included every morning"},
+  buckingham:{n:1,m:1,day:"1",he:"ארמון בקינגהאם",en:"Buckingham Palace",ll:[51.5014,-0.1419],w:"https://www.rct.uk/visit/buckingham-palace",
+    tHe:"10 דק׳ הליכה דרך גרין פארק • סנט ג׳יימס פארק ליד: שקנאים וסנאים",tEn:"10 min walk through Green Park • St James's Park next door has pelicans and squirrels"},
+  bigben:{n:2,m:1,day:"1",he:"ביג בן והפרלמנט",en:"Big Ben & Parliament",ll:[51.5007,-0.1246],w:"https://www.parliament.uk/bigben",
+    tHe:"הכי יפה מגשר וסטמינסטר",tEn:"Best view from Westminster Bridge"},
+  eye:{n:3,m:1,day:"1",he:"London Eye",en:"London Eye",ll:[51.5033,-0.1196],w:"https://www.londoneye.com",
+    tHe:"להגיע 30 דק׳ לפני • ב-15:00 רואים מלמעלה את השקיעה (~15:50) • קוד QR בנייד",tEn:"Arrive 30 min early • at 15:00 you catch sunset (~15:50) from the top • QR code on your phone"},
+  regent:{n:4,m:1,day:"1",he:"רחוב ריג׳נט וקרנבי – אורות החג",en:"Regent St & Carnaby – Christmas lights",ll:[51.5112,-0.1383],w:"https://www.regentstreetonline.com",
+    tHe:"הכי יפה אחרי 16:00 כשחשוך • 5 דק׳ מהמלון",tEn:"Best after 16:00 when it's dark • 5 min from the hotel"},
+  cicchetti:{n:5,m:1,day:"1",he:"Cicchetti Piccadilly – ארוחה משפחתית",en:"Cicchetti Piccadilly – family dinner",ll:[51.5087,-0.1393],w:"https://sancarlo.co.uk/restaurants/london/cicchetti-piccadilly/",
+    tHe:"איטלקית, חדר פרטי עד 24 איש, תפריט ילדים • טל׳ 020 7362 0999",tEn:"Italian, private room for up to 24, kids' menu • tel 020 7362 0999"},
+  lego:{n:6,m:1,day:"1",he:"לסטר סקוור – LEGO ו-M&M's",en:"Leicester Sq – LEGO & M&M's",ll:[51.5103,-0.1301],
+    tHe:"שתי חנויות ענק, פתוחות עד הערב",tEn:"Two huge stores, open into the evening"},
+  hamleys:{n:7,m:1,day:"3",he:"Hamleys",en:"Hamleys",ll:[51.5128,-0.1405],w:"https://www.hamleys.com",
+    tHe:"להגיע בפתיחה • הדגמות צעצועים בכל קומה",tEn:"Go at opening time • toy demos on every floor"},
+  arcadecp:{n:8,m:1,day:"3",he:"Arcade Food Hall – Centre Point",en:"Arcade Food Hall – Centre Point",ll:[51.5161,-0.1302],w:"https://www.arcade-london.com",
+    tHe:"דוכני אוכל מכל העולם, הזמנה מהשולחן",tEn:"Food stalls from around the world, order from your table"},
+  covent:{n:9,m:1,day:"3",he:"קובנט גארדן – עץ האשוח",en:"Covent Garden – Christmas tree",ll:[51.5117,-0.1240],w:"https://www.coventgarden.london",
+    tHe:"עץ ענק ואמני רחוב בפיאצה",tEn:"Giant tree and street performers in the Piazza"},
+  lyceum:{n:10,m:1,day:"3",he:"מלך האריות – תיאטרון Lyceum",en:"The Lion King – Lyceum Theatre",ll:[51.5115,-0.1199],w:"https://thelionking.co.uk",
+    tHe:"גיל 3+ • אין כניסה עם עגלות • להגיע 30 דק׳ לפני • לבקש כריות הגבהה",tEn:"Age 3+ • no buggies inside • arrive 30 min early • ask for booster cushions"},
+  pier:{n:11,m:1,day:"4",he:"רציף וסטמינסטר – Uber Boat",en:"Westminster Pier – Uber Boat",ll:[51.5017,-0.1235],w:"https://www.thamesclippers.com",
+    tHe:"משלמים בכרטיס אשראי בשער • שייט לבאטרסי",tEn:"Tap in with a card • boat to Battersea"},
+  fortnum:{n:12,m:1,day:"r",he:"Fortnum & Mason – חלונות חג",en:"Fortnum & Mason – Christmas windows",ll:[51.5083,-0.1378],w:"https://www.fortnumandmason.com",
+    tHe:"2 דק׳ מהמלון • ארקייד ברלינגטון ממול",tEn:"2 min from the hotel • Burlington Arcade opposite"},
+  somerset:{n:13,m:1,day:"r",he:"סומרסט האוס – החלקה על הקרח",en:"Somerset House – ice skating",ll:[51.5110,-0.1172],w:"https://www.somersethouse.org.uk",
+    tHe:"פתוח 11.11.26–10.1.27 • ילדים מ-£11 • עזרי החלקה לילדים",tEn:"Open 11 Nov 26 – 10 Jan 27 • kids from £11 • skate aids for children"},
+  savoy:{n:14,m:1,day:"r",he:"Paddington המחזמר – Savoy",en:"Paddington The Musical – Savoy",ll:[51.5103,-0.1205],
+    tHe:"מומלץ מגיל 6, מתחת לגיל 4 לא נכנסים • 2:45 שעות",tEn:"Recommended 6+, no under-4s • 2h45"},
+  trafalgar:{n:15,m:1,day:"r",he:"כיכר טרפלגר",en:"Trafalgar Square",ll:[51.5080,-0.1281],
+    tHe:"עץ חג המולד הנורווגי • ChanukahLIVE – לבדוק תאריך 2026 באתר JLC",tEn:"Norwegian Christmas tree • check the JLC site for ChanukahLIVE 2026"},
+  tower:{n:16,m:2,day:"2",he:"מצודת לונדון",en:"Tower of London",ll:[51.5081,-0.0759],w:"https://www.hrp.org.uk/tower-of-london/",
+    tHe:"קודם תכשיטי הכתר, לפני התורים • סיורי Beefeater חינם מהכניסה",tEn:"Crown Jewels first, before the queues • free Beefeater tours from the entrance"},
+  towerbridge:{n:17,m:2,day:"2",he:"גשר טאואר",en:"Tower Bridge",ll:[51.5055,-0.0754],w:"https://www.towerbridge.org.uk",
+    tHe:"חוצים ברגל • רצפת הזכוכית למעלה בתשלום",tEn:"Walk across • glass floor upstairs is ticketed"},
+  borough:{n:18,m:2,day:"2",he:"שוק בורו",en:"Borough Market",ll:[51.5055,-0.0910],w:"https://boroughmarket.org.uk",
+    tHe:"הכי עמוס 12:00–14:00 • מעט מקומות ישיבה",tEn:"Busiest 12:00–14:00 • little seating"},
+  ww:{n:19,m:2,day:"2",he:"Winter Wonderland – הייד פארק",en:"Winter Wonderland – Hyde Park",ll:[51.5072,-0.1570],w:"https://hydeparkwinterwonderland.com",
+    tHe:"כניסה 16:00–17:00 • הכול בכרטיס • נקודת מפגש לילדים: הגלגל הגדול",tEn:"Entry 16:00–17:00 • card payments only • kids' meeting point: the big wheel"},
+  gravity:{n:20,m:0,day:"3",he:"Gravity Wandsworth – קארטינג, באולינג ו-VR",en:"Gravity Wandsworth – karting, bowling & VR",ll:[51.4558,-0.1925],w:"https://www.gravity-uk.com/southside-wandsworth",q:"Gravity, Southside Wandsworth, London SW18 4TF",
+    tHe:"קארטינג (מגיל 12 במצב Pro), באולינג, מיני-גולף, VR, Gamebox וחצים • בחצים מתחת לגיל 16 צריך השגחת מבוגר – טטיאנה • בתוך קניון Southside",tEn:"Karting (Pro mode 12+), bowling, mini golf, VR, Gamebox & darts • under-16s need adult supervision at darts – Tatiana • inside Southside mall"},
+  o2:{n:21,m:2,day:"3",he:"The O2 – Mamma Mia! The Party",en:"The O2 – Mamma Mia! The Party",ll:[51.5030,0.0032],w:"https://mammamiatheparty.com/london/",
+    tHe:"קו Jubilee מגרין פארק ל-North Greenwich, כ-20 דק׳ • הארוחה כלולה",tEn:"Jubilee line from Green Park to North Greenwich, ~20 min • dinner included"},
+  emirates:{n:22,m:2,day:"3",he:"אצטדיון האמירויות – ארסנל",en:"Emirates Stadium – Arsenal",ll:[51.5549,-0.1084],w:"https://www.arsenal.com",
+    tHe:"קו Piccadilly ישיר מהמלון • תיק עד A4 בלבד, אין שמירת חפצים • להגיע שעה לפני",tEn:"Piccadilly line direct from the hotel • bags A4 size max, no storage • arrive an hour early"},
+  battersea:{n:23,m:2,day:"4",he:"תחנת הכוח באטרסי – Lift 109",en:"Battersea Power Station – Lift 109",ll:[51.4818,-0.1445],w:"https://batterseapowerstation.co.uk",
+    tHe:"Lift 109 בכרטיס עם שעה • החלקה Glide – לוודא שפועל",tEn:"Lift 109 is timed-ticket • Glide ice rink – check it's open"},
+  tussauds:{n:28,m:2,day:"4",he:"מאדאם טוסו",en:"Madame Tussauds",ll:[51.5229,-0.1551],w:"https://www.madametussauds.com/london/",
+    tHe:"ליד תחנת Baker Street – 2 תחנות בקו Jubilee מגרין פארק • כרטיס עם שעת כניסה, להזמין מראש • כשעתיים",tEn:"Next to Baker Street station – 2 stops on the Jubilee line from Green Park • timed tickets, book ahead • about 2 hours"},
+  science:{n:24,m:2,day:"2",he:"מוזיאון המדע – Wonderlab",en:"Science Museum – Wonderlab",ll:[51.4978,-0.1745],w:"https://www.sciencemuseum.org.uk",
+    tHe:"כניסה חינם, Wonderlab בתשלום ובשעה • מוזיאון הטבע צמוד",tEn:"Free entry, Wonderlab is paid and timed • Natural History Museum next door"},
+  nhm:{n:25,m:2,day:"r",he:"מוזיאון הטבע – הדינוזאורים",en:"Natural History Museum – dinosaurs",ll:[51.4962,-0.1785],w:"https://www.nhm.ac.uk",
+    tHe:"כניסה חינם, כדאי להזמין שעה",tEn:"Free entry, book a time slot"},
+  f1:{n:26,m:2,day:"4",he:"F1 Arcade",en:"F1 Arcade",ll:[51.5138,-0.0984],w:"https://f1arcade.com/uk/london",
+    tHe:"מגיל 7 • מתחת לגיל 18 רק עד 18:00 • פתוח מ-12:00",tEn:"Ages 7+ • under-18s only until 6pm • opens 12:00"},
+  leadenhall:{n:27,m:2,day:"r",he:"שוק לידנהול + Sky Garden",en:"Leadenhall Market + Sky Garden",ll:[51.5129,-0.0834],w:"https://skygarden.london",
+    tHe:"שוק ויקטוריאני מקורה ויפהפה • Sky Garden: תצפית חינם בהזמנה מראש",tEn:"A beautiful covered Victorian market • Sky Garden: free viewpoint, book ahead"},
+  lhr:{n:29,m:0,day:"h",he:"הית׳רו טרמינל 4",en:"Heathrow Terminal 4",ll:[51.4598,-0.4467],w:"https://www.heathrow.com",
+    tHe:"נקודת מפגש עם הנהג: App & Private Hire Pick-Up, Zone 1 – מחוץ לטרמינל, מעבר לכביש",tEn:"Driver meeting point: App & Private Hire Pick-Up, Zone 1 – outside, across the road"},
+  ltn:{n:30,m:0,day:"h",he:"נמל התעופה לוטון",en:"Luton Airport",ll:[51.8747,-0.3683],w:"https://www.london-luton.co.uk",
+    tHe:"כשעה נסיעה מהמלון • ישר לדלפקי אל-על",tEn:"About an hour's drive • straight to the El Al desks"}
+};
+
+/* events: d day index, t time (London), who, ti/su {he,en}, pl place, k b=booked p=pending f=free s=split */
+const E = [];
+const ev = (d,t,who,he,en,suHe,suEn,pl,k) => E.push({d,t,who,ti:{he,en},su:{he:suHe||"",en:suEn||""},pl,k:k||""});
+// Day 0
+ev(0,"10:40",ALONF,"משפחת אלון נוחתת בהית׳רו","Alon's family lands at Heathrow","Delta 5921 • הסעה 1005790 למלון","Delta 5921 • transfer 1005790 to the hotel","lhr","b");
+ev(0,"12:30",ALONF,"הגעה למלון והשארת מזוודות","Arrive at the hotel, leave bags","אחה״צ חופשי ליד המלון: גרין פארק, Fortnum & Mason","Free afternoon nearby: Green Park, Fortnum & Mason","hotel","f");
+ev(0,"15:00",ISR,"המראה מתל אביב – LY317","Take-off from Tel Aviv – LY317","17:00 שעון ישראל • YCWT59 + YDVYSX","17:00 Israel time • YCWT59 + YDVYSX","","b");
+ev(0,"20:25",ISR,"נחיתה בהית׳רו, טרמינל 4","Land at Heathrow Terminal 4","אחרי המזוודות: לצאת לנקודת App & Private Hire Pick-Up, Zone 1, ולהתקשר לנהג","After bags: go out to App & Private Hire Pick-Up, Zone 1, and call the driver","lhr","b");
+ev(0,"21:25",ISR,"2 רכבים למלון","Two vans to the hotel","1005001 + 1005005 • £128 לרכב במזומן • כ-50 דק׳","1005001 + 1005005 • £128 per van in cash • ~50 min","lhr","b");
+ev(0,"22:30",ALL,"צ׳ק-אין ונר שלישי של חנוכה","Check-in and 3rd Hanukkah candle","6 חדרים • חנוכייה חשמלית","6 rooms • electric menorah","hotel");
+// Day 1
+ev(1,"08:30",ALL,"ארוחת בוקר במלון","Breakfast at the hotel","","","hotel");
+ev(1,"10:00",ALL,"גרין פארק וארמון בקינגהאם","Green Park & Buckingham Palace","","","buckingham");
+ev(1,"11:30",ALL,"ביג בן, הפרלמנט וגשר וסטמינסטר","Big Ben, Parliament & Westminster Bridge","הליכה לגדה הדרומית","Walk to the South Bank","bigben");
+ev(1,"12:30",ALL,"צהריים חופשי בגדה הדרומית","Free lunch on the South Bank","נפגשים ב-14:30 ליד ה-Eye","Meet at 14:30 by the Eye","eye","f");
+ev(1,"15:00",ALL,"London Eye","London Eye","הזמנה R128336856 • 19 כרטיסים","Booking R128336856 • 19 tickets","eye","b");
+ev(1,"16:30",LITTLE.concat(["dani","hadar","liz"]),"פעוטות חוזרים למלון","Little ones back to the hotel","מנוחה ואמבטיה לפני הארוחה","Rest and bath before dinner","hotel","s");
+ev(1,"16:30",without(ALL,LITTLE.concat(["dani","hadar","liz"])),"אורות החג ברחוב ריג׳נט וקרנבי","Christmas lights on Regent St & Carnaby","LEGO ו-M&M's בלסטר סקוור – הכול ליד המלון","LEGO & M&M's in Leicester Sq – all near the hotel","regent","s");
+ev(1,"18:30",ALL,"נר רביעי במלון","4th candle at the hotel","","","hotel");
+ev(1,"19:00",ALL,"ארוחת ערב משפחתית – כל ה-19","Family dinner – all 19 of us","Cicchetti Piccadilly, חדר פרטי • בקשת הזמנה בתהליך","Cicchetti Piccadilly, private room • booking in progress","cicchetti","p");
+// Day 2
+ev(2,"08:00",ALL,"ארוחת בוקר במלון","Breakfast at the hotel","","","hotel");
+ev(2,"09:00",ALL,"מצודת לונדון","Tower of London","קודם תכשיטי הכתר","Crown Jewels first","tower","p");
+ev(2,"11:30",ALL,"גשר טאואר","Tower Bridge","","","towerbridge");
+ev(2,"12:30",ALL,"צהריים חופשי","Free lunch","הצעה: שוק בורו, 15 דק׳ לאורך הנהר","Idea: Borough Market, 15 min along the river","borough","f");
+ev(2,"14:00",without(ALL,["dor","niv","itamar","eitan"]),"חזרה למלון למנוחה","Back to the hotel to rest","שנ״צ לקטנים, בגדים חמים","Naps for the little ones, warm clothes","hotel");
+ev(2,"14:00",["dor","niv","itamar","eitan"],"Wonderlab במוזיאון המדע","Wonderlab at the Science Museum","מטאואר היל בקו District ישר לסאות׳ קנזינגטון • ב-8.12 נסגר ב-16:00 • ב-15:50 הולכים 15 דק׳ לווינטר וונדרלנד • מבוגר מלווה: ___","District line from Tower Hill straight to South Kensington • closes 16:00 on 8 Dec • at 15:50 walk 15 min to Winter Wonderland • adult with them: ___","science","p");
+ev(2,"16:00",ALL,"Winter Wonderland","Winter Wonderland","כניסה בין 16:00 ל-17:00 • הזמנה 130427698 • 15 דק׳ הליכה","Entry between 16:00 and 17:00 • booking 130427698 • 15 min walk","ww","b");
+ev(2,"19:00",ALL,"ערב חופשי ונר חמישי","Free evening & 5th candle","אפשר לאכול במתחם • פעוטות חוזרים ראשונים","Eat inside the park • little ones head back first","ww","f");
+// Day 3
+ev(3,"08:00",ALL,"ארוחת בוקר במלון","Breakfast at the hotel","","","hotel");
+ev(3,"10:00",TEENS,"שופינג באוקספורד סטריט וקרנבי","Shopping on Oxford St & Carnaby","מי שרוצה יכול להישאר לשופינג כל היום","Anyone who prefers can shop all day","regent");
+ev(3,"12:30",TEENS,"צהריים חופשי","Free lunch","הצעה: Kingly Court בקרנבי","Idea: Kingly Court in Carnaby","regent","f");
+ev(3,"13:30",TEENS,"נסיעה ל-Gravity Wandsworth","Head to Gravity Wandsworth","כ-40 דק׳ בתחבורה ציבורית • מבוגר מלווה: ___","~40 min by public transport • adult with them: ___","gravity");
+ev(3,"14:15",TEENS,"Gravity: קארטינג, באולינג ו-VR","Gravity: karting, bowling & VR","כל השישה מעל גיל 12 – מתאים לקארטינג Pro • להזמין מראש","All six are 12+ – fine for Pro karting • book ahead","gravity","p");
+ev(3,"16:30",TEENS,"חזרה למלון","Back to the hotel","מלך האריות יוצאים ב-17:30, ארסנל ב-18:30","Lion King group leaves 17:30, Arsenal 18:30","hotel");
+const TRACKB = without(ALL,TEENS);
+ev(3,"10:00",TRACKB,"Hamleys ברחוב ריג׳נט","Hamleys on Regent Street","","","hamleys");
+ev(3,"12:30",TRACKB,"צהריים חופשי","Free lunch","הצעה: Arcade Food Hall ב-Centre Point","Idea: Arcade Food Hall at Centre Point","arcadecp","f");
+ev(3,"14:00",TRACKB,"שנ״צ במלון | קובנט גארדן","Naps at the hotel | Covent Garden","עץ האשוח ואמני רחוב","The big tree and street performers","covent","s");
+ev(3,"17:30",["yoni","dani","dan","hadar"],"יציאה ל-Mamma Mia! The Party","Leave for Mamma Mia! The Party","קו Jubilee מגרין פארק","Jubilee line from Green Park","o2","p");
+ev(3,"18:30",["yoni","dani","dan","hadar"],"Mamma Mia! The Party","Mamma Mia! The Party","Tier A + Platinum • ארוחה כלולה • חזרה ~23:00","Tier A + Platinum • dinner included • back ~23:00","o2","p");
+ev(3,"17:30",["tatiana","davidj","rose","amber","dor","niv"],"ארוחה מוקדמת בקובנט גארדן","Early dinner in Covent Garden","טטיאנה המבוגרת האחראית","Tatiana is the adult in charge","covent","f");
+ev(3,"19:30",["tatiana","davidj","rose","amber","dor","niv"],"מלך האריות","The Lion King","תיאטרון Lyceum • כשעתיים וחצי","Lyceum Theatre • about 2½ hours","lyceum","p");
+ev(3,"18:30",["david","itamar","eitan"],"יציאה לאמירויות","Leave for the Emirates","קו Piccadilly ישיר","Piccadilly line, direct","emirates");
+ev(3,"20:00",["david","itamar","eitan"],"ארסנל – ריאל מדריד","Arsenal v Real Madrid","ליגת האלופות • כרטיסים: ___","Champions League • tickets: ___","emirates","p");
+ev(3,"18:00",["sandra","alon","liz","imri","raz","ziv"],"ערב במלון ונר שישי","Evening at the hotel & 6th candle","עם הפעוטות","With the little ones","hotel");
+// Day 4
+ev(4,"08:00",ALL,"ארוחת בוקר במלון","Breakfast at the hotel","","","hotel");
+ev(4,"09:30",ALL,"Uber Boat לבאטרסי","Uber Boat to Battersea","מרציף וסטמינסטר","From Westminster Pier","pier");
+ev(4,"10:30",ALL,"Lift 109 והחלקה על הקרח","Lift 109 & ice skating","מעלית בתוך הארובה","A lift inside the chimney","battersea","p");
+ev(4,"12:30",ALL,"צהריים חופשי","Free lunch","הצעה: Arcade Battersea בתוך תחנת הכוח","Idea: Arcade Battersea inside the power station","battersea","f");
+ev(4,"14:00",without(ALONF,["tatiana","davidj","rose"]).concat(["dor","niv","itamar"]),"יציאה למאדאם טוסו","Leave for Madame Tussauds","מבאטרסי: קו Northern לאמבנקמנט, ואז Bakerloo ל-Baker Street • כ-30 דק׳","From Battersea: Northern line to Embankment, then Bakerloo to Baker Street • ~30 min","tussauds");
+ev(4,"14:30",without(ALONF,["tatiana","davidj","rose"]).concat(["dor","niv","itamar"]),"מאדאם טוסו","Madame Tussauds","כשעתיים • כרטיסים עם שעת כניסה: ___","About 2 hours • timed tickets: ___","tussauds","p");
+ev(4,"14:30",["amber","tatiana","davidj","rose"],"F1 Arcade","F1 Arcade","ליד סנט פול • מתחת לגיל 18 רק עד 18:00 – לסיים עד 17:45","Near St Paul's • under-18s only until 6pm – finish by 5:45pm","f1","p");
+ev(4,"14:30",without(ADULTS.concat(LITTLE),["alon","liz","ziv"]),"אחה״צ חופשי ליד המלון","Free afternoon near the hotel","שנ״צ לפעוטות • מי שרוצה: Fortnum & Mason, Burlington Arcade, רחוב ריג׳נט","Naps for the little ones • ideas: Fortnum & Mason, Burlington Arcade, Regent St","hotel","f");
+ev(4,"17:30",ALL,"ארוחת ערב חופשית – מוקדם","Early free dinner","כולם במלון עד 19:30","Everyone back by 19:30","","f");
+ev(4,"19:30",ALL,"נר שביעי, אריזה ושינה","7th candle, packing, bed","מזוודות סגורות עד 20:00 • ארוחות בוקר ארוזות","Bags closed by 20:00 • packed breakfasts","hotel");
+// Day 5
+ev(5,"03:15",ALONF,"השכמה למשפחת אלון","Wake-up – Alon's family","","","hotel");
+ev(5,"03:30",ALONF,"הסעה להית׳רו","Transfer to Heathrow","1005791 • £115","1005791 • £115","lhr","b");
+ev(5,"06:30",ALONF,"טיסה Delta 9603","Flight Delta 9603","הית׳רו טרמינל 4","Heathrow Terminal 4","lhr","b");
+ev(5,"04:30",ISR,"השכמה לקבוצת ישראל","Wake-up – Israel group","ארוחות בוקר ארוזות • המזוודות בלובי","Packed breakfasts • bags in the lobby","hotel");
+ev(5,"05:00",ISR,"2 רכבים ללוטון","Two vans to Luton","1005002 + 1005006 • £143 לרכב • מומלץ להקדים ל-04:15","1005002 + 1005006 • £143 per van • better to move to 04:15","ltn","b");
+ev(5,"06:00",ISR,"הגעה ללוטון","Arrive at Luton","ישר לדלפקי אל-על","Straight to the El Al desks","ltn");
+ev(5,"07:55",ISR,"המראה LY312","Take-off LY312","נחיתה בנתב״ג 14:40","Lands at Ben Gurion 14:40","ltn","b");
+E.sort((a,b) => a.d - b.d || a.t.localeCompare(b.t));
+
+const TODO = [
+  {id:"cicchetti",he:"ארוחה משפחתית – Cicchetti Piccadilly, שני 7.12 19:00",en:"Family dinner – Cicchetti Piccadilly, Mon 7 Dec 19:00",u:"https://sancarlo.co.uk/private-group-bookings/"},
+  {id:"luton",he:"להקדים איסוף ללוטון ל-04:15 (מומלץ)",en:"Move the Luton pickup to 04:15 (recommended)",u:"https://www.airport-pickups-london.com/manage-booking.html"},
+  {id:"mammamia",he:"Mamma Mia! The Party – 4 כרטיסים Tier A + Platinum",en:"Mamma Mia! The Party – 4 Tier A + Platinum tickets",u:"https://mammamiatheparty.com/london/tickets/"},
+  {id:"gravity",he:"Gravity Wandsworth לנוער – רביעי 14:15 (קארטינג Pro, באולינג, VR)",en:"Gravity Wandsworth for the teens – Wed 14:15 (Pro karting, bowling, VR)",u:"https://www.gravity-uk.com/southside-wandsworth"},
+  {id:"lionking",he:"מלך האריות – 6 כרטיסים, רביעי 19:30",en:"The Lion King – 6 tickets, Wed 19:30",u:"https://thelionking.co.uk"},
+  {id:"arsenal",he:"ארסנל – ריאל מדריד: 3 כרטיסים",en:"Arsenal v Real Madrid: 3 tickets",u:"https://www.arsenal.com/tickets"},
+  {id:"wonderlab",he:"Wonderlab – 4 ילדים + מלווה, שלישי 8.12 14:30 (נסגר ב-16:00 באותו יום)",en:"Wonderlab – 4 kids + an adult, Tue 8 Dec 14:30 (closes 16:00 that day)",u:"https://www.sciencemuseum.org.uk"},
+  {id:"tussauds",he:"מאדאם טוסו – 7 כרטיסים, חמישי 14:30 (אלון, ליז, איתן, זיו, דור, ניב ואיתמר)",en:"Madame Tussauds – 7 tickets, Thu 14:30 (Alon, Liz, Eitan, Ziv, Dor, Niv, Itamar)",u:"https://www.madametussauds.com/london/"},
+  {id:"f1",he:"F1 Arcade – 4 נהגים, חמישי 14:30 (אמבר, טטיאנה, דיוויד ורוז)",en:"F1 Arcade – 4 drivers, Thu 14:30 (Amber, Tatiana, David, Rose)",u:"https://f1arcade.com/uk/london"},
+  {id:"tower",he:"מצודת לונדון – שלישי 09:00",en:"Tower of London – Tue 09:00",u:"https://www.hrp.org.uk/tower-of-london/"},
+  {id:"lift109",he:"Lift 109 + Glide – חמישי",en:"Lift 109 + Glide – Thu",u:"https://batterseapowerstation.co.uk"},
+  {id:"eta",he:"ETA – אישור כניסה לכל 19 המשתתפים",en:"UK ETA for all 19 travellers",u:"https://www.gov.uk/guidance/apply-for-an-electronic-travel-authorisation-eta"},
+  {id:"wwinfant",he:"Winter Wonderland – לבדוק כרטיסי תינוק לאימרי, זיו ורז",en:"Winter Wonderland – check infant tickets for Imri, Ziv and Raz",u:"https://hydeparkwinterwonderland.com"},
+  {id:"cash",he:"מזומן ליש״ט להסעות",en:"Pounds in cash for the transfers"},
+  {id:"boxes",he:"ארוחות בוקר ארוזות ליום שישי – לבקש מהמלון",en:"Packed breakfasts for Friday – ask the hotel"}
+];
+
+const FOOD = [
+  ["Cicchetti Piccadilly","איטלקי • הארוחה המשפחתית","Italian • family dinner","https://sancarlo.co.uk/restaurants/london/cicchetti-piccadilly/"],
+  ["Giraffe Southbank","משפחתי, תפריט ילדים • ליד ה-Eye","Family-friendly, kids' menu • by the Eye","https://www.giraffe.net/menus"],
+  ["Arcade Food Hall – Centre Point","דוכנים מכל העולם","Food stalls from around the world","https://www.arcade-london.com/food-and-drink"],
+  ["Roast – Borough Market","בריטי קלאסי, מעל השוק","Classic British, above the market","https://roast-restaurant.com/menus/"],
+  ["Pizza Pilgrims","פיצה נפוליטנית","Neapolitan pizza","https://www.pizzapilgrims.co.uk/menu/"],
+  ["Seven Dials Market","שוק אוכל מקורה","Covered food market","https://www.sevendialsmarket.com/traders/"],
+  ["Dishoom Covent Garden","הודי, תפריט קבוצתי","Indian, group feast menu","https://www.dishoom.com/journal/covent-garden-menu/"],
+  ["PizzaExpress","פיצה ופסטה, תפריט ילדים","Pizza and pasta, kids' menu","https://www.pizzaexpress.com/our-food/restaurant-menu"],
+  ["Arcade Battersea","פוד-הול בתחנת הכוח","Food hall in the power station","https://www.arcade-london.com/battersea-kitchens"],
+  ["Hard Rock Cafe Piccadilly","אמריקאי, תפריט ילדים","American, kids' menu","https://cafe.hardrock.com/piccadilly/menu.aspx"]
+];
+
+const PACK = [
+  ["דרכונים בתוקף","Valid passports"],["ETA מאושר לכל אחד","Approved ETA for everyone"],["מזומן ליש״ט להסעות","Pounds in cash for transfers"],
+  ["מתאם חשמל בריטי (3 פינים)","UK plug adapter (3-pin)"],["חנוכייה חשמלית","Electric menorah"],["מעילי גשם וכיסוי לעגלה","Rain jackets and buggy rain cover"],
+  ["כובעים, כפפות וצעיפים","Hats, gloves and scarves"],["נעליים נוחות להליכה","Comfortable walking shoes"],["מטען נייד","Power bank"],
+  ["AirTag לילדים הקטנים","AirTags for the little ones"],["כרטיסי חירום מודפסים לילדים","Printed emergency cards for the kids"],["תרופות קבועות ומדחום","Regular medicines and a thermometer"]
+];
+
+const HUNT = [
+  ["אוטובוס אדום דו-קומתי","A red double-decker bus"],["תא טלפון אדום","A red phone box"],["שומר עם כובע פרווה ענק","A guard in a giant fur hat"],
+  ["מונית שחורה","A black cab"],["שלט Underground עגול","The round Underground sign"],["סנאי בפארק","A squirrel in the park"],
+  ["שקנאי בסנט ג׳יימס פארק","A pelican in St James's Park"],["Beefeater במצודה","A Beefeater at the Tower"],["עורב במצודת לונדון","A raven at the Tower"],
+  ["הגלגל הכי גבוה ב-Winter Wonderland","The tallest wheel at Winter Wonderland"],["עץ אשוח ענק","A giant Christmas tree"],["חנוכייה בלונדון","A menorah in London"],
+  ["תיבת דואר אדומה","A red postbox"],["סירה על התמזה","A boat on the Thames"],["דובי פדינגטון","A Paddington Bear"]
+];
+
+/* ============ I18N ============ */
+const UI = {
+  now:["עכשיו","Now"], schedule:["לו״ז","Schedule"], map:["מפה","Map"], bookings:["הזמנות","Bookings"], more:["עוד","More"],
+  everyone:["כולם","Everyone"], family:["משפחה","Family"],
+  website:["אתר","Website"], openmap:["מפה","Map"], transit:["תחבורה ציבורית","Public transport"], walk:["הליכה","Walk"],
+  viewList:["רשימה","List"], viewGrid:["מי איפה","Who's where"],
+  countdown:["ימים לטיסה","days to go"], nowIs:["עכשיו","Happening now"], next:["הבא בתור","Up next"], nothingNow:["אין כרגע פעילות בלו״ז","Nothing scheduled right now"],
+  fromOrganizer:["עדכון מיוני","Update from Yoni"], tripOver:["הטיול נגמר – נחיתה טובה!","The trip is over – safe travels!"],
+  edit:["מצב עריכה","Edit mode"], save:["שמירה לכולם","Save for everyone"], cancel:["ביטול","Cancel"], saving:["שומר...","Saving..."],
+  readonly:["רק למארגן יש הרשאת עריכה. השינויים לא נשמרו.","Only the organizer can edit. Changes were not saved."],
+  saveFail:["השמירה לא הצליחה. נסו שוב בעוד רגע.","Couldn't save. Try again in a moment."],
+  big:["טקסט גדול","Large text"], close:["סגירה","Close"],
+  central:["סביב המלון","Around the hotel"], wide:["כל לונדון","All of London"],
+  offmap:["מחוץ למפה","Off the map"], tapPin:["לחיצה על נקודה או על שם פותחת פרטים, מפה והוראות הגעה","Tap a pin or a name for details, map and directions"],
+  todo:["מה עוד לסגור","Still to book"], confirmed:["סגור ומשולם","Confirmed"], who:["מי","Who"], time:["שעה","Time"],
+  mapNote:["מפה סכמטית – המיקומים מדויקים, הרחובות מקורבים","Schematic map – locations are exact, streets are approximate"]
+};
+let LANG = "he";
+try{ const s = localStorage.getItem("gl_lang"); LANG = (s === "he" || s === "en") ? s : ((navigator.language||"").toLowerCase().startsWith("he") ? "he" : "en"); }catch(e){ LANG = (navigator.language||"").toLowerCase().startsWith("he") ? "he" : "en"; }
+const L = o => (o && typeof o === "object") ? (o[LANG] ?? o.he) : o;
+const T = k => UI[k] ? UI[k][LANG === "he" ? 0 : 1] : k;
+const nm = id => L(P[id]);
+
+/* ============ HELPERS ============ */
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const $ = id => document.getElementById(id);
+const store = { get(k,d){ try{ const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); }catch(e){ return d; } }, set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} } };
+const ICON = {
+  now:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  schedule:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
+  map:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>',
+  bookings:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-3a2 2 0 0 0 0-4z"/><path d="M14 5v14" stroke-dasharray="2 2"/></svg>',
+  more:'<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>',
+  web:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>',
+  pin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>',
+  bus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="5" y="3" width="14" height="15" rx="3"/><path d="M5 11h14M8 18v3M16 18v3"/><circle cx="8.5" cy="14.5" r="1"/><circle cx="15.5" cy="14.5" r="1"/></svg>',
+  walk:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="13" cy="4" r="2"/><path d="m9 21 2-6 3 3v3M11 15l1-6 3 3h3M12 9l-3 2-1 3"/></svg>'
+};
+function logo(size){ // Groshar family mark: a London Eye wheel that forms a G, with a Hanukkah flame on top
+  let spokes = "", caps = "";
+  for(let i=0;i<12;i++){ const a = i*Math.PI/6, x = 50+38*Math.cos(a), y = 52+38*Math.sin(a);
+    caps += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2.6" fill="#D4A933"/>`;
+    spokes += `<line x1="50" y1="52" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="#D4A933" stroke-opacity=".28" stroke-width="1"/>`; }
+  return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" role="img" aria-label="Groshar family logo"><circle cx="50" cy="52" r="47" fill="#0F1B3D"/><circle cx="50" cy="52" r="38" fill="none" stroke="#D4A933" stroke-opacity=".45" stroke-width="1.4"/>${spokes}${caps}<path d="M65.3 39.1 A20 20 0 1 0 69.3 57.2 L53 57.2" fill="none" stroke="#D4A933" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M50 1.5 C55 7 56 11.5 50 15 C44 11.5 45 7 50 1.5Z" fill="#E4572E"/><path d="M50 7 C52.4 9.6 52.6 11.8 50 13.4 C47.4 11.8 47.6 9.6 50 7Z" fill="#F6C945"/></svg>`;
+}
+const gmapSearch = p => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(p.q || (p.en + ", London"));
+const gmapDir = (p, mode) => "https://www.google.com/maps/dir/?api=1&destination=" + p.ll[0] + "," + p.ll[1] + "&travelmode=" + mode;
+function placeActions(id, compact){
+  const p = PL[id]; if(!p) return "";
+  const a = [];
+  if(p.w) a.push(`<a class="act" href="${p.w}" target="_blank" rel="noopener">${ICON.web}${T("website")}</a>`);
+  a.push(`<a class="act" href="${gmapSearch(p)}" target="_blank" rel="noopener">${ICON.pin}${T("openmap")}</a>`);
+  a.push(`<a class="act primary" href="${gmapDir(p,"transit")}" target="_blank" rel="noopener">${ICON.bus}${T("transit")}</a>`);
+  if(!compact) a.push(`<a class="act" href="${gmapDir(p,"walking")}" target="_blank" rel="noopener">${ICON.walk}${T("walk")}</a>`);
+  return `<div class="actions">${a.join("")}</div>`;
+}
+
+/* London time */
+function londonNow(){
+  const f = new Intl.DateTimeFormat("en-GB",{timeZone:"Europe/London",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hour12:false});
+  const o = {}; f.formatToParts(new Date()).forEach(x => o[x.type] = x.value);
+  return {date:`${o.year}-${o.month}-${o.day}`, time:`${o.hour === "24" ? "00" : o.hour}:${o.minute}`};
+}
+
+/* ============ VIEW STATE ============ */
+let WHO = store.get("gl_who","all");         // "all" | "f:y" | "p:amber"
+let DAY = 0, SCHMODE = store.get("gl_schmode","list"), MAPMODE = "central", EDIT = false, CANEDIT = false;
+let DRAFT = JSON.parse(JSON.stringify(STATE));
+(function(){ const n = londonNow(); const i = DAYS.findIndex(d => d.date === n.date); if(i >= 0) DAY = i; })();
+function whoSet(){ if(WHO === "all") return null; if(WHO.startsWith("f:")) return fam(WHO.slice(2)); if(WHO.startsWith("p:")) return [WHO.slice(2)]; return null; }
+const visible = e => { const s = whoSet(); return !s || e.who.some(x => s.includes(x)); };
+
+/* ============ RENDER: chrome ============ */
+function renderTop(){
+  document.documentElement.lang = LANG; document.documentElement.dir = LANG === "he" ? "rtl" : "ltr";
+  const big = document.documentElement.classList.contains("big");
+  $("topbar").innerHTML = `<div class="brand">${logo(42)}<div style="min-width:0"><div class="t1">${LANG==="he"?"משפחת גרושר בלונדון":"The Groshars in London"}</div><div class="t2">${LANG==="he"?"6–11 בדצמבר 2026":"6–11 December 2026"}</div></div></div>
+    <button class="tbtn" id="bigBtn" aria-pressed="${big}" title="${T("big")}">A+</button>
+    <button class="tbtn" id="langBtn">${LANG==="he"?"English":"עברית"}</button>`;
+  $("langBtn").onclick = () => { LANG = LANG === "he" ? "en" : "he"; try{ localStorage.setItem("gl_lang", LANG); }catch(e){} renderAll(); };
+  $("bigBtn").onclick = () => { document.documentElement.classList.toggle("big"); store.set("gl_big", document.documentElement.classList.contains("big")); renderTop(); };
+}
+function renderWho(){
+  const chips = [`<button class="chip" data-w="all" aria-pressed="${WHO==="all"}">${T("everyone")}</button>`,'<span class="sep"></span>'];
+  for(const f of ["y","d","a","g"]) chips.push(`<button class="chip" data-w="f:${f}" aria-pressed="${WHO==="f:"+f}"><span class="dot" style="background:${FAM[f].c}"></span>${L(FAM[f])}</button>`);
+  chips.push('<span class="sep"></span>');
+  for(const id of IDS){ if(P[id].kid) continue; chips.push(`<button class="chip" data-w="p:${id}" aria-pressed="${WHO==="p:"+id}"><span class="dot" style="background:${FAM[P[id].f].c}"></span>${nm(id)}</button>`); }
+  $("who").innerHTML = chips.join("");
+  $("who").querySelectorAll("[data-w]").forEach(b => b.onclick = () => { WHO = b.dataset.w; store.set("gl_who", WHO); renderWho(); renderView(); });
+}
+const TABS = ["now","schedule","map","bookings","more"];
+function route(){ const h = (location.hash||"").slice(1); return TABS.includes(h) ? h : "now"; }
+function renderTabs(){
+  const r = route();
+  $("tabs").innerHTML = TABS.map(t => `<button class="tab" data-t="${t}" ${r===t?'aria-current="page"':""}>${ICON[t]}<span>${T(t)}</span></button>`).join("");
+  $("tabs").querySelectorAll("[data-t]").forEach(b => b.onclick = () => { location.hash = b.dataset.t; });
+}
+function renderAll(){ renderTop(); renderWho(); renderTabs(); renderView(); fabLabel(); }
+function renderView(){
+  const r = route(); $("who").hidden = (r === "map" || r === "bookings" || r === "more");
+  const v = $("view");
+  v.innerHTML = ({now:viewNow,schedule:viewSchedule,map:viewMap,bookings:viewBookings,more:viewMore}[r])();
+  if(EDIT) v.insertAdjacentHTML("beforeend", editBar());
+  const fb = $("fab"); if(fb) fb.hidden = EDIT;
+  wire(v);
+}
+
+/* ============ VIEWS ============ */
+function avatars(who){
+  const fams = ["g","y","d","a"].filter(f => fam(f).every(i => who.includes(i)));
+  const covered = fams.flatMap(fam);
+  if(who.length === IDS.length) return `<div class="avs"><span class="av" style="background:var(--navy);color:var(--bg)">${T("everyone")}</span></div>`;
+  return `<div class="avs">${fams.map(f => `<span class="av" style="background:${FAM[f].c}">${L(FAM[f])}</span>`).join("")}${who.filter(i => !covered.includes(i)).map(i => `<span class="av" style="background:${FAM[P[i].f].c}">${nm(i)}</span>`).join("")}</div>`;
+}
+function kindPill(k){ return k==="b" ? `<span class="pill b">✓ ${LANG==="he"?"סגור":"Booked"}</span>` : k==="p" ? `<span class="pill p">${LANG==="he"?"לסגור":"To book"}</span>` : k==="f" ? `<span class="pill f">${LANG==="he"?"חופשי":"Free time"}</span>` : k==="s" ? `<span class="pill s">${LANG==="he"?"מפוצל":"Split"}</span>` : ""; }
+function evCard(e, isNow){
+  const p = e.pl ? PL[e.pl] : null;
+  const tile = `var(--c${(E.indexOf(e) % 6) + 1})`;
+  return `<div class="ev k-${e.k}${isNow?" now":""}"><div class="time">${e.t}</div><div class="body" style="--tile:${tile}">
+    <div class="row" style="justify-content:space-between;gap:6px"><span class="ttl">${esc(L(e.ti))}</span>${kindPill(e.k)}</div>
+    ${L(e.su)?`<div class="sub">${esc(L(e.su))}</div>`:""}
+    ${avatars(e.who)}
+    ${p?`<div class="sub">📍 ${esc(L(p))}</div>${placeActions(e.pl,true)}`:""}
+  </div></div>`;
+}
+function menorah(n){
+  const cols = ["#FF8FA3","#7FD1FF","#8EF0B8","#C9A7FF","#FFB86B","#FF8FA3","#7FD1FF","#8EF0B8"];
+  const xs = [264,234,204,174,116,86,56,26]; // first candle on the right, as lit in Hebrew order
+  let c = "", f = "";
+  xs.forEach((x,i) => { const lit = i < n; c += `<rect x="${x}" y="48" width="14" height="36" rx="5" fill="${lit?cols[i]:"#3A4479"}"/>`; if(lit) f += `<ellipse cx="${x+7}" cy="38" rx="6" ry="10" fill="#FFD166"/>`; });
+  return `<svg viewBox="0 0 300 104" role="img" aria-label="${LANG==="he"?`חנוכייה עם ${n} נרות`:`Menorah with ${n} candles`}"><rect x="20" y="84" width="260" height="8" rx="4" fill="#FFD166"/><rect x="144" y="90" width="12" height="12" rx="2" fill="#FFD166"/>${c}<rect x="143" y="32" width="14" height="52" rx="5" fill="#FFFFFF"/><ellipse cx="150" cy="22" rx="7" ry="11" fill="#FFD166"/>${f}</svg>`;
+}
+function bus(w){ return `<svg width="${w}" viewBox="0 0 96 64" role="img" aria-label="London bus"><rect x="4" y="4" width="84" height="48" rx="10" fill="#E63946"/>${[12,30,48,66].map(x=>`<rect x="${x}" y="12" width="14" height="12" rx="3" fill="#FFE29A"/>`).join("")}${[12,30,48].map(x=>`<rect x="${x}" y="30" width="14" height="12" rx="3" fill="#FFE29A"/>`).join("")}<rect x="68" y="30" width="12" height="18" rx="2" fill="#0E1638"/><circle cx="24" cy="54" r="8" fill="#2B356B"/><circle cx="70" cy="54" r="8" fill="#2B356B"/></svg>`; }
+const KIDS = ["dor","niv","imri","ziv","raz","itamar","eitan"];
+let KID = store.get("gl_kid","");
+function kidView(id){
+  const he = LANG === "he", n = londonNow();
+  let d = DAYS.findIndex(x => x.date === n.date); const before = n.date < DAYS[0].date;
+  if(d < 0) d = before ? 1 : 5;
+  const days = Math.ceil((Date.UTC(2026,11,6) - Date.now()) / 864e5);
+  const left = 5 - d;
+  const evs = E.filter(e => e.d === d && e.who.includes(id) && !/ארוחת בוקר|Breakfast/.test(e.ti.en));
+  const huntDone = store.get("gl_hunt",{}); const hn = HUNT.filter((h,i) => huntDone[i]).length;
+  const buddy = STATE.buddies[id];
+  const candles = DAYS[d].n || 0;
+  const tiles = evs.slice(0,5).map((e,i) => `<div class="ktile" style="background:var(--c${(i%6)+1})"><span class="kt mono">${e.t}</span><span style="min-width:0"><b style="font-size:1.1em;font-weight:400">${esc(L(e.ti))}</b>${L(e.su)?`<span style="display:block;font-size:.82em;opacity:.8">${esc(L(e.su))}</span>`:""}</span></div>`).join("");
+  return `<div class="stack">
+    <div class="row" style="justify-content:space-between"><div class="row">${KIDS.map(k => `<button class="chip" data-kid="${k}" aria-pressed="${k===id}">${nm(k)}</button>`).join("")}</div><button class="tbtn" data-kid="">${he?"חזרה למבוגרים":"Grown-up view"}</button></div>
+    <div class="kidhead"><div style="flex:1;min-width:0"><div class="hi">${he?"היי":"Hi"} ${nm(id)}!</div><div class="muted">${before ? (he?`עוד ${days} ימים ללונדון!`:`${days} days until London!`) : (he?`${L(DAYS[d])} • ${left>0?`עוד ${left} לילות בלונדון`:"היום טסים הביתה"}`:`${L(DAYS[d])} • ${left>0?`${left} more nights in London`:"flying home today"}`)}</div></div>${bus(84)}</div>
+    ${candles?`<div class="menorah-card">${menorah(candles)}<div style="font-size:1.2em">${he?`הלילה מדליקים <span style="color:var(--gold)">${candles} נרות</span>!`:`Tonight we light <span style="color:var(--gold)">${candles} candles</span>!`}</div>${candles<8?`<div class="muted small">${he?`עוד ${8-candles} לילות – כל השמונה`:`${8-candles} more nights until all eight`}</div>`:""}</div>`:""}
+    <h3>${before ? (he?"מה נעשה ביום הראשון?":"What will we do on day one?") : (he?"מה עושים היום?":"What are we doing today?")}</h3>
+    <div class="stack" style="gap:9px">${tiles || `<div class="card">${he?"יום רגוע!":"A quiet day!"}</div>`}</div>
+    <div class="kgrid">
+      <a class="kbox" href="#more" style="text-decoration:none"><span>${he?"ציד אוצרות":"Treasure hunt"}</span><span style="font-size:1.6em;color:var(--c4)">${hn}/${HUNT.length}</span><span class="bar"><i style="width:${Math.round(hn/HUNT.length*100)}%;background:var(--c4)"></i></span></a>
+      <div class="kbox" style="border-color:var(--c5)"><span>${he?"מי שומר עליי?":"Who looks after me?"}</span><span style="font-size:1.5em;color:var(--c5)">${buddy?nm(buddy):"—"}</span><span class="muted small">${he?"הלכת לאיבוד? תראה את הכרטיס":"Lost? Show your card"}</span></div>
+    </div></div>`;
+}
+function viewNow(){
+  if(KID && P[KID]) return kidView(KID);
+  const n = londonNow(); const out = [];
+  if(L(STATE.announce)) out.push(`<div class="notice"><h3>${T("fromOrganizer")} <span class="muted small mono">${esc(STATE.announceDate||"")}</span></h3><div>${esc(L(STATE.announce))}</div></div>`);
+  if(STATE.waGroup) out.push(`<a class="act primary" style="justify-self:start" href="${esc(STATE.waGroup)}" target="_blank" rel="noopener">💬 ${LANG==="he"?"לקבוצת הוואטסאפ של הטיול":"Trip WhatsApp group"}</a>`);
+  out.push(`<div class="card row" style="justify-content:space-between"><span>${LANG==="he"?"מצב ילדים":"Kids' mode"}</span><span class="row" style="gap:6px">${KIDS.slice(0,5).map(k => `<button class="chip" data-kid="${k}">${nm(k)}</button>`).join("")}</span></div>`);
+  const start = DAYS[0].date, end = DAYS[5].date;
+  if(n.date < start){
+    const days = Math.ceil((Date.UTC(2026,11,6) - Date.now()) / 864e5);
+    out.push(`<div class="menorah-card">${menorah(3)}<div>${LANG==="he"?"בערב הנחיתה – נר שלישי של חנוכה":"Landing night – the 3rd Hanukkah candle"}</div></div>`);
+    out.push(`<div class="hero"><div class="lbl">${LANG==="he"?"ספירה לאחור":"Countdown"}</div><div class="big">${days} <span style="font-size:.45em">${T("countdown")}</span></div><div>${LANG==="he"?"ראשון 6.12 – המראה ב-17:00 (LY317) • משפחת אלון נוחתת ב-10:40":"Sun 6 Dec – LY317 takes off 17:00 Israel time • Alon's family lands 10:40"}</div></div>`);
+    out.push(`<h3>${LANG==="he"?"היום הראשון":"First day"}</h3>`);
+    out.push(`<div class="nextlist">${E.filter(e => e.d===0 && visible(e)).map(e => evCard(e)).join("")}</div>`);
+  } else if(n.date > end){
+    out.push(`<div class="hero"><div class="big">${T("tripOver")}</div></div>`);
+  } else {
+    const d = DAYS.findIndex(x => x.date === n.date);
+    const today = E.filter(e => e.d === d && visible(e));
+    const cur = today.filter(e => e.t <= n.time).slice(-1)[0];
+    const nxt = today.filter(e => e.t > n.time).slice(0,3);
+    out.push(`<div class="hero"><div class="lbl">${L(DAYS[d])} • ${LANG==="he"?"שעון לונדון":"London time"} <span class="mono">${n.time}</span></div>
+      <div class="lbl">${T("nowIs")}</div><div class="ev">${cur ? esc(L(cur.ti)) : T("nothingNow")}</div>
+      ${cur && cur.pl ? placeActions(cur.pl,true) : ""}</div>`);
+    if(nxt.length) out.push(`<h3>${T("next")}</h3><div class="nextlist">${nxt.map(e => evCard(e)).join("")}</div>`);
+    if(DAYS[d].n) out.push(`<div class="menorah-card">${menorah(DAYS[d].n)}<div>${LANG==="he"?`הערב נר ${DAYS[d].n} של חנוכה • השקיעה בסביבות 15:52`:`Tonight: Hanukkah candle ${DAYS[d].n} • sunset around 15:52`}</div></div>`);
+  }
+  out.push(`<div class="card"><div class="row" style="justify-content:space-between"><b>${LANG==="he"?"מזג האוויר בלונדון":"London weather"}</b><a class="act" href="https://www.bbc.com/weather/2643743" target="_blank" rel="noopener">BBC Weather</a></div><div class="muted small">${LANG==="he"?"בדצמבר בדרך כלל 5–9 מעלות, גשם קל וחושך כבר ב-16:00. שכבות, מעיל גשם, כובע וכפפות.":"Usually 5–9°C in December, light rain, dark by 16:00. Layers, rain jacket, hat and gloves."}</div></div>`);
+  return `<div class="stack">${out.join("")}</div>`;
+}
+function viewSchedule(){
+  const d = DAYS[DAY];
+  const days = DAYS.map((x,i) => `<button class="day" data-day="${i}" aria-pressed="${i===DAY}"><b>${LANG==="he"?["א׳","ב׳","ג׳","ד׳","ה׳","ו׳"][i]:["Sun","Mon","Tue","Wed","Thu","Fri"][i]}</b><span>${x.date.slice(8)}.12</span></button>`).join("");
+  const mode = `<div class="mode"><button data-mode="list" aria-pressed="${SCHMODE==="list"}">${T("viewList")}</button><button data-mode="grid" aria-pressed="${SCHMODE==="grid"}">${T("viewGrid")}</button></div>`;
+  const n = londonNow();
+  let body;
+  if(SCHMODE === "grid"){
+    const evs = E.filter(e => e.d === DAY);
+    const times = [...new Set(evs.map(e => e.t))].sort();
+    const cols = ["y","d","a","g"];
+    body = `<div class="grid-who"><table><thead><tr><th>${T("time")}</th>${cols.map(f => `<th><span class="dot" style="display:inline-block;background:${FAM[f].c}"></span> ${L(FAM[f])}</th>`).join("")}</tr></thead><tbody>
+      ${times.map(t => `<tr><td class="t">${t}</td>${cols.map(f => { const fm = fam(f); const here = evs.filter(e => e.t === t && e.who.some(x => fm.includes(x)));
+        return `<td>${here.map(e => { const ppl = e.who.filter(x => fm.includes(x)); const partial = ppl.length < fm.length; return `<div class="cell k-${e.k}" style="margin-bottom:4px">${esc(L(e.ti))}${partial?`<div class="muted small">${ppl.map(nm).join(", ")}</div>`:""}</div>`; }).join("")}</td>`; }).join("")}</tr>`).join("")}
+    </tbody></table></div><div class="muted small">${LANG==="he"?"גוללים הצידה כדי לראות את כל המשפחות":"Scroll sideways to see every family"}</div>`;
+  } else {
+    const evs = E.filter(e => e.d === DAY && visible(e));
+    const nowIdx = n.date === d.date ? evs.map(e => e.t <= n.time).lastIndexOf(true) : -1;
+    body = evs.length ? `<div class="stack">${evs.map((e,i) => evCard(e, i === nowIdx)).join("")}</div>` : `<div class="card muted">${LANG==="he"?"אין פעילויות לבחירה הזו ביום הזה":"Nothing for this selection on this day"}</div>`;
+  }
+  return `<div class="stack"><div class="days" role="group">${days}</div>
+    <div class="row" style="justify-content:space-between;flex-wrap:nowrap;align-items:flex-end"><div style="min-width:0"><h2>${L(d)}</h2><div class="muted">${LANG==="he"?d.tHe:d.tEn}${d.n?` • ${LANG==="he"?"נר":"candle"} ${d.n}`:""}</div></div>${d.n?`<div style="width:120px;flex:none">${menorah(d.n)}</div>`:""}</div>
+    <div class="row" style="justify-content:space-between">${mode}</div>${body}</div>`;
+}
+
+/* map */
+const THAMES = [[51.4680,-0.1900],[51.4770,-0.1830],[51.4805,-0.1730],[51.4825,-0.1667],[51.4848,-0.1560],[51.4846,-0.1497],[51.4835,-0.1445],[51.4860,-0.1350],[51.4880,-0.1270],[51.4943,-0.1222],[51.5008,-0.1218],[51.5060,-0.1205],[51.5086,-0.1167],[51.5097,-0.1043],[51.5085,-0.0942],[51.5079,-0.0877],[51.5055,-0.0754],[51.5040,-0.0640],[51.5060,-0.0500],[51.5080,-0.0380],[51.5060,-0.0300],[51.4990,-0.0270],[51.4900,-0.0210],[51.4855,-0.0120],[51.4870,-0.0050],[51.4950,-0.0030],[51.5030,-0.0030],[51.5085,0.0030],[51.5060,0.0110],[51.4990,0.0150],[51.4950,0.0260]];
+const PARKS = [[51.5025,51.5125,-0.1900,-0.1520],[51.5015,51.5075,-0.1480,-0.1400],[51.5003,51.5045,-0.1395,-0.1290],[51.4750,51.4835,-0.1690,-0.1500],[51.5220,51.5360,-0.1650,-0.1450]];
+const STREETS = [["Piccadilly",[[51.5027,-0.1527],[51.5072,-0.1430],[51.5100,-0.1347]]],["Regent St",[[51.5100,-0.1347],[51.5110,-0.1375],[51.5125,-0.1395],[51.5152,-0.1418]]],["Oxford St",[[51.5148,-0.1505],[51.5152,-0.1418],[51.5163,-0.1307]]],["Strand",[[51.5074,-0.1270],[51.5100,-0.1220],[51.5128,-0.1175]]],["The Mall",[[51.5016,-0.1405],[51.5065,-0.1283]]],["Whitehall",[[51.5065,-0.1278],[51.5008,-0.1262]]],["Shaftesbury Ave",[[51.5100,-0.1347],[51.5125,-0.1300],[51.5140,-0.1265]]],["Charing Cross Rd",[[51.5085,-0.1283],[51.5125,-0.1293],[51.5160,-0.1300]]]];
+const DAYCOL = {h:"#D4A933","1":"#3A6EA5","2":"#B3261E","3":"#6B2C6E","4":"#2E7D5B",r:"#7A8294"};
+function viewMap(){
+  const ext = MAPMODE === "central" ? [51.4985,51.5185,-0.1505,-0.1110] : [51.4730,51.5600,-0.1950,0.0250];
+  const K = 111.32*Math.cos(51.5*Math.PI/180), KY = 110.57;
+  const W = (ext[3]-ext[2])*K, H = (ext[1]-ext[0])*KY, S = 1000/W;
+  const X = lon => (lon-ext[2])*K*S, Y = lat => (ext[1]-lat)*KY*S;
+  const vw = 1000, vh = H*S;
+  const pts = arr => arr.map(([la,lo]) => `${X(lo).toFixed(1)},${Y(la).toFixed(1)}`).join(" ");
+  let svg = `<svg viewBox="0 0 ${vw} ${vh.toFixed(0)}" role="img" aria-label="${T("map")}"><rect width="${vw}" height="${vh}" fill="var(--map-land)"/>`;
+  PARKS.forEach(([a,b,c,d]) => svg += `<rect x="${X(c)}" y="${Y(b)}" width="${X(d)-X(c)}" height="${Y(a)-Y(b)}" rx="6" fill="var(--map-park)"/>`);
+  if(MAPMODE === "central") STREETS.forEach(([n,p]) => { svg += `<polyline points="${pts(p)}" fill="none" stroke="var(--map-street)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>`; });
+  svg += `<polyline points="${pts(THAMES)}" fill="none" stroke="var(--map-river)" stroke-width="${MAPMODE==="central"?26:12}" stroke-linecap="round" stroke-linejoin="round"/>`;
+  if(MAPMODE === "central") STREETS.forEach(([n,p]) => { const i = Math.floor((p.length-1)/2); const a = p[i], b = p[i+1]; let ang = Math.atan2(Y(b[0])-Y(a[0]), X(b[1])-X(a[1]))*180/Math.PI; if(ang>90) ang-=180; if(ang<-90) ang+=180; const cx = (X(a[1])+X(b[1]))/2, cy = (Y(a[0])+Y(b[0]))/2; svg += `<text x="${cx}" y="${cy}" transform="rotate(${ang.toFixed(1)} ${cx} ${cy})" font-size="15" fill="var(--map-label)" text-anchor="middle" dominant-baseline="middle" font-style="italic" direction="ltr">${n}</text>`; });
+  if(MAPMODE === "wide"){ const a = [X(-0.1505),Y(51.5185),X(-0.1110),Y(51.4985)]; svg += `<rect x="${a[0]}" y="${a[1]}" width="${a[2]-a[0]}" height="${a[3]-a[1]}" fill="none" stroke="#D4A933" stroke-width="3" stroke-dasharray="10 7"/>`; }
+  const list = Object.entries(PL).filter(([id,p]) => p.m === (MAPMODE==="central"?1:2) || (MAPMODE==="wide" && id==="hotel"));
+  list.forEach(([id,p]) => { const x = X(p.ll[1]), y = Y(p.ll[0]); const r = MAPMODE==="central"?27:21;
+    svg += id==="hotel" ? `<g class="pin" tabindex="0" data-place="${id}" role="button" aria-label="${esc(L(p))}"><circle cx="${x}" cy="${y}" r="${r+3}" fill="#D4A933" stroke="#0F1B3D" stroke-width="3"/><text x="${x}" y="${y+1}" font-size="${r}" text-anchor="middle" dominant-baseline="middle" fill="#0F1B3D">★</text></g>`
+      : `<g class="pin" tabindex="0" data-place="${id}" role="button" aria-label="${esc(L(p))}"><circle cx="${x}" cy="${y}" r="${r}" fill="${DAYCOL[p.day]}" stroke="#fff" stroke-width="3"/><text x="${x}" y="${y+1}" font-size="${r*0.95}" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#fff" font-family="IBM Plex Mono, monospace">${p.n}</text></g>`; });
+  svg += `<text x="${vw-24}" y="44" font-size="22" font-weight="700" text-anchor="middle" fill="var(--ink)">N</text><path d="M${vw-24} 12 l-8 16 h16z" fill="var(--ink)"/>`;
+  const km = MAPMODE==="central"?0.5:2; svg += `<line x1="24" y1="${vh-24}" x2="${24+km*S}" y2="${vh-24}" stroke="var(--ink)" stroke-width="4"/><text x="${24+km*S/2}" y="${vh-34}" font-size="16" text-anchor="middle" fill="var(--ink)">${km} km</text></svg>`;
+  const leg = list.map(([id,p]) => `<button class="lg" data-place="${id}">${id==="hotel"?`<span class="num" style="background:#D4A933;color:#0F1B3D">★</span>`:`<span class="num" style="background:${DAYCOL[p.day]}">${p.n}</span>`}<span>${esc(L(p))}</span></button>`).join("");
+  const off = Object.entries(PL).filter(([id,p]) => p.m === 0).map(([id,p]) => `<button class="lg" data-place="${id}"><span class="num" style="background:${DAYCOL[p.day]};${p.day==="h"?"color:#0F1B3D":""}">${p.n}</span><span>${esc(L(p))}</span></button>`).join("");
+  const key = [["1",LANG==="he"?"יום 1":"Day 1"],["2",LANG==="he"?"יום 2":"Day 2"],["3",LANG==="he"?"יום 3":"Day 3"],["4",LANG==="he"?"יום 4":"Day 4"],["r",LANG==="he"?"המלצות":"Ideas"]].map(([k,t]) => `<span class="row" style="gap:4px"><span class="dot" style="background:${DAYCOL[k]}"></span><span class="small">${t}</span></span>`).join("");
+  return `<div class="stack"><div class="row" style="justify-content:space-between"><div class="mode"><button data-mapmode="central" aria-pressed="${MAPMODE==="central"}">${T("central")}</button><button data-mapmode="wide" aria-pressed="${MAPMODE==="wide"}">${T("wide")}</button></div><div class="row">${key}</div></div>
+    <div class="mapbox">${svg}</div><div class="muted small">${T("tapPin")} • ${T("mapNote")}</div>
+    <div class="legend">${leg}</div><h3>${T("offmap")}</h3><div class="legend">${off}</div></div>`;
+}
+function openPlace(id){
+  const p = PL[id]; if(!p) return;
+  const evs = E.filter(e => e.pl === id);
+  $("sheet").innerHTML = `<div class="scrim" id="scrim"><div class="sheet" role="dialog" aria-modal="true" aria-label="${esc(L(p))}">
+    <button class="tbtn close" id="closeSheet">${T("close")}</button>
+    <div class="row"><span class="num" style="background:${DAYCOL[p.day]};${p.day==="h"?"color:#0F1B3D":""}">${id==="hotel"?"★":p.n}</span><h2>${esc(L(p))}</h2></div>
+    <div>${esc(LANG==="he"?p.tHe:p.tEn)}</div>
+    ${placeActions(id,false)}
+    ${evs.length?`<div class="stack">${evs.map(e => `<div class="card small"><b class="mono">${L(DAYS[e.d])} ${e.t}</b> – ${esc(L(e.ti))}</div>`).join("")}</div>`:""}
+    <a class="small" href="https://citymapper.com/directions?endcoord=${p.ll[0]}%2C${p.ll[1]}&endname=${encodeURIComponent(p.en)}" target="_blank" rel="noopener">Citymapper</a>
+  </div></div>`;
+  $("closeSheet").onclick = closeSheet; $("scrim").onclick = ev => { if(ev.target.id === "scrim") closeSheet(); };
+  $("closeSheet").focus();
+}
+function closeSheet(){ $("sheet").innerHTML = ""; }
+document.addEventListener("keydown", e => { if(e.key === "Escape") closeSheet(); });
+
+function viewBookings(){
+  const S = EDIT ? DRAFT : STATE;
+  const todo = TODO.map(t => `<label class="check ${S.done[t.id]?"done":""}"><input type="checkbox" data-todo="${t.id}" ${S.done[t.id]?"checked":""} ${EDIT?"":"disabled"}><span class="lbl" style="min-width:0">${esc(L(t))}${t.u?` <a href="${t.u}" target="_blank" rel="noopener" class="small">${LANG==="he"?"קישור":"link"}</a>`:""}</span></label>`).join("");
+  const doneN = TODO.filter(t => S.done[t.id]).length;
+  const card = (title, rows, extra) => `<div class="card stack"><h3>${title}</h3><dl class="kv">${rows.map(([k,v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>${extra||""}</div>`;
+  const he = LANG === "he";
+  return `<div class="stack">
+    <h2>${T("todo")}</h2>
+    <div class="row"><div class="bar" style="flex:1"><i style="width:${Math.round(doneN/TODO.length*100)}%"></i></div><span class="mono small">${doneN}/${TODO.length}</span></div>
+    ${!EDIT?`<div class="muted small">${he?"יוני מסמן כאן מה כבר נסגר, וכולם רואים.":"Yoni ticks off what's booked here, and everyone sees it."}</div>`:""}
+    <div class="stack">${todo}</div>
+    ${CANEDIT&&!EDIT?`<button class="act primary" id="editOn" style="justify-self:start">✏️ ${T("edit")}</button>`:""}
+    <h2>${T("confirmed")}</h2>
+    ${card(he?"✈️ טיסות – קבוצת ישראל (12)":"✈️ Flights – Israel group (12)",[
+      [he?"הלוך":"Out","LY317 • "+(he?"ראשון 6.12 • ת״א 17:00 ← הית׳רו T4 20:25":"Sun 6 Dec • TLV 17:00 → Heathrow T4 20:25")],
+      [he?"חזור":"Back","LY312 • "+(he?"שישי 11.12 • לוטון 07:55 ← נתב״ג 14:40":"Fri 11 Dec • Luton 07:55 → TLV 14:40")],
+      [he?"הזמנות":"Bookings","YCWT59 (7) • YDVYSX (5)"],[he?"כבודה":"Bags",he?"מזוודה אחת לנוסע":"1 checked bag each"]],
+      `<div class="actions"><a class="act" href="https://www.google.com/search?q=LY317+flight+status" target="_blank" rel="noopener">LY317 ${he?"סטטוס":"status"}</a><a class="act" href="https://www.google.com/search?q=LY312+flight+status" target="_blank" rel="noopener">LY312 ${he?"סטטוס":"status"}</a></div>`)}
+    ${card(he?"✈️ טיסות – משפחת אלון (7)":"✈️ Flights – Alon's family (7)",[
+      [he?"הלוך":"Out","Delta 5921 (Virgin) • "+(he?"נחיתה בהית׳רו 6.12 ב-10:40":"lands Heathrow 6 Dec 10:40")],
+      [he?"חזור":"Back","Delta 9603 (KLM) • "+(he?"הית׳רו T4, 11.12 ב-06:30":"Heathrow T4, 11 Dec 06:30")]],
+      `<div class="actions"><a class="act" href="https://www.google.com/search?q=DL5921+flight+status" target="_blank" rel="noopener">DL5921</a><a class="act" href="https://www.google.com/search?q=DL9603+flight+status" target="_blank" rel="noopener">DL9603</a></div>`)}
+    ${card(he?"🚐 הסעות – Airport Pickups London":"🚐 Transfers – Airport Pickups London",[
+      ["6.12",he?"הית׳רו ← מלון: 1005001 + 1005005 (£128 לרכב) • משפחת אלון: 1005790":"Heathrow → hotel: 1005001 + 1005005 (£128 per van) • Alon's family: 1005790"],
+      ["11.12",he?"05:00 מלון ← לוטון: 1005002 + 1005006 (£143 לרכב) • 03:30 משפחת אלון להית׳רו: 1005791 (£115)":"05:00 hotel → Luton: 1005002 + 1005006 (£143 per van) • 03:30 Alon's family to Heathrow: 1005791 (£115)"],
+      [he?"מפגש":"Meet",he?"הית׳רו T4: App & Private Hire Pick-Up, Zone 1 – להתקשר לנהג אחרי המזוודות":"Heathrow T4: App & Private Hire Pick-Up, Zone 1 – call the driver after bags"],
+      [he?"תשלום":"Pay",he?"מזומן לנהג או לינק תשלום":"Cash to the driver or a payment link"],
+      [he?"טלפון":"Phone",`<span class="mono" dir="ltr">+44 208 688 7744</span>`],["WhatsApp",`<span class="mono" dir="ltr">+44 7538 989360</span>`]],
+      `<div class="actions"><a class="act primary" href="https://wa.me/447538989360" target="_blank" rel="noopener">WhatsApp</a><a class="act" href="https://www.airport-pickups-london.com/manage-booking.html" target="_blank" rel="noopener">${he?"ניהול הזמנה":"Manage booking"}</a></div>`)}
+    ${card(he?"🏨 המלון – The Dilly":"🏨 Hotel – The Dilly",[
+      [he?"כתובת":"Address","21 Piccadilly, London W1J 0BH"],[he?"תאריכים":"Dates",he?"6–11.12, 5 לילות, כולל ארוחת בוקר":"6–11 Dec, 5 nights, breakfast included"],
+      [he?"ביטול":"Cancel",he?"חינם עד 6.12 ב-14:00":"Free until 6 Dec 14:00"],[he?"נציגה":"Contact","Danica Loriaga • londonres@leonardohotels.com"],
+      [he?"חדר 1":"Room 1",he?"יוני, דני, אימרי":"Yoni, Dani, Imri"],[he?"חדר 2":"Room 2",he?"אמבר, איתמר (צמוד ל-1)":"Amber, Itamar (next to 1)"],
+      [he?"חדר 3":"Room 3",he?"אלון, ליז, זיו":"Alon, Liz, Ziv"],[he?"חדר 4":"Room 4",he?"טטיאנה, דיוויד, רוז, איתן":"Tatiana, David, Rose, Eitan"],
+      [he?"חדר 5":"Room 5",he?"סבא דוד וסבתא סנדרה":"Grandpa David & Grandma Sandra"],[he?"חדר 6":"Room 6",he?"דן, הדר, דור, ניב, רז":"Dan, Hadar, Dor, Niv, Raz"]],placeActions("hotel",true))}
+    ${card(he?"🎟️ כרטיסים":"🎟️ Tickets",[
+      ["London Eye",he?"שני 7.12, 15:00 • R128336856 • QR בנייד":"Mon 7 Dec, 15:00 • R128336856 • QR on phone"],
+      ["Winter Wonderland",he?"שלישי 8.12, כניסה 16:00–17:00 • 130427698":"Tue 8 Dec, entry 16:00–17:00 • 130427698"]],
+      `<div class="actions"><a class="act" href="https://drive.google.com/drive/folders/1NycnLh3v_IS_MSO4c973iN-Xli0Bfqa5" target="_blank" rel="noopener">${he?"תיקיית הטיול בדרייב":"Trip folder in Drive"}</a></div><div class="muted small">${he?"הקישור נפתח רק למי שיוני שיתף איתו את התיקייה":"Opens only for people Yoni shared the folder with"}</div>`)}
+  </div>`;
+}
+
+function viewMore(){
+  const he = LANG === "he", S = EDIT ? DRAFT : STATE;
+  const sec = (id, title, inner, open) => `<details class="sec" id="sec-${id}" ${open?"open":""}><summary>${title}</summary><div class="in">${inner}</div></details>`;
+  const adultsSel = (kid) => `<select data-buddy="${kid}" style="width:auto;min-width:120px;padding:6px 8px">${ADULTS.concat(["tatiana","davidj"]).map(a => `<option value="${a}" ${S.buddies[kid]===a?"selected":""}>${nm(a)}</option>`).join("")}</select>`;
+  const buddies = Object.keys(S.buddies).map(k => `<div class="row" style="justify-content:space-between;border-top:1px solid var(--line);padding-top:8px;flex-wrap:nowrap"><span><b>${nm(k)}</b> <span class="muted small">(${P[k].age})</span></span><span class="row" style="gap:6px;flex-wrap:nowrap"><span class="muted small">${he?"באחריות":"looked after by"}</span>${EDIT ? adultsSel(k) : `<b>${nm(S.buddies[k])}</b>`}</span></div>`).join("");
+  const packDone = store.get("gl_pack",{}), huntDone = store.get("gl_hunt",{});
+  const huntN = HUNT.filter((h,i) => huntDone[i]).length;
+  const CUR = he ? {key:"gl_rate", def:4.08, sym:"₪", code:"ILS"} : {key:"gl_rate_usd", def:1.33, sym:"$", code:"USD"};
+  const rate = store.get(CUR.key, CUR.def);
+  const nights = [[6,3],[7,4],[8,5],[9,6],[10,7]];
+  const phonesEdit = Object.keys(S.phones).map(k => `<label class="field"><span>${nm(k)}</span><input type="tel" data-phone="${k}" value="${esc(S.phones[k])}" dir="ltr"></label>`).join("");
+  const parentsOf = {imri:["yoni","dani"],dor:["dan","hadar"],niv:["dan","hadar"],raz:["dan","hadar"],ziv:["alon","liz"]};
+  const kidCards = Object.keys(parentsOf).map(k => `<div class="card stack" style="direction:ltr;text-align:left"><b style="font-size:1.1em">My name is ${P[k].en} (${P[k].he})</b><div>I'm staying at <b>The Dilly hotel, 21 Piccadilly, London W1J 0BH</b></div><div>Please call my parents:<br>${parentsOf[k].map(p => `${P[p].en}: <span class="mono">${esc(S.phones[p]||"___")}</span>`).join("<br>")}</div><button class="act" data-card="${k}">${he?"שמירה כתמונה להדפסה":"Save as image to print"}</button></div>`).join("");
+  return `<div class="stack">
+    ${EDIT?sec("announce",he?"✏️ עדכון מהמארגן":"✏️ Organizer update",`<label class="field"><span>עברית</span><textarea id="annHe" rows="3">${esc(S.announce.he)}</textarea></label><label class="field"><span>English – ${he?"מתורגם אוטומטית מהעברית כששומרים":"translated automatically from Hebrew on save"}</span><textarea id="annEn" rows="3" dir="ltr">${esc(S.announce.en)}</textarea></label><div class="row"><button class="act" id="transBtn">🌐 ${he?"תרגום לאנגלית עכשיו":"Translate to English now"}</button><span class="muted small" id="transMsg"></span></div><label class="field"><span>${he?"קישור לאלבום תמונות":"Photo album link"}</span><input id="albumIn" type="url" dir="ltr" value="${esc(S.album)}"></label><label class="field"><span>${he?"קישור הזמנה לקבוצת הוואטסאפ":"WhatsApp group invite link"}</span><input id="waIn" type="url" dir="ltr" value="${esc(S.waGroup||"")}" placeholder="https://chat.whatsapp.com/..."></label>`,true):""}
+    ${sec("emergency",he?"🚨 חירום":"🚨 Emergency",`
+      <div class="actions"><a class="act primary" style="background:var(--bus);border-color:var(--bus)" href="https://wa.me/447511223617" target="_blank" rel="noopener">💬 ${he?"שגרירות – חירום 24/7":"Embassy – 24/7 emergency"}</a><a class="act primary" href="https://wa.me/447538989360" target="_blank" rel="noopener">💬 ${he?"חברת ההסעות":"Transfer company"}</a><a class="act" href="https://wa.me/447498316363" target="_blank" rel="noopener">💬 ${he?"שגרירות – קונסולרי":"Embassy – consular"}</a></div>
+      <dl class="kv"><dt>${he?"חירום (משטרה, אמבולנס)":"Emergency (police, ambulance)"}</dt><dd><span class="mono" dir="ltr">999 / 112</span></dd>
+      <dt>${he?"ייעוץ רפואי לא דחוף":"Non-urgent medical advice"}</dt><dd><span class="mono" dir="ltr">NHS 111</span></dd>
+      <dt>${he?"שגרירות ישראל – מוקד חירום 24/7 (שיחה או וואטסאפ)":"Israeli Embassy – 24/7 emergency (call or WhatsApp)"}</dt><dd><span class="mono" dir="ltr">+44 7511 223617</span></dd>
+      <dt>${he?"שגרירות – קו ראשי":"Embassy – main line"}</dt><dd><span class="mono" dir="ltr">+44 20 7957 9500</span><div class="muted small">${he?"שני–חמישי 9:30–12:00":"Mon–Thu 9:30–12:00"}</div></dd>
+      <dt>${he?"וואטסאפ קונסולרי":"Consular WhatsApp"}</dt><dd><span class="mono" dir="ltr">+44 7498 316363</span><div class="muted small">${he?"שני–חמישי 14:30–16:30":"Mon–Thu 14:30–16:30"}</div></dd>
+      <dt>${he?"כתובת השגרירות":"Embassy address"}</dt><dd><span dir="ltr">2 Palace Green, London W8 4QB</span><div class="muted small">${he?"לבדוק באתר השגרירות לפני הגעה":"Check the embassy website before going"}</div></dd>
+      <dt>${he?"חברת ההסעות – Airport Pickups London":"Transfers – Airport Pickups London"}</dt><dd><span class="mono" dir="ltr">+44 7538 989360</span><div class="muted small">${he?"וואטסאפ 24/7 • טלפון ":"WhatsApp 24/7 • phone "}<span dir="ltr">+44 208 688 7744</span></div></dd>
+      <dt>${he?"טלפון המלון":"Hotel phone"}</dt><dd class="mono">___</dd></dl>
+      <div class="card small"><b>${he?"ילד הלך לאיבוד":"If a child gets lost"}</b><br>${he?"1. הילד נשאר במקום ופונה לעובד עם תג או לשוטר ומראה את כרטיס החירום. 2. המבוגר האחראי מתקשר מיד לכולם בקבוצה. 3. בודקים AirTag ב-Find My. 4. בכל אטרקציה קובעים מראש נקודת מפגש.":"1. The child stays put, finds a staff member or police officer and shows their emergency card. 2. The adult in charge calls the group right away. 3. Check the AirTag in Find My. 4. Agree a meeting point at every attraction."}</div>`,true)}
+    ${sec("contacts",he?"📞 טלפונים של כולם":"📞 Everyone's phone numbers",["y","d","a","g"].map(f => `<div class="stack" style="gap:6px"><b style="color:${FAM[f].c}">${L(FAM[f])}</b>${fam(f).filter(i => !P[i].kid).map(i => { const ph = S.phones[i]||""; const dig = ph.replace(/[^0-9]/g,""); return `<div style="display:grid;grid-template-columns:minmax(70px,auto) 1fr auto;gap:8px;align-items:center;border-top:1px solid var(--line);padding-top:6px"><span>${nm(i)}</span>${EDIT ? `<input type="tel" data-phone="${i}" value="${esc(ph)}" dir="ltr" style="width:100%;border:1px solid var(--line);border-radius:10px;padding:7px 9px;background:var(--bg);font-size:1rem">` : `<span class="mono small" dir="ltr" style="text-align:end">${esc(ph||"___")}</span>`}${dig&&!EDIT?`<a class="act" href="https://wa.me/${dig}" target="_blank" rel="noopener">WhatsApp</a>`:"<span></span>"}</div>`; }).join("")}</div>`).join("")+`<div class="muted small">${he?"בחו״ל מחייגים עם הקידומת הבינלאומית, כמו שמופיע כאן.":"Abroad, dial with the international prefix as shown."}</div>`,true)}
+    ${sec("taxi",he?"🚕 כרטיס לנהג מונית":"🚕 Show the taxi driver",`<div class="taxi"><div style="font-size:.9em">Please take me to</div><div class="a">The Dilly Hotel</div><div class="a" style="font-size:1.4em">21 Piccadilly</div><div class="a" style="font-size:1.4em">London W1J 0BH</div><div style="margin-top:6px">Near Piccadilly Circus</div></div>`)}
+    ${sec("buddies",he?"🤝 מי שומר על מי":"🤝 Who looks after whom",`<div class="muted small">${he?"באטרקציות עמוסות כל ילד צמוד למבוגר אחד שאחראי עליו. זה לא קשור לטלפונים.":"At busy attractions each child sticks with one grown-up who is responsible for them. This isn't about phones."}</div><div class="stack" style="gap:8px">${buddies}</div>`)}
+    ${sec("track",he?"📍 AirTag ושיתוף מיקום":"📍 AirTag & location sharing",`
+      <div>${he?"אי אפשר להציג מיקום של AirTag בתוך העמוד. כך עובדים עם זה:":"An AirTag's location can't be shown inside this page. Here's how to use it:"}</div>
+      <ol style="margin:0;padding-inline-start:20px;display:grid;gap:6px">
+        <li>${he?"שמים AirTag בכיס או בתיק של הילדים הקטנים.":"Put an AirTag in the little ones' pocket or bag."}</li>
+        <li>${he?"משתפים אותו: Find My ← פריטים ← בוחרים את ה-AirTag ← הוספת אנשים (עד 5). ככה גם בן/בת הזוג וסבא וסבתא רואים.":"Share it: Find My → Items → choose the AirTag → Add People (up to 5), so your partner and the grandparents can see it too."}</li>
+        <li>${he?"בימים שמתפצלים: וואטסאפ ← צירוף ← מיקום ← שיתוף מיקום בזמן אמת.":"On split days: WhatsApp → attach → Location → Share live location."}</li></ol>
+      <div class="actions"><a class="act primary" href="findmy://">${he?"פתיחת Find My":"Open Find My"}</a></div>
+      <div class="muted small">${he?"הכפתור עובד באייפון בלבד ולפעמים לא נפתח מתוך הדף – אז פותחים את האפליקציה ידנית. אנדרואיד לא מציג AirTag.":"The button works on iPhone only and may not open from inside the page – then open the app yourself. Android can't show AirTags."}</div>`)}
+    ${sec("hanukkah",he?"🕎 חנוכה בלונדון":"🕎 Hanukkah in London",`
+      <dl class="kv">${nights.map(([d,n]) => `<dt class="mono">${d}.12</dt><dd>${he?`נר ${n}`:`Candle ${n}`} • ${he?"אחרי השקיעה (~15:52)":"after sunset (~15:52)"}</dd>`).join("")}</dl>
+      <div class="muted small">${he?"בחדרי המלון אסור אש גלויה – חנוכייה חשמלית.":"No open flames in hotel rooms – use an electric menorah."}</div>
+      <div class="card blessing" dir="rtl" style="text-align:right">בָּרוּךְ אַתָּה ה׳ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו וְצִוָּנוּ לְהַדְלִיק נֵר שֶׁל חֲנֻכָּה.<br>בָּרוּךְ אַתָּה ה׳ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, שֶׁעָשָׂה נִסִּים לַאֲבוֹתֵינוּ בַּיָּמִים הָהֵם בַּזְּמַן הַזֶּה.</div>
+      <div class="card small" dir="ltr" style="text-align:left"><i>Baruch atah Adonai, Eloheinu melech ha'olam, asher kid'shanu b'mitzvotav v'tzivanu l'hadlik ner shel Chanukah.<br>Baruch atah Adonai, Eloheinu melech ha'olam, she'asah nisim la'avoteinu bayamim hahem bazman hazeh.</i></div>`)}
+    ${sec("money",he?"💷 מחשבון ליש״ט ↔ שקל":"💷 Pounds ↔ Dollars",`
+      <div class="conv"><label>£ GBP<input id="gbp" type="number" inputmode="decimal" value="10"></label><label>${CUR.sym} ${CUR.code}<input id="ils" type="number" inputmode="decimal" value="${(10*rate).toFixed(2)}"></label></div>
+      <label class="field"><span>${he?"שער (1 ליש״ט בשקלים) – אפשר לעדכן":"Rate ($ per £1) – you can change it"}</span><input id="rate" type="number" step="0.01" value="${rate}"></label>
+      <div class="muted small">${he?"ברירת מחדל: 4.08, לפי השער ב-27.10.2026. במסעדות מתווספים לרוב 12.5% דמי שירות.":"Default 1.33, the rate on 27 Oct 2026. Restaurants usually add a 12.5% service charge."}</div>`)}
+    ${sec("food",he?"🍽️ איפה לאכול":"🍽️ Where to eat",`<div class="muted small">${he?"ארוחת בוקר כל יום במלון • צהריים וערב חופשיים":"Breakfast at the hotel daily • lunch and dinner are free time"}</div>${FOOD.map(f => `<div class="row" style="justify-content:space-between;border-top:1px solid var(--line);padding-top:8px"><div style="min-width:0"><b dir="ltr">${f[0]}</b><div class="muted small">${he?f[1]:f[2]}</div></div><div class="actions"><a class="act" href="${f[3]}" target="_blank" rel="noopener">${he?"תפריט":"Menu"}</a><a class="act" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(f[0]+" London")}" target="_blank" rel="noopener">${ICON.pin}</a></div></div>`).join("")}`)}
+    ${sec("album",he?"📸 אלבום משותף":"📸 Shared album",S.album?`<a class="act primary" style="justify-self:start" href="${esc(S.album)}" target="_blank" rel="noopener">${he?"פתיחת האלבום":"Open the album"}</a><ol style="margin:0;padding-inline-start:20px;display:grid;gap:4px"><li>${he?"פותחים את האלבום (בפעם הראשונה לוחצים ״הצטרפות״).":"Open the album (the first time, tap \"Join\")."}</li><li>${he?"לוחצים על + או על סמל התמונה עם הפלוס.":"Tap + or the add-photos icon."}</li><li>${he?"בוחרים תמונות מהגלריה ולוחצים ״הוספה״ – וכולם רואים.":"Pick photos from your gallery and tap \"Add\" – everyone sees them."}</li></ol><div class="muted small">${he?"מצלמים כרגיל במצלמת הטלפון, ואז מוסיפים לאלבום. צריך חשבון גוגל כדי להעלות.":"Take photos with your phone camera as usual, then add them to the album. You need a Google account to upload."}</div>`:`<div class="muted">${he?"יוני יוסיף כאן קישור לאלבום ב-Google Photos.":"Yoni will add a Google Photos album link here."}</div>`)}
+    ${sec("pack",he?"🧳 רשימת ציוד (בטלפון הזה)":"🧳 Packing list (on this phone)",PACK.map((p,i) => `<label class="check ${packDone[i]?"done":""}"><input type="checkbox" data-pack="${i}" ${packDone[i]?"checked":""}><span class="lbl">${he?p[0]:p[1]}</span></label>`).join(""))}
+    ${sec("kids",he?"🧒 לילדים: ציד אוצרות בלונדון":"🧒 Kids: London treasure hunt",`<div class="row"><div class="bar" style="flex:1"><i style="width:${Math.round(huntN/HUNT.length*100)}%"></i></div><span class="mono small">${huntN}/${HUNT.length}</span></div>${HUNT.map((h,i) => `<label class="check ${huntDone[i]?"done":""}"><input type="checkbox" data-hunt="${i}" ${huntDone[i]?"checked":""}><span class="lbl">${he?h[0]:h[1]}</span></label>`).join("")}`)}
+    ${sec("cards",he?"🪪 כרטיסי חירום לילדים בלי טלפון":"🪪 Emergency cards for kids without phones",`<div class="muted small">${he?"באנגלית, כדי שכל עובד או שוטר יבין. שומרים כתמונה ומדפיסים, או מצלמים מסך.":"In English so any staff member or police officer can read it. Save as an image and print, or take a screenshot."}</div>${EDIT?`<div class="muted small">${he?"את מספרי הטלפון עורכים בחלק ״טלפונים של כולם״.":"Edit phone numbers in \"Everyone's phone numbers\"."}</div>`:""}${kidCards}`)}
+    ${sec("home",he?"📱 להוסיף למסך הבית":"📱 Add to your home screen",`<div>${he?"אייפון: פותחים את הקישור ב-Safari ← כפתור שיתוף ← ״הוספה למסך הבית״.<br>אנדרואיד: Chrome ← ⋮ ← ״הוספה למסך הבית״.":"iPhone: open the link in Safari → Share → \"Add to Home Screen\".<br>Android: Chrome → ⋮ → \"Add to Home screen\"."}</div><div class="muted small">${he?"צריך חיבור לאינטרנט. כדאי לשמור צילום מסך של ההזמנות החשובות.":"You need an internet connection. Keep screenshots of the key bookings."}</div><div class="muted small">${he?"להדפסת הלו״ז המלא – המצגת של יוני.":"For a printed schedule, use Yoni's slide deck."}</div>`)}
+    ${CANEDIT&&!EDIT?`<button class="act primary" id="editOn" style="justify-self:start">✏️ ${T("edit")}</button>`:""}
+  </div>`;
+}
+function editBar(){ return `<div class="editbar"><b style="flex:1">${T("edit")}</b><span id="editMsg" class="small"></span><button class="ghost" id="editCancel">${T("cancel")}</button><button class="save" id="editSave">${T("save")}</button></div>`; }
+
+/* ============ WIRING ============ */
+function wire(v){
+  v.querySelectorAll("[data-day]").forEach(b => b.onclick = () => { DAY = +b.dataset.day; renderView(); });
+  v.querySelectorAll("[data-kid]").forEach(b => b.onclick = () => { KID = b.dataset.kid; store.set("gl_kid", KID); renderView(); window.scrollTo(0,0); });
+  v.querySelectorAll("[data-mode]").forEach(b => b.onclick = () => { SCHMODE = b.dataset.mode; store.set("gl_schmode",SCHMODE); renderView(); });
+  v.querySelectorAll("[data-mapmode]").forEach(b => b.onclick = () => { MAPMODE = b.dataset.mapmode; renderView(); });
+  v.querySelectorAll("[data-place]").forEach(b => { b.onclick = () => openPlace(b.dataset.place); b.onkeydown = e => { if(e.key==="Enter"||e.key===" "){ e.preventDefault(); openPlace(b.dataset.place); } }; });
+  v.querySelectorAll("[data-pack]").forEach(c => c.onchange = () => { const s = store.get("gl_pack",{}); s[c.dataset.pack] = c.checked; store.set("gl_pack",s); c.closest(".check").classList.toggle("done",c.checked); });
+  v.querySelectorAll("[data-hunt]").forEach(c => c.onchange = () => { const s = store.get("gl_hunt",{}); s[c.dataset.hunt] = c.checked; store.set("gl_hunt",s); renderView(); const d = $("sec-kids"); if(d) d.open = true; });
+  v.querySelectorAll("[data-todo]").forEach(c => c.onchange = () => { DRAFT.done[c.dataset.todo] = c.checked; c.closest(".check").classList.toggle("done",c.checked); });
+  v.querySelectorAll("[data-buddy]").forEach(s => s.onchange = () => { DRAFT.buddies[s.dataset.buddy] = s.value; });
+  v.querySelectorAll("[data-phone]").forEach(i => i.oninput = () => { DRAFT.phones[i.dataset.phone] = i.value.trim(); });
+  v.querySelectorAll("[data-card]").forEach(b => b.onclick = () => saveCard(b.dataset.card, b));
+  const ah = $("annHe"), ae = $("annEn"), al = $("albumIn");
+  if(ah) ah.oninput = () => { DRAFT.announce.he = ah.value; };
+  if(ae) ae.oninput = () => { DRAFT.announce.en = ae.value; EN_TOUCHED = true; };
+  const tb = $("transBtn"); if(tb) tb.onclick = async () => { const m = $("transMsg"); m.textContent = LANG==="he"?"מתרגם...":"Translating..."; const t = await translateHe(DRAFT.announce.he); if(t){ DRAFT.announce.en = t; EN_TOUCHED = true; const e2 = $("annEn"); if(e2) e2.value = t; m.textContent = LANG==="he"?"תורגם – אפשר לתקן לפני שמירה":"Translated – you can edit it before saving"; } else m.textContent = LANG==="he"?"התרגום לא הצליח – אפשר לכתוב באנגלית ידנית":"Translation failed – type the English yourself"; };
+  if(al) al.oninput = () => { DRAFT.album = al.value.trim(); };
+  const wi = $("waIn"); if(wi) wi.oninput = () => { DRAFT.waGroup = wi.value.trim(); };
+  const g = $("gbp"), i = $("ils"), r = $("rate");
+  if(g){ const rt = () => parseFloat(r.value)||(LANG==="he"?4.08:1.33);
+    g.oninput = () => { i.value = g.value===""?"":(parseFloat(g.value)*rt()).toFixed(2); };
+    i.oninput = () => { g.value = i.value===""?"":(parseFloat(i.value)/rt()).toFixed(2); };
+    r.oninput = () => { store.set(LANG==="he"?"gl_rate":"gl_rate_usd", rt()); g.oninput(); }; }
+  const on = $("editOn"); if(on) on.onclick = () => { EDIT = true; DRAFT = JSON.parse(JSON.stringify(STATE)); renderView(); };
+  const cx = $("editCancel"); if(cx) cx.onclick = () => { EDIT = false; renderView(); };
+  const sv = $("editSave"); if(sv) sv.onclick = save;
+}
+
+/* ============ SAVE (republish page with new shared state) ============ */
+function buildDoc(state){
+  const style = $("app-style").textContent, script = $("app-script").textContent;
+  const json = JSON.stringify(state).replace(/</g,"\\u003c");
+  return '<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>' + RESET + '</style></head><body>'
+    + HEAD_TAGS + '<style id="app-style">' + style + '</style>\n' + BODY_TAGS
+    + '<script type="application/json" id="state">' + json + '<\/script>\n<script id="app-script">' + script + '<\/script></body></html>';
+}
+let EN_TOUCHED = false;
+async function translateHe(he){
+  if(!he || !he.trim()) return "";
+  let sm = SAMPLE; try{ if(!sm && window.claude) sm = await window.claude.use("sample"); }catch(e){}
+  if(!sm) return null;
+  const names = IDS.map(i => `${P[i].he} = ${P[i].en}`).join(", ");
+  try{
+    const { text } = await sm(`Translate this announcement from the organizer of a family trip to London from Hebrew into natural, warm, short English for the English-speaking relatives. Use these name spellings: ${names}. Keep times, numbers, emojis and links exactly as they are. Reply with only the English translation, nothing else.\n\n${he}`, { modelTier: "quick" });
+    return text.trim();
+  }catch(e){ return null; }
+}
+async function save(){
+  const msg = $("editMsg"), btn = $("editSave"); btn.disabled = true; msg.textContent = T("saving");
+  DRAFT.announceDate = londonNow().date;
+  if(DRAFT.announce.he !== STATE.announce.he && !EN_TOUCHED){
+    msg.textContent = LANG==="he" ? "מתרגם לאנגלית..." : "Translating...";
+    const t = await translateHe(DRAFT.announce.he);
+    if(t === null){ msg.textContent = LANG==="he" ? "התרגום לא הצליח. כתבו את האנגלית ידנית ושמרו שוב." : "Translation failed. Type the English yourself and save again."; btn.disabled = false; EN_TOUCHED = true; return; }
+    DRAFT.announce.en = t;
+    msg.textContent = T("saving");
+  }
+  try{
+    const art = window.claude ? await window.claude.use("artifact") : null;
+    if(!art){ msg.textContent = T("readonly"); btn.disabled = false; return; }
+    try{ sessionStorage.setItem("gl_tab", route()); }catch(e){}
+    await art.publish(buildDoc(DRAFT));
+  }catch(err){
+    const c = err && err.code;
+    if(c === "conflict") return;
+    if(["not_writer","not_granted","not_declared","consent_required","capability_disabled"].includes(c)){ CANEDIT = false; EDIT = false; renderView(); const v = $("view"); v.insertAdjacentHTML("afterbegin", `<div class="notice">${T("readonly")}</div>`); return; }
+    msg.textContent = T("saveFail"); btn.disabled = false;
+  }
+}
+
+/* kid card -> PNG */
+async function saveCard(kid, btn){
+  const S = STATE, parentsOf = {imri:["yoni","dani"],dor:["dan","hadar"],niv:["dan","hadar"],raz:["dan","hadar"],ziv:["alon","liz"]};
+  const c = document.createElement("canvas"); c.width = 1050; c.height = 650; const x = c.getContext("2d");
+  x.fillStyle = "#fff"; x.fillRect(0,0,1050,650); x.strokeStyle = "#0F1B3D"; x.lineWidth = 10; x.strokeRect(5,5,1040,640);
+  x.fillStyle = "#0F1B3D"; x.fillRect(5,5,1040,120); x.fillStyle = "#D4A933"; x.font = "bold 54px Arial"; x.fillText("IF I'M LOST, PLEASE HELP", 40, 88);
+  x.fillStyle = "#000"; x.font = "bold 64px Arial"; x.fillText("My name is " + P[kid].en, 40, 215);
+  x.font = "36px Arial"; x.fillText("I'm staying at The Dilly hotel,", 40, 290); x.fillText("21 Piccadilly, London W1J 0BH", 40, 340);
+  x.font = "bold 38px Arial"; x.fillText("Please call my parents:", 40, 420); x.font = "38px Arial";
+  parentsOf[kid].forEach((p,i) => x.fillText(P[p].en + ":  " + (S.phones[p] || "_______________"), 40, 480 + i*55));
+  x.font = "26px Arial"; x.fillStyle = "#555"; x.fillText("Emergency: 999", 40, 620);
+  const blob = await new Promise(r => c.toBlob(r, "image/png"));
+  try{
+    const dl = window.claude ? await window.claude.use("downloads") : null;
+    if(!dl){ const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "emergency-card-" + P[kid].en.toLowerCase() + ".png"; document.body.appendChild(a); a.click(); a.remove(); btn.textContent = LANG==="he" ? "נשמר ✓" : "Saved ✓"; return; }
+    await dl.save({filename: "emergency-card-" + P[kid].en.toLowerCase() + ".png", data: blob});
+  }catch(e){
+    if(e && e.message === "none"){ btn.textContent = LANG==="he" ? "אפשר לצלם את הכרטיס מסך" : "Take a screenshot of the card instead"; }
+  }
+}
+
+
+/* ============ ASK CLAUDE ============ */
+let SAMPLE = null, CHAT = [], CHATCTL = null;
+function tripContext(){
+  const n = londonNow();
+  const ppl = IDS.map(i => `${P[i].en} (${P[i].he})${P[i].age?`, age ${P[i].age}`:""}, family: ${FAM[P[i].f].en}`).join("\n");
+  const evs = E.map(e => { const pl = e.pl ? PL[e.pl] : null; const who = e.who.length === IDS.length ? "everyone" : e.who.map(i => P[i].en).join(", ");
+    return `${DAYS[e.d].en} ${e.t} | ${e.ti.en} | ${e.su.en} | who: ${who}${pl?` | place: ${pl.en} (${pl.ll.join(",")})`:""}${e.k==="b"?" | BOOKED":e.k==="p"?" | NOT YET BOOKED":e.k==="f"?" | free time":""}`; }).join("\n");
+  const places = Object.values(PL).map(p => `${p.en}: ${p.tEn}`).join("\n");
+  const food = FOOD.map(f => `${f[0]}: ${f[2]}`).join("\n");
+  return `You are the helpful assistant inside the Groshar family's London trip app (6-11 December 2026, 19 people, hotel: The Dilly, 21 Piccadilly, London W1J 0BH, breakfast included). Hanukkah is during the trip.
+Current London date/time: ${n.date} ${n.time}. The viewer has selected: ${WHO}. Reply in ${LANG==="he"?"Hebrew":"English"} unless the viewer writes in another language - then reply in that language.
+Keep answers short and practical, phone-friendly, no markdown tables. For directions, suggest the likely Tube/bus/walking route and say to confirm live times in Google Maps or Citymapper. You cannot browse the web; if something needs live info (opening hours, prices, weather) say so briefly. Use the trip data below as the source of truth for the schedule.
+
+PEOPLE:
+${ppl}
+
+SCHEDULE (London time):
+${evs}
+
+PLACES & TIPS:
+${places}
+
+FOOD IDEAS:
+${food}
+
+TRANSFERS: Airport Pickups London, WhatsApp +44 7538 989360, phone +44 208 688 7744. Israel group (12): arrive LY317 Heathrow T4 Sun 20:25, meet driver at App & Private Hire Pick-Up Zone 1; return Fri pickup 05:00 to Luton for LY312 07:55. Alon's family (7): Delta 5921 lands Heathrow Sun 10:40; return pickup Fri 03:30 to Heathrow T4 for Delta 9603 06:30.
+EMERGENCY: 999/112, NHS 111, Israeli Embassy 24/7 +44 7511 223617.`;
+}
+function renderFab(){
+  if(!SAMPLE || $("fab")) return;
+  document.body.insertAdjacentHTML("beforeend", `<button class="fab" id="fab" aria-label="Ask Claude">✳︎ <span id="fabTxt"></span></button>`);
+  $("fab").onclick = openChat; fabLabel();
+}
+function fabLabel(){ const t = $("fabTxt"); if(t) t.textContent = LANG==="he" ? "שאלו את Claude" : "Ask Claude"; }
+function openChat(){
+  const he = LANG === "he";
+  const sugs = he ? ["איך מגיעים מהמלון למצודת לונדון?","מה הלו״ז שלי מחר?","איפה אוכלים ליד קובנט גארדן עם פעוטות?","מה לעשות אם יורד גשם?"] : ["How do I get from the hotel to the Tower of London?","What's my plan tomorrow?","Where can we eat near Covent Garden with toddlers?","What can we do if it rains?"];
+  $("sheet").innerHTML = `<div class="scrim" id="scrim"><div class="sheet" role="dialog" aria-modal="true" aria-label="Ask Claude">
+    <div class="row" style="justify-content:space-between"><h2>${he?"שאלו את Claude":"Ask Claude"}</h2><button class="tbtn" id="closeSheet">${T("close")}</button></div>
+    <div class="chat"><div class="msgs" id="msgs"></div>
+      ${CHAT.length?"":`<div class="sugs">${sugs.map(q => `<button class="chip" data-sug="${esc(q)}">${esc(q)}</button>`).join("")}</div>`}
+      <div class="chatin"><textarea id="chatBox" rows="2" placeholder="${he?"כתבו שאלה...":"Type a question..."}"></textarea><button id="chatSend">${he?"שליחה":"Send"}</button></div>
+      <div class="muted small">${he?"Claude מכיר את הלו״ז והמקומות של הטיול. התשובות משתמשות בחשבון Claude שלכם.":"Claude knows the trip schedule and places. Answers use your own Claude account."}</div></div>
+  </div></div>`;
+  $("closeSheet").onclick = () => { if(CHATCTL) CHATCTL.abort(); closeSheet(); };
+  $("scrim").onclick = ev => { if(ev.target.id === "scrim"){ if(CHATCTL) CHATCTL.abort(); closeSheet(); } };
+  drawMsgs();
+  document.querySelectorAll("[data-sug]").forEach(b => b.onclick = () => { $("chatBox").value = b.dataset.sug; send(); });
+  $("chatSend").onclick = send;
+  $("chatBox").onkeydown = e => { if(e.key === "Enter" && !e.shiftKey){ e.preventDefault(); send(); } };
+  $("chatBox").focus();
+}
+function drawMsgs(extra){
+  const box = $("msgs"); if(!box) return;
+  box.innerHTML = "";
+  CHAT.forEach(m => { const d = document.createElement("div"); d.className = "msg " + (m.role === "user" ? "me" : "ai"); d.textContent = m.content; box.appendChild(d); });
+  if(extra){ const d = document.createElement("div"); d.className = "msg " + (extra.cls || "ai"); d.id = "live"; d.textContent = extra.text; box.appendChild(d); }
+  box.scrollTop = box.scrollHeight;
+}
+async function send(){
+  const he = LANG === "he", box = $("chatBox"), btn = $("chatSend");
+  const q = box.value.trim(); if(!q || CHATCTL) return;
+  box.value = ""; CHAT.push({role:"user", content:q});
+  document.querySelectorAll(".sugs").forEach(x => x.remove());
+  drawMsgs({text: he ? "חושב..." : "Thinking..."});
+  CHATCTL = new AbortController(); btn.textContent = he ? "עצירה" : "Stop"; btn.onclick = () => CHATCTL && CHATCTL.abort();
+  const turns = [{role:"user", content: tripContext()}, ...CHAT.slice(-12)];
+  try{
+    const { text } = await SAMPLE(turns, { cache:false, signal: CHATCTL.signal, onText: ({text}) => { const l = $("live"); if(l){ l.textContent = text; const b = $("msgs"); b.scrollTop = b.scrollHeight; } } });
+    CHAT.push({role:"assistant", content:text}); drawMsgs();
+  }catch(e){
+    const c = e && e.code;
+    if(e && e.text) CHAT.push({role:"assistant", content:e.text});
+    const msg = c === "cancelled" ? "" : (["not_granted","sampling_disabled","not_declared","capability_disabled","capability_removed"].includes(c)
+      ? (he ? "הצ׳אט עם Claude לא זמין בחשבון הזה." : "Claude chat isn't available for this account.")
+      : c === "rate_limited" ? (he ? "יותר מדי שאלות ברצף – נסו שוב בעוד כמה דקות." : "Too many questions in a row – try again in a few minutes.")
+      : c === "session_expired" ? (he ? "צריך להתחבר מחדש ל-Claude." : "Please sign in to Claude again.")
+      : (he ? "משהו השתבש. נסו לשאול שוב." : "Something went wrong. Try asking again."));
+    drawMsgs(msg ? {text: msg, cls:"note"} : null);
+    if(["not_granted","sampling_disabled","not_declared","capability_disabled","capability_removed"].includes(c)){ SAMPLE = null; const f = $("fab"); if(f) f.remove(); }
+  }finally{
+    CHATCTL = null; const b = $("chatSend"); if(b){ b.textContent = he ? "שליחה" : "Send"; b.onclick = send; }
+  }
+}
+
+/* ============ BOOT ============ */
+try{ if(store.get("gl_big",false)) document.documentElement.classList.add("big"); }catch(e){}
+try{ const t = sessionStorage.getItem("gl_tab"); if(t){ sessionStorage.removeItem("gl_tab"); if(!location.hash) location.hash = t; } }catch(e){}
+window.addEventListener("hashchange", () => { closeSheet(); renderTabs(); renderView(); window.scrollTo(0,0); });
+renderAll();
+(async () => {
+  try{
+    for(let i = 0; i < 30 && !window.claude; i++) await new Promise(r => setTimeout(r, 100));
+    if(!window.claude) return;
+    window.claude.use("sample").then(sm => { if(sm){ SAMPLE = sm; renderFab(); } }).catch(() => {});
+    const u = await window.claude.use("user");
+    const ok = u ? await Promise.resolve(u.canEdit()) : false;
+    if(ok){ CANEDIT = true; const r = route(); if(r === "more" || r === "bookings") renderView(); }
+  }catch(e){}
+})();
+})();
+</script>
+
+</body>
+</html>
