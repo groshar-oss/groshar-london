@@ -855,6 +855,7 @@ function viewByAttraction(){
     <select id="attrSel" style="font:inherit;padding:10px 12px;border-radius:14px;background:var(--surface);color:var(--ink);border:1px solid var(--line)">${opts}</select></label>
     ${placeActions(ATTR,false)}<div class="stack">${evs.map(e => eventDetail(e,false)).join("")}</div>`;
 }
+function sosTarget(me){ return me === "yoni" ? "dani" : "yoni"; }
 function openSOS(){
   const he = LANG === "he";
   const phoneOwners = IDS.filter(id => !P[id].kid);
@@ -863,14 +864,14 @@ function openSOS(){
   $("sheet").innerHTML = `<div class="scrim" id="scrim"><div class="sheet stack" role="dialog" aria-modal="true" aria-label="SOS">
     <button class="tbtn close" id="closeSheet">${T("close")}</button>
     <h2 style="color:#FF8FA3">🆘 ${he?"קריאת מצוקה":"Emergency alert"}</h2>
-    <div>${he?"ההודעה תישלח לקבוצת הוואטסאפ של המשפחה, עם המיקום שלך במפה.":"This sends a message with your location on a map to the family WhatsApp group."}</div>
+    <div>${he?`ההודעה עם המיקום שלך נפתחת ישר בוואטסאפ אצל ${nm(sosTarget(me))} – רק לוחצים שלח.`:`The message with your location opens straight in WhatsApp to ${nm(sosTarget(me))} – just press send.`}</div>
     <div class="card small" style="border-color:#E63946">${he?"בסכנה אמיתית מתקשרים קודם למשטרה או לאמבולנס:":"In real danger, call the police or an ambulance first:"} <a class="act" href="tel:999" style="margin-inline-start:6px">📞 999</a></div>
     <label class="field"><span>${he?"מי שולח":"Who's sending"}</span><select id="sosMe">${opts}</select></label>
     <div id="sosBody"><button class="sosbig" id="sosGo">${he?"📍 לאתר מיקום ולהכין הודעה":"📍 Get my location and prepare the message"}</button></div>
-    <div class="muted small">${he?"בטלפון יופיעו שני אישורים: גישה למיקום, ואחר כך בוחרים בוואטסאפ את קבוצת המשפחה ולוחצים שלח.":"Your phone will ask for location access; then pick the family group in WhatsApp and press send."}</div>
+    <div class="muted small">${he?"בפעם הראשונה הטלפון יבקש אישור לגישה למיקום.":"The first time, your phone will ask to allow location access."}</div>
   </div></div>`;
   $("closeSheet").onclick = closeSheet; $("scrim").onclick = ev => { if(ev.target.id === "scrim") closeSheet(); };
-  $("sosMe").onchange = () => store.set("gl_me", $("sosMe").value);
+  $("sosMe").onchange = () => { store.set("gl_me", $("sosMe").value); openSOS(); };
   $("sosGo").onclick = () => {
     const who = $("sosMe").value ? nm($("sosMe").value) : (he?"מישהו מהמשפחה":"Someone in the family");
     const t = new Intl.DateTimeFormat("en-GB",{timeZone:"Europe/London",hour:"2-digit",minute:"2-digit"}).format(new Date());
@@ -878,16 +879,20 @@ function openSOS(){
       const msg = he
         ? `🆘 קריאת מצוקה מ${who}!\n${loc ? `המיקום שלי: https://maps.google.com/?q=${loc.lat},${loc.lng}\n(דיוק של כ-${loc.acc} מטר)` : "לא הצלחתי לשתף מיקום – תתקשרו אליי!"}\nשעה בלונדון: ${t}`
         : `🆘 Emergency alert from ${who}!\n${loc ? `My location: https://maps.google.com/?q=${loc.lat},${loc.lng}\n(accurate to about ${loc.acc} m)` : "Couldn't share my location – call me!"}\nLondon time: ${t}`;
-      $("sosBody").innerHTML = `<a class="sosbig" href="https://wa.me/?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">${he?"💬 פתיחת וואטסאפ ← בוחרים את קבוצת המשפחה":"💬 Open WhatsApp → pick the family group"}</a>
+      const to = sosTarget($("sosMe").value), num = (STATE.phones[to] || "").replace(/\D/g, "");
+      const url = `https://wa.me/${num}?text=${encodeURIComponent(msg)}`;
+      $("sosBody").innerHTML = `<a class="sosbig" href="${url}" target="_blank" rel="noopener">${he?`💬 שליחה ל${nm(to)} בוואטסאפ`:`💬 Send to ${nm(to)} on WhatsApp`}</a>
         <div class="card small" style="white-space:pre-wrap;margin-top:8px">${esc(msg)}</div>`;
+      try{ window.location.href = url; }catch(e){}
     };
     $("sosGo").disabled = true; $("sosGo").textContent = he ? "מאתר מיקום…" : "Finding your location…";
     if(!navigator.geolocation){ ready(null); return; }
     navigator.geolocation.getCurrentPosition(
       pos => ready({lat: pos.coords.latitude.toFixed(5), lng: pos.coords.longitude.toFixed(5), acc: Math.round(pos.coords.accuracy)}),
       () => ready(null),
-      {enableHighAccuracy: true, timeout: 10000, maximumAge: 60000});
+      {enableHighAccuracy: true, timeout: 7000, maximumAge: 120000});
   };
+  if(me) $("sosGo").click();
 }
 function openPlace(id){
   const p = PL[id]; if(!p) return;
