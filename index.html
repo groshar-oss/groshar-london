@@ -649,7 +649,7 @@ function menorah(n){
   return `<svg viewBox="0 0 300 104" role="img" aria-label="${LANG==="he"?`חנוכייה עם ${n} נרות`:`Menorah with ${n} candles`}"><rect x="20" y="84" width="260" height="8" rx="4" fill="#FFD166"/><rect x="144" y="90" width="12" height="12" rx="2" fill="#FFD166"/>${c}<rect x="143" y="32" width="14" height="52" rx="5" fill="#FFFFFF"/><ellipse cx="150" cy="22" rx="7" ry="11" fill="#FFD166"/>${f}</svg>`;
 }
 function bus(w){ return `<svg width="${w}" viewBox="0 0 96 64" role="img" aria-label="London bus"><rect x="4" y="4" width="84" height="48" rx="10" fill="#E63946"/>${[12,30,48,66].map(x=>`<rect x="${x}" y="12" width="14" height="12" rx="3" fill="#FFE29A"/>`).join("")}${[12,30,48].map(x=>`<rect x="${x}" y="30" width="14" height="12" rx="3" fill="#FFE29A"/>`).join("")}<rect x="68" y="30" width="12" height="18" rx="2" fill="#0E1638"/><circle cx="24" cy="54" r="8" fill="#2B356B"/><circle cx="70" cy="54" r="8" fill="#2B356B"/></svg>`; }
-const KIDS = ["dor","niv","imri","ziv","raz","itamar","eitan"];
+const KIDS = ["dor","niv","imri","ziv","raz"];
 let KID = store.get("gl_kid",""), KDAY = null;
 function kidView(id){
   const he = LANG === "he", n = londonNow();
@@ -678,7 +678,7 @@ function kidView(id){
     </div></div>`;
 }
 function viewNow(){
-  if(KID && P[KID]) return kidView(KID);
+  if(KID && KIDS.includes(KID)) return kidView(KID);
   const n = londonNow(); const out = [];
   if(L(STATE.announce)) out.push(`<div class="notice"><h3>${T("fromOrganizer")} <span class="muted small mono">${esc(STATE.announceDate||"")}</span></h3><div>${esc(L(STATE.announce))}</div></div>`);
   if(STATE.waGroup) out.push(`<a class="act primary" style="justify-self:start" href="${esc(STATE.waGroup)}" target="_blank" rel="noopener">💬 ${LANG==="he"?"לקבוצת הוואטסאפ של הטיול":"Trip WhatsApp group"}</a>`);
@@ -1101,7 +1101,7 @@ window.addEventListener("hashchange", () => { closeSheet(); renderTabs(); render
   const v = $("view");
   v.addEventListener("touchstart", e => {
     sx = null;
-    const kid = route() === "now" && KID && P[KID];
+    const kid = route() === "now" && KID && KIDS.includes(KID);
     if(!(kid || (route() === "schedule" && SCHMODE !== "attr")) || e.touches.length !== 1) return;
     if(e.target.closest(".grid-who, .days, select, input, textarea")) return;
     sx = e.touches[0].clientX; sy = e.touches[0].clientY;
@@ -1111,7 +1111,7 @@ window.addEventListener("hashchange", () => { closeSheet(); renderTabs(); render
     const t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy; sx = null;
     if(Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
     const next = LANG === "he" ? dx > 0 : dx < 0;
-    const kid = route() === "now" && KID && P[KID];
+    const kid = route() === "now" && KID && KIDS.includes(KID);
     const cur = kid ? KDAY : DAY;
     const nd = Math.max(0, Math.min(DAYS.length - 1, cur + (next ? 1 : -1)));
     if(nd === cur) return;
