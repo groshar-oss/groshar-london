@@ -219,6 +219,10 @@ h2,h3{color:var(--gold)}
 .sosbig{display:block;width:100%;background:#E63946;color:#fff;border:0;border-radius:18px;padding:16px;font:inherit;font-size:1.15em;text-align:center;text-decoration:none;cursor:pointer}
 .act.doc,.ev .body .act.doc{background:#1F2340;color:#FFD166;border:2px solid #FFD166;font-weight:600;box-shadow:0 2px 0 rgba(0,0,0,.35)}
 .act.doc:active{transform:translateY(1px);box-shadow:none}
+@media (max-width:440px){ #topbar .t1{font-size:.92em;line-height:1.2} #topbar .t2{font-size:.72em} #topbar .tbtn{padding-inline:9px;min-width:0} }
+.qrow{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.qrow::-webkit-scrollbar{display:none}
+.qa{flex:none;display:inline-flex;align-items:center;gap:4px;padding:10px 14px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--ink);text-decoration:none;font-size:.95em;white-space:nowrap}
 .cell.k-r{border:1px dashed var(--c5);background:transparent}
 </style>
 </head>
@@ -607,9 +611,10 @@ function renderTop(){
   document.documentElement.lang = LANG; document.documentElement.dir = LANG === "he" ? "rtl" : "ltr";
   const big = document.documentElement.classList.contains("big");
   $("topbar").innerHTML = `<div class="brand">${logo(42)}<div style="min-width:0"><div class="t1">${LANG==="he"?"משפחת גרושר בלונדון":"The Groshars in London"}</div><div class="t2">${LANG==="he"?"6–11 בדצמבר 2026":"6–11 December 2026"}</div></div></div>
+    <a class="tbtn" href="${HOTEL_DIR}" target="_blank" rel="noopener" aria-label="${LANG==="he"?"קח אותי למלון":"Take me to the hotel"}" style="text-decoration:none">🏨</a>
     <button class="tbtn sos" id="sosBtn" aria-label="${LANG==="he"?"קריאת מצוקה":"Emergency alert"}">🆘</button>
     <button class="tbtn" id="bigBtn" aria-pressed="${big}" title="${T("big")}">A+</button>
-    <button class="tbtn" id="langBtn">${LANG==="he"?"English":"עברית"}</button>`;
+    <button class="tbtn" id="langBtn" aria-label="${LANG==="he"?"English":"עברית"}">${LANG==="he"?"EN":"עב"}</button>`;
   $("sosBtn").onclick = openSOS;
   $("langBtn").onclick = () => { LANG = LANG === "he" ? "en" : "he"; try{ localStorage.setItem("gl_lang", LANG); }catch(e){} renderAll(); };
   $("bigBtn").onclick = () => { document.documentElement.classList.toggle("big"); store.set("gl_big", document.documentElement.classList.contains("big")); renderTop(); };
@@ -683,12 +688,70 @@ async function loadWeather(){
   }catch(e){}
 }
 function wxAvailable(){ return DAYS.some(x => wxDay(x.date)); }
+/* ---- quick "nearest" links ---- */
+const HOTEL_DIR = "https://www.google.com/maps/dir/?api=1&destination=51.5094,-0.1365&travelmode=transit";
+function quickRow(){
+  const he = LANG === "he", g = q => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q);
+  const b = (href, label, style) => `<a class="qa" href="${href}" target="_blank" rel="noopener"${style?` style="${style}"`:""}>${label}</a>`;
+  return `<div class="qrow">
+    ${b(HOTEL_DIR, he?"🏨 קח אותי למלון":"🏨 Take me to the hotel", "background:var(--gold);color:var(--on-accent);border-color:var(--gold)")}
+    ${b(g("public toilets near me"), he?"🚻 שירותים":"🚻 Toilets")}
+    ${b(g("Boots pharmacy near me"), he?"💊 בית מרקחת":"💊 Pharmacy")}
+    ${b(g("ATM cash machine near me"), he?"🏧 כספומט":"🏧 ATM")}
+    ${b(g("McDonald's near me"), he?"🍟 מקדונלדס":"🍟 McDonald's", "background:#DA291C;border-color:#DA291C;color:#FFC72C")}
+  </div>`;
+}
+/* ---- Tube status (TfL open data) ---- */
+const TUBE = [["jubilee","Jubilee","#A0A5A9"],["piccadilly","Piccadilly","#1C3F94"],["northern","Northern","#FFFFFF"],["district","District","#00782A"],["circle","Circle","#FFD300"],["bakerloo","Bakerloo","#B36305"]];
+let TFL = store.get("gl_tfl", null);
+const TFLHE = {"Good Service":"תקין","Minor Delays":"עיכובים קלים","Severe Delays":"עיכובים כבדים","Part Suspended":"מושבת חלקית","Suspended":"מושבת","Part Closure":"סגור חלקית","Planned Closure":"סגירה מתוכננת","Reduced Service":"שירות מופחת","Special Service":"שירות מיוחד","Service Closed":"לא פועל עכשיו","Severe Delays ":"עיכובים כבדים"};
+async function loadTube(){
+  if(TFL && Date.now() - TFL.t < 5*60e3) return;
+  try{
+    const r = await fetch("https://api.tfl.gov.uk/Line/" + TUBE.map(x => x[0]).join(",") + "/Status");
+    if(!r.ok) return; const j = await r.json();
+    const st = {}; j.forEach(l => { const s0 = (l.lineStatuses||[])[0] || {}; st[l.id] = {sev: s0.statusSeverity, txt: s0.statusSeverityDescription, why: s0.reason || ""}; });
+    TFL = {t: Date.now(), st}; store.set("gl_tfl", TFL);
+    if(route() === "now") renderView();
+  }catch(e){}
+}
+function tubeCard(){
+  const he = LANG === "he";
+  const rows = TUBE.map(([id,name,col]) => {
+    const s0 = TFL && TFL.st[id];
+    const ok = s0 && s0.sev === 10, bad = s0 && s0.sev !== undefined && s0.sev <= 6;
+    const dot = !s0 ? "var(--muted)" : ok ? "#8EF0B8" : bad ? "#FF5A5F" : "#FFD166";
+    const txt = !s0 ? (he?"אין נתונים":"No data") : (he ? (TFLHE[s0.txt] || s0.txt) : s0.txt);
+    return `<div class="row" style="gap:8px;flex-wrap:nowrap"><span style="width:14px;height:14px;border-radius:4px;background:${col};border:1px solid var(--line);flex:none"></span><b style="min-width:84px">${name}</b><span style="width:10px;height:10px;border-radius:50%;background:${dot};flex:none"></span><span class="small">${esc(txt)}</span></div>${s0 && !ok && s0.why ? `<div class="muted small" style="padding-inline-start:22px">${esc(s0.why).slice(0,160)}</div>`:""}`;
+  }).join("");
+  const age = TFL ? Math.round((Date.now() - TFL.t)/60000) : null;
+  return `<div class="card stack" style="gap:6px"><div class="row" style="justify-content:space-between"><b>🚇 ${he?"מצב הרכבת התחתית":"Tube status"}</b><a class="act" href="https://tfl.gov.uk/tube-dlr-overground/status/" target="_blank" rel="noopener">TfL</a></div>${rows}<div class="muted small">${age===null?(he?"מתעדכן כשיש אינטרנט":"Updates when online"):(he?`עודכן לפני ${age} דק׳`:`Updated ${age} min ago`)}</div></div>`;
+}
+/* ---- travel time between consecutive activities ---- */
+function km(a, b){ const R = 6371, t = x => x*Math.PI/180, dLa = t(b[0]-a[0]), dLo = t(b[1]-a[1]); const h = Math.sin(dLa/2)**2 + Math.cos(t(a[0]))*Math.cos(t(b[0]))*Math.sin(dLo/2)**2; return 2*R*Math.asin(Math.sqrt(h)); }
+function travelInfo(e){
+  if(!e.pl || !PL[e.pl] || e.k === "r") return null;
+  const prev = E.filter(x => x !== e && x.k !== "r" && x.d === e.d && x.t < e.t && x.pl && PL[x.pl] && x.who.some(w => e.who.includes(w))).slice(-1)[0];
+  if(!prev || prev.pl === e.pl) return null;
+  if(["lhr","ltn"].includes(prev.pl) || ["lhr","ltn"].includes(e.pl)) return null; // airport legs are by pre-booked van
+  const d = km(PL[prev.pl].ll, PL[e.pl].ll); if(d < 0.25) return null;
+  const walk = d <= 1.3, mins = walk ? Math.round(d / 4.5 * 60) : Math.round(12 + d * 3.5);
+  const [h0,m0] = prev.t.split(":").map(Number), [h1,m1] = e.t.split(":").map(Number);
+  const gap = (h1*60+m1) - (h0*60+m0);
+  return {walk, mins, from: prev, tight: gap < mins + 5};
+}
+function travelLine(e){
+  const t = travelInfo(e); if(!t) return "";
+  const he = LANG === "he", from = esc(L(PL[t.from.pl]));
+  return `<div class="small" style="opacity:.85">${t.walk?"🚶":"🚇"} ${he?`כ-${t.mins} דק׳ ${t.walk?"הליכה":"בתחבורה"} מ${from}`:`~${t.mins} min ${t.walk?"walk":"by transit"} from ${from}`}${t.tight?` <b style="color:#B3261E">⚠️ ${he?"צפוף":"tight"}</b>`:""}</div>`;
+}
 function evCard(e, isNow){
   const p = e.pl ? PL[e.pl] : null;
   const tile = `var(--c${(E.indexOf(e) % 6) + 1})`;
   return `<div class="ev k-${e.k}${isNow?" now":""}"><div class="time">${e.t}</div><div class="body" style="--tile:${tile}">
     <div class="row" style="justify-content:space-between;gap:6px"><span class="ttl">${esc(L(e.ti))}</span>${kindPill(e.k)}</div>
     ${L(e.su)?`<div class="sub">${esc(L(e.su))}</div>`:""}
+    ${travelLine(e)}
     ${avatars(e.who)}
     ${p?`<div class="sub">📍 ${esc(L(p))}</div>${placeActions(e.pl,true)}`:""}${docBtns(e)}
   </div></div>`;
@@ -734,7 +797,7 @@ function viewNow(){
   const n = londonNow(); const out = [];
   if(L(STATE.announce)) out.push(`<div class="notice"><h3>${T("fromOrganizer")} <span class="muted small mono">${esc(STATE.announceDate||"")}</span></h3><div>${esc(L(STATE.announce))}</div></div>`);
   if(STATE.waGroup) out.push(`<a class="act primary" style="justify-self:start" href="${esc(STATE.waGroup)}" target="_blank" rel="noopener">💬 ${LANG==="he"?"לקבוצת הוואטסאפ של הטיול":"Trip WhatsApp group"}</a>`);
-  out.push(`<a class="act" style="justify-self:start;background:#DA291C;border-color:#DA291C;color:#FFC72C" href="https://www.google.com/maps/search/?api=1&query=McDonald%27s%20near%20me" target="_blank" rel="noopener">🍟 ${LANG==="he"?"המקדונלדס הקרוב אליי":"Nearest McDonald's"}</a>`);
+  out.push(quickRow());
   out.push(`<div class="card row" style="justify-content:space-between"><span>${LANG==="he"?"מצב ילדים":"Kids' mode"}</span><span class="row" style="gap:6px">${KIDS.slice(0,5).map(k => `<button class="chip" data-kid="${k}">${nm(k)}</button>`).join("")}</span></div>`);
   const start = DAYS[0].date, end = DAYS[5].date;
   if(n.date < start){
@@ -762,6 +825,7 @@ function viewNow(){
     }
     if(DAYS[d].n) out.push(`<div class="menorah-card">${menorah(DAYS[d].n)}<div>${LANG==="he"?`הערב נר ${DAYS[d].n} של חנוכה • השקיעה בסביבות 15:52`:`Tonight: Hanukkah candle ${DAYS[d].n} • sunset around 15:52`}</div></div>`);
   }
+  out.push(tubeCard());
   { const he = LANG === "he";
     const rows = DAYS.map(x => wxLine(x.date) ? `<div class="row" style="gap:8px"><b class="mono" style="min-width:68px">${L(x)}</b>${wxLine(x.date)}</div>` : "").join("");
     out.push(`<div class="card stack" style="gap:6px"><div class="row" style="justify-content:space-between"><b>${he?"מזג האוויר בלונדון":"London weather"}</b><a class="act" href="https://www.bbc.com/weather/2643743" target="_blank" rel="noopener">BBC Weather</a></div>${rows || `<div class="muted small">${he?"התחזית לכל יום תופיע כאן כשבועיים לפני הטיסה. בדצמבר בדרך כלל 5–9 מעלות, גשם קל וחושך כבר ב-16:00.":"A day-by-day forecast appears here about two weeks before the trip. December is usually 5–9°C, light rain, dark by 4pm."}</div>`}</div>`); }
@@ -1224,7 +1288,8 @@ window.addEventListener("hashchange", () => { closeSheet(); renderTabs(); render
   }, {passive:true});
 })();
 renderAll();
-loadWeather();
+loadWeather(); loadTube();
+setInterval(() => { if(route() === "now") loadTube(); }, 5*60e3);
 setInterval(() => { if(route() === "now" && !$("sheet").innerHTML) renderView(); }, 60000);
 if("serviceWorker" in navigator && /github\.io$/.test(location.hostname)){ navigator.serviceWorker.register("sw.js").catch(() => {}); }
 (async () => {

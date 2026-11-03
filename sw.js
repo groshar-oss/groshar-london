@@ -1,5 +1,5 @@
 // Offline support: keep the app and its fonts on the phone so it opens without internet.
-const CACHE = "groshar-london-v1";
+const CACHE = "groshar-london-v2";
 const CORE = ["./", "index.html", "manifest.webmanifest", "icon-192.png", "icon-512.png", "apple-touch-icon.png"];
 
 self.addEventListener("install", e => {
@@ -14,7 +14,7 @@ self.addEventListener("fetch", e => {
   const url = new URL(req.url);
   const isFont = url.hostname === "fonts.googleapis.com" || url.hostname === "fonts.gstatic.com";
   const isApp = url.origin === location.origin;
-  const isWeather = url.hostname === "api.open-meteo.com";
+  const isWeather = url.hostname === "api.open-meteo.com" || url.hostname === "api.tfl.gov.uk";
   if (!isFont && !isApp && !isWeather) return;
   if (isFont) {
     // fonts never change: cache first
