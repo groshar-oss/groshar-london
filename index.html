@@ -223,6 +223,8 @@ h2,h3{color:var(--gold)}
 .body.tap{cursor:pointer}
 .morehint{font-size:.8em;opacity:.7;white-space:nowrap}
 .nowttl{font-size:1.25em;font-weight:600;line-height:1.3}
+.chbar{display:flex;gap:10px;align-items:flex-start;background:var(--gold);color:var(--on-accent);border-radius:16px;padding:10px 12px;font-size:.92em}
+.chbar .tbtn{background:transparent;border-color:rgba(0,0,0,.25);color:var(--on-accent);padding:4px 10px}
 .qrow{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
 .qrow::-webkit-scrollbar{display:none}
 .qa{flex:none;display:inline-flex;align-items:center;gap:4px;padding:10px 14px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--ink);text-decoration:none;font-size:.95em;white-space:nowrap}
@@ -400,11 +402,13 @@ ev(0,"20:25",ISR,"נחיתה בהית׳רו, טרמינל 4","Land at Heathrow T
 ev(0,"21:25",ISR,"2 רכבים למלון","Two vans to the hotel","1005001 + 1005005 • £128 לרכב במזומן • כ-50 דק׳","1005001 + 1005005 • £128 per van in cash • ~50 min","lhr","b");
 ev(0,"21:00",["alon","liz"],"המלצה למבוגרים: Ye Grapes ב-Shepherd Market","Grown-ups' idea: Ye Grapes in Shepherd Market","5 דק׳ מהמלון • טטיאנה עם הילדים • ביום ראשון פאבים נסגרים מוקדם","5 min from the hotel • Tatiana with the kids • pubs close early on Sundays","yegrapes","r");
 ev(0,"22:30",ALL,"צ׳ק-אין ונר שלישי של חנוכה","Check-in and 3rd Hanukkah candle","6 חדרים • חנוכייה חשמלית","6 rooms • electric menorah","hotel");
+ev(0,"22:45",ISR,"ארוחה קלה במלון","Light meal at the hotel","Room service או חטיפים מהבית • רוב המסעדות כבר סגורות בשעה הזו","Room service or snacks from home • most restaurants are closed by now","hotel","f");
 // Day 1
 ev(1,"08:30",ALL,"ארוחת בוקר במלון","Breakfast at the hotel","","","hotel");
-ev(1,"10:00",ALL,"גרין פארק וארמון בקינגהאם","Green Park & Buckingham Palace","","","buckingham");
-ev(1,"11:30",ALL,"ביג בן, הפרלמנט וגשר וסטמינסטר","Big Ben, Parliament & Westminster Bridge","הליכה לגדה הדרומית","Walk to the South Bank","bigben");
-ev(1,"12:30",ALL,"צהריים חופשי בגדה הדרומית","Free lunch on the South Bank","נפגשים ב-14:30 ליד ה-Eye","Meet at 14:30 by the Eye","eye","f");
+ev(1,"10:15",ALL,"הליכה דרך גרין פארק לארמון בקינגהאם","Walk through Green Park to Buckingham Palace","15 דק׳ הליכה • להגיע ב-10:30 כדי לעמוד קרוב לגדר","15 min walk • arrive by 10:30 to stand near the railings","buckingham");
+ev(1,"11:00",ALL,"חילופי המשמר בארמון בקינגהאם","Changing of the Guard at Buckingham Palace","בדצמבר מתוכנן בימי שני, רביעי ושישי ב-11:00 • כ-45 דק׳ • לוודא בלוח הרשמי יום לפני","In December it's planned Mon, Wed and Fri at 11:00 • about 45 min • check the official calendar the day before","buckingham");
+ev(1,"12:00",ALL,"ביג בן, הפרלמנט וגשר וסטמינסטר","Big Ben, Parliament & Westminster Bridge","דרך פארק סנט ג׳יימס, 15 דק׳ • ואז הליכה לגדה הדרומית","Through St James's Park, 15 min • then walk to the South Bank","bigben");
+ev(1,"13:00",ALL,"צהריים חופשי בגדה הדרומית","Free lunch on the South Bank","נפגשים ב-14:30 ליד ה-Eye","Meet at 14:30 by the Eye","eye","f");
 ev(1,"15:00",ALL,"London Eye","London Eye","הזמנה R128336856 • 19 כרטיסים","Booking R128336856 • 19 tickets","eye","b");
 ev(1,"16:00",LITTLE.concat(["dani","hadar","liz"]),"פעוטות חוזרים למלון","Little ones back to the hotel","מ-Waterloo בקו Jubilee לגרין פארק, או מונית • מנוחה ואמבטיה ומגיעים ישר למסעדה ב-19:00","Jubilee line from Waterloo to Green Park, or a taxi • rest and bath, then straight to the restaurant at 19:00","hotel","s");
 ev(1,"16:00",without(ALL,LITTLE.concat(["dani","hadar","liz"])),"שוק החורף בסאות׳בנק","Southbank Centre Winter Market","5 דק׳ הליכה מה-Eye • משהו חם לשתות ולנשנש","5 min walk from the Eye • something warm to drink and a snack","southbank","f");
@@ -430,7 +434,9 @@ ev(2,"14:30",["imri","raz","ziv","dani","hadar","liz"],"המלצה: גן המש�
 ev(2,"16:00",ALL,"Winter Wonderland","Winter Wonderland","כניסה בין 16:00 ל-17:00 • הזמנה 130427698 • 15 דק׳ הליכה","Entry between 16:00 and 17:00 • booking 130427698 • 15 min walk","ww","b");
 ev(2,"19:30",without(ALL,LITTLE),"המלצה: Paddington המחזמר","Idea: Paddington The Musical","תיאטרון Savoy, 5 דק׳ מהמלון • במקום הערב בווינטר וונדרלנד, למי שרוצה • לבדוק מקומות ומחירים","Savoy Theatre, 5 min from the hotel • instead of the evening at Winter Wonderland, for anyone keen • check seats and prices","savoy","r");
 ev(2,"21:00",["yoni","dani","dan","hadar","alon","liz"],"המלצה למבוגרים: The Churchill Arms","Grown-ups' idea: The Churchill Arms","הפאב המקושט בלונדון, 20 דק׳ הליכה מווינטר וונדרלנד • מי שנשאר עם הילדים: ___","London's most decorated pub, 20 min walk from Winter Wonderland • who stays with the kids: ___","churchill","r");
-ev(2,"19:00",ALL,"ערב חופשי ונר חמישי","Free evening & 5th candle","אפשר לאכול במתחם • פעוטות חוזרים ראשונים","Eat inside the park • little ones head back first","ww","f");
+ev(2,"18:30",LITTLE.concat(["dani","hadar","liz"]),"פעוטות חוזרים למלון ונר חמישי","Little ones back to the hotel & 5th candle","מונית או קו Piccadilly מ-Hyde Park Corner, 2 תחנות","Taxi or Piccadilly line from Hyde Park Corner, 2 stops","hotel","s");
+ev(2,"18:30",without(ALL,LITTLE.concat(["dani","hadar","liz"])),"ערב חופשי בווינטר וונדרלנד","Free evening at Winter Wonderland","אוכלים במתחם • מתקנים, החלקה ושוק","Eat inside the park • rides, skating and the market","ww","f");
+ev(2,"20:30",without(ALL,LITTLE.concat(["dani","hadar","liz"])),"חזרה למלון ונר חמישי","Back to the hotel & 5th candle","15 דק׳ הליכה דרך הייד פארק קורנר או קו Piccadilly","15 min walk via Hyde Park Corner or the Piccadilly line","hotel");
 // Day 3
 ev(3,"08:00",ALL,"ארוחת בוקר במלון","Breakfast at the hotel","","","hotel");
 ev(3,"10:00",TEENS,"שופינג באוקספורד סטריט וקרנבי","Shopping on Oxford St & Carnaby","מי שרוצה יכול להישאר לשופינג כל היום","Anyone who prefers can shop all day","regent");
@@ -452,6 +458,7 @@ ev(3,"18:30",["david","itamar","eitan"],"יציאה לאמירויות","Leave f
 ev(3,"20:00",["david","itamar","eitan"],"ארסנל – ריאל מדריד","Arsenal v Real Madrid","ליגת האלופות • כרטיסים בידיים ✓","Champions League • tickets in hand ✓","emirates","b");
 ev(3,"21:00",["alon","liz"],"המלצה למבוגרים: The Red Lion, Crown Passage","Grown-ups' idea: The Red Lion, Crown Passage","5 דק׳ מהמלון • סבתא סנדרה עם הקטנים","5 min from the hotel • Grandma Sandra with the little ones","redlion","r");
 ev(3,"23:00",["yoni","dani","dan","hadar"],"המלצה: קזינו Hippodrome אחרי Mamma Mia","Idea: the Hippodrome Casino after Mamma Mia","פתוח 24/7 • קו Jubilee מה-O2 ל-Green Park ו-7 דק׳ הליכה • 18+ עם דרכון","Open 24/7 • Jubilee line from the O2 to Green Park, then 7 min walk • 18+ with passport","hippodrome","r");
+ev(3,"16:00",["sandra","alon","liz","imri","raz","ziv"],"המלצה: LEGO ו-M&M's בלסטר סקוור","Idea: LEGO and M&M's in Leicester Square","למי שקם משנ״צ • 7 דק׳ מהמלון • הקטנים פספסו אותם בשני","For whoever's up from naps • 7 min from the hotel • the little ones missed them on Monday","leicester","r");
 ev(3,"18:00",["sandra","alon","liz","imri","raz","ziv"],"ערב במלון ונר שישי","Evening at the hotel & 6th candle","עם הפעוטות","With the little ones","hotel");
 // Day 4
 ev(4,"08:00",ALL,"ארוחת בוקר במלון","Breakfast at the hotel","","","hotel");
@@ -467,7 +474,7 @@ ev(4,"14:30",["david","dani","dan","hadar","imri","raz"],"האקווריום SEA
 ev(4,"16:30",["alon","liz","ziv","sandra","dor","niv"],"המלצה: Selfridges ומרילבון","Idea: Selfridges & Marylebone","אחרי טוסו, 15 דק׳ הליכה • חלונות החג וקומת חג המולד","After Tussauds, 15 min walk • Christmas windows and Christmas shop","selfridges","r");
 ev(4,"16:00",["david","dani","dan","hadar","imri","raz"],"המלצה: שוק החורף בסאות׳בנק","Idea: Southbank Winter Market","ממש ליד האקווריום, לפני שחוזרים למלון","Right next to the aquarium, before heading back","southbank","r");
 ev(4,"17:45",["amber","tatiana","davidj","rose","itamar","eitan","yoni"],"המלצה: גג One New Change וגשר המילניום","Idea: One New Change rooftop & Millennium Bridge","באותו בניין של F1 • 10 דק׳ על הגג עם נוף לסנט פול ואז לארוחה","Same building as F1 • 10 min on the roof facing St Paul's, then dinner","onenew","r");
-ev(4,"18:00",ALL,"ארוחת ערב חופשית – מוקדם","Early free dinner","כולם במלון עד 19:30","Everyone back by 19:30","","f");
+ev(4,"18:00",ALL,"ארוחת ערב משפחתית אחרונה","Last family dinner","הצעה: Kingly Court – כמה מסעדות בחצר אחת, 8 דק׳ מהמלון • להזמין שולחן ל-19 • כולם במלון עד 19:30","Idea: Kingly Court – several restaurants in one courtyard, 8 min from the hotel • book a table for 19 • everyone back by 19:30","kingly","p");
 ev(4,"21:00",["yoni","dani","dan","hadar","alon","liz"],"המלצה: משקה אחרון בבר של המלון","Idea: a last drink at the hotel bar","קצר – ההשכמה ב-03:15/04:30 • בלי לצאת מהמלון","Keep it short – wake-up at 03:15/04:30 • no need to leave the hotel","hotel","r");
 ev(4,"19:30",ALL,"נר שביעי, אריזה ושינה","7th candle, packing, bed","מזוודות סגורות עד 20:00 • ארוחות בוקר ארוזות","Bags closed by 20:00 • packed breakfasts","hotel");
 // Day 5
@@ -489,6 +496,7 @@ const TODO = [
   {id:"arsenal",he:"ארסנל – ריאל מדריד: 3 כרטיסים",en:"Arsenal v Real Madrid: 3 tickets",u:"https://www.arsenal.com/tickets"},
   {id:"wonderlab",he:"Wonderlab – 4 ילדים + מלווה, שלישי 8.12 14:30 (נסגר ב-16:00 באותו יום)",en:"Wonderlab – 4 kids + an adult, Tue 8 Dec 14:30 (closes 16:00 that day)",u:"https://www.sciencemuseum.org.uk"},
   {id:"sealife",he:"SEA LIFE – חמישי 14:30: סבא דוד, דני, דן, הדר + אימרי ורז (לבדוק כרטיס חינם מתחת לגיל 3)",en:"SEA LIFE – Thu 14:30: Grandpa David, Dani, Dan, Hadar + Imri and Raz (check free under-3 entry)",u:"https://www.visitsealife.com/london/"},
+  {id:"lastdinner",he:"ארוחה משפחתית אחרונה – חמישי 18:00, 19 איש (הצעה: Kingly Court)",en:"Last family dinner – Thu 18:00, 19 people (idea: Kingly Court)",u:"https://www.carnaby.co.uk/kingly-court"},
   {id:"tussauds",he:"מאדאם טוסו – 6 כרטיסים, חמישי 14:30 (סנדרה, אלון, ליז, זיו, דור וניב)",en:"Madame Tussauds – 6 tickets, Thu 14:30 (Sandra, Alon, Liz, Ziv, Dor, Niv)",u:"https://www.madametussauds.com/london/"},
   {id:"f1",he:"F1 Arcade – 7 נהגים, חמישי 14:30 (יוני, אמבר, איתמר, טטיאנה, דיוויד, רוז ואיתן)",en:"F1 Arcade – 7 drivers, Thu 14:30 (Yoni, Amber, Itamar, Tatiana, David, Rose, Eitan)",u:"https://f1arcade.com/uk/london"},
   {id:"tower",he:"מצודת לונדון – שלישי 09:00",en:"Tower of London – Tue 09:00",u:"https://www.hrp.org.uk/tower-of-london/"},
@@ -508,28 +516,33 @@ const FOOD_GROUPS = [
   {k:"d4b", d:4, he:"חמישי 10.12 – ערב, אחרי טוסו ו-F1", en:"Thu 10 Dec – dinner after Tussauds and F1"}
 ];
 const FOOD = [
-  ["Cicchetti Piccadilly","איטלקי • 5 דק׳ • הארוחה המשפחתית בשני","Italian • 5 min • the family dinner on Monday","https://sancarlo.co.uk/restaurants/london/cicchetti-piccadilly/","hotel","Cicchetti Piccadilly London"],
-  ["Kingly Court","חצר מסעדות מקורה בקרנבי • 8 דק׳","Covered restaurant courtyard in Carnaby • 8 min","https://www.carnaby.co.uk/kingly-court","hotel","Kingly Court London"],
-  ["Pizza Pilgrims – Kingly St","פיצה נפוליטנית • קרנבי, 8 דק׳","Neapolitan pizza • Carnaby, 8 min","https://www.pizzapilgrims.co.uk/menu/","hotel","Pizza Pilgrims Kingly Street London"],
-  ["PizzaExpress – Piccadilly","פיצה ופסטה, תפריט ילדים • 5 דק׳","Pizza and pasta, kids' menu • 5 min","https://www.pizzaexpress.com/our-food/restaurant-menu","hotel","PizzaExpress Piccadilly London"],
-  ["Hard Rock Cafe Piccadilly","אמריקאי, תפריט ילדים • 10 דק׳","American, kids' menu • 10 min","https://cafe.hardrock.com/piccadilly/menu.aspx","hotel","Hard Rock Cafe Piccadilly London"],
-  ["Giraffe Southbank","משפחתי, תפריט ילדים • ליד ה-Eye","Family-friendly, kids' menu • by the Eye","https://www.giraffe.net/menus","d1","Giraffe Southbank London"],
-  ["Southbank Winter Market","דוכני אוכל חם • 5 דק׳ מה-Eye","Hot food stalls • 5 min from the Eye","https://www.southbankcentre.co.uk","d1","Southbank Centre Winter Market London"],
-  ["Roast – Borough Market","בריטי קלאסי, מעל השוק • 15 דק׳ מהמצודה","Classic British, above the market • 15 min from the Tower","https://roast-restaurant.com/menus/","d2","Roast Borough Market London"],
-  ["Borough Market","דוכנים מכל העולם • אוכלים בעמידה","Stalls from all over the world • eat as you walk","https://boroughmarket.org.uk","d2","Borough Market London"],
-  ["Arcade Food Hall – Centre Point","דוכנים מכל העולם • ליד Hamleys","Food stalls from around the world • near Hamleys","https://www.arcade-london.com/food-and-drink","d3","Arcade Food Hall Centre Point London"],
-  ["Seven Dials Market","שוק אוכל מקורה • 5 דק׳ מהתיאטרון","Covered food market • 5 min from the theatre","https://www.sevendialsmarket.com/traders/","d3","Seven Dials Market London"],
-  ["Dishoom Covent Garden","הודי, תפריט קבוצתי • ארוחה לפני מלך האריות","Indian, group feast menu • dinner before The Lion King","https://www.dishoom.com/journal/covent-garden-menu/","d3","Dishoom Covent Garden London"],
-  ["Arcade Battersea","פוד-הול בתוך תחנת הכוח","Food hall inside the power station","https://www.arcade-london.com/battersea-kitchens","d4","Arcade Battersea Power Station London"],
-  ["Poppies Fish & Chips – Soho","פיש אנד צ׳יפס בריטי קלאסי • 10 דק׳ מהמלון","Classic British fish & chips • 10 min from the hotel","https://www.poppiesfishandchips.co.uk","hotel","Poppies Fish and Chips Soho London"],
-  ["Rosa's Thai – Carnaby","תאילנדי, מנות לילדים • 8 דק׳","Thai, kids' portions • 8 min","https://rosasthaicafe.com","hotel","Rosa's Thai Carnaby London"],
-  ["wagamama – Royal Festival Hall","נודלס וראמן, תפריט ילדים • 5 דק׳ מה-Eye","Noodles and ramen, kids' menu • 5 min from the Eye","https://www.wagamama.com","d1","wagamama Royal Festival Hall London"],
-  ["Padella – Borough Market","פסטה טרייה, בלי הזמנה (יש תור) • בשוק","Fresh pasta, no bookings (expect a queue) • in the market","https://www.padella.co","d2","Padella Borough Market London"],
-  ["Bread Ahead – Borough Market","הסופגניות המפורסמות – קינוח בחנוכה","The famous doughnuts – perfect for Hanukkah","https://www.breadahead.com","d2","Bread Ahead Borough Market London"],
-  ["Shake Shack – Covent Garden","המבורגרים, בתוך השוק • לפני מלך האריות","Burgers, inside the market • before The Lion King","https://shakeshack.co.uk","d3","Shake Shack Covent Garden London"],
-  ["Flat Iron – Covent Garden","סטייק במחיר שפוי, בלי הזמנה • 5 דק׳ מהתיאטרון","Good-value steak, walk-in • 5 min from the theatre","https://flatironsteak.co.uk","d3","Flat Iron Covent Garden London"],
-  ["The Golden Hind – Marylebone","פיש אנד צ׳יפס ותיק משנת 1914 • 10 דק׳ מטוסו","Fish & chips since 1914 • 10 min from Tussauds","https://www.goldenhindrestaurant.com","d4b","The Golden Hind Marylebone London"],
-  ["One New Change – מסעדות","כמה מסעדות באותו בניין של F1","Several restaurants in the same building as F1","https://www.onenewchange.com","d4b","One New Change London restaurants"]
+  ["Cicchetti Piccadilly","איטלקי • 5 דק׳ • הארוחה המשפחתית בשני","Italian • 5 min • the family dinner on Monday","https://sancarlo.co.uk/restaurants/london/cicchetti-piccadilly/","hotel","Cicchetti Piccadilly London","🍝 איטלקי","🍝 Italian"],
+  ["Kingly Court","חצר מסעדות מקורה בקרנבי • 8 דק׳","Covered restaurant courtyard in Carnaby • 8 min","https://www.carnaby.co.uk/kingly-court","hotel","Kingly Court London","🍽️ מגוון","🍽️ Mixed"],
+  ["Pizza Pilgrims – Kingly St","פיצה נפוליטנית • קרנבי, 8 דק׳","Neapolitan pizza • Carnaby, 8 min","https://www.pizzapilgrims.co.uk/menu/","hotel","Pizza Pilgrims Kingly Street London","🍕 פיצה","🍕 Pizza"],
+  ["PizzaExpress – Piccadilly","פיצה ופסטה, תפריט ילדים • 5 דק׳","Pizza and pasta, kids' menu • 5 min","https://www.pizzaexpress.com/our-food/restaurant-menu","hotel","PizzaExpress Piccadilly London","🍕 פיצה ופסטה","🍕 Pizza & pasta"],
+  ["Hard Rock Cafe Piccadilly","אמריקאי, תפריט ילדים • 10 דק׳","American, kids' menu • 10 min","https://cafe.hardrock.com/piccadilly/menu.aspx","hotel","Hard Rock Cafe Piccadilly London","🍔 אמריקאי","🍔 American"],
+  ["Giraffe Southbank","משפחתי, תפריט ילדים • ליד ה-Eye","Family-friendly, kids' menu • by the Eye","https://www.giraffe.net/menus","d1","Giraffe Southbank London","🍔 משפחתי","🍔 Family"],
+  ["Southbank Winter Market","דוכני אוכל חם • 5 דק׳ מה-Eye","Hot food stalls • 5 min from the Eye","https://www.southbankcentre.co.uk","d1","Southbank Centre Winter Market London","🥨 אוכל רחוב","🥨 Street food"],
+  ["Roast – Borough Market","בריטי קלאסי, מעל השוק • 15 דק׳ מהמצודה","Classic British, above the market • 15 min from the Tower","https://roast-restaurant.com/menus/","d2","Roast Borough Market London","🥩 בריטי","🥩 British"],
+  ["Borough Market","דוכנים מכל העולם • אוכלים בעמידה","Stalls from all over the world • eat as you walk","https://boroughmarket.org.uk","d2","Borough Market London","🥪 שוק אוכל","🥪 Food market"],
+  ["Arcade Food Hall – Centre Point","דוכנים מכל העולם • ליד Hamleys","Food stalls from around the world • near Hamleys","https://www.arcade-london.com/food-and-drink","d3","Arcade Food Hall Centre Point London","🍽️ פוד-הול","🍽️ Food hall"],
+  ["Seven Dials Market","שוק אוכל מקורה • 5 דק׳ מהתיאטרון","Covered food market • 5 min from the theatre","https://www.sevendialsmarket.com/traders/","d3","Seven Dials Market London","🍽️ שוק אוכל","🍽️ Food market"],
+  ["Dishoom Covent Garden","הודי, תפריט קבוצתי • ארוחה לפני מלך האריות","Indian, group feast menu • dinner before The Lion King","https://www.dishoom.com/journal/covent-garden-menu/","d3","Dishoom Covent Garden London","🍛 הודי","🍛 Indian"],
+  ["Arcade Battersea","פוד-הול בתוך תחנת הכוח","Food hall inside the power station","https://www.arcade-london.com/battersea-kitchens","d4","Arcade Battersea Power Station London","🍽️ פוד-הול","🍽️ Food hall"],
+  ["Poppies Fish & Chips – Soho","פיש אנד צ׳יפס בריטי קלאסי • 10 דק׳ מהמלון","Classic British fish & chips • 10 min from the hotel","https://www.poppiesfishandchips.co.uk","hotel","Poppies Fish and Chips Soho London","🐟 פיש אנד צ׳יפס","🐟 Fish & chips"],
+  ["Rosa's Thai – Carnaby","תאילנדי, מנות לילדים • 8 דק׳","Thai, kids' portions • 8 min","https://rosasthaicafe.com","hotel","Rosa's Thai Carnaby London","🍜 תאילנדי","🍜 Thai"],
+  ["wagamama – Royal Festival Hall","נודלס וראמן, תפריט ילדים • 5 דק׳ מה-Eye","Noodles and ramen, kids' menu • 5 min from the Eye","https://www.wagamama.com","d1","wagamama Royal Festival Hall London","🍜 אסייתי","🍜 Asian"],
+  ["Padella – Borough Market","פסטה טרייה, בלי הזמנה (יש תור) • בשוק","Fresh pasta, no bookings (expect a queue) • in the market","https://www.padella.co","d2","Padella Borough Market London","🍝 פסטה","🍝 Pasta"],
+  ["Bread Ahead – Borough Market","הסופגניות המפורסמות – קינוח בחנוכה","The famous doughnuts – perfect for Hanukkah","https://www.breadahead.com","d2","Bread Ahead Borough Market London","🍩 מאפייה","🍩 Bakery"],
+  ["Shake Shack – Covent Garden","המבורגרים, בתוך השוק • לפני מלך האריות","Burgers, inside the market • before The Lion King","https://shakeshack.co.uk","d3","Shake Shack Covent Garden London","🍔 המבורגרים","🍔 Burgers"],
+  ["Flat Iron – Covent Garden","סטייק במחיר שפוי, בלי הזמנה • 5 דק׳ מהתיאטרון","Good-value steak, walk-in • 5 min from the theatre","https://flatironsteak.co.uk","d3","Flat Iron Covent Garden London","🥩 סטייקים","🥩 Steak"],
+  ["The Golden Hind – Marylebone","פיש אנד צ׳יפס ותיק משנת 1914 • 10 דק׳ מטוסו","Fish & chips since 1914 • 10 min from Tussauds","https://www.goldenhindrestaurant.com","d4b","The Golden Hind Marylebone London","🐟 פיש אנד צ׳יפס","🐟 Fish & chips"],
+  ["One New Change – מסעדות","כמה מסעדות באותו בניין של F1","Several restaurants in the same building as F1","https://www.onenewchange.com","d4b","One New Change London restaurants","🍽️ מגוון","🍽️ Mixed"],
+  ["itsu – Piccadilly","סושי ובאן מהירים וטריים • ליד פיקדילי סירקוס","Quick fresh sushi and bao • by Piccadilly Circus","https://www.itsu.com","hotel","itsu Piccadilly Circus London","🍣 סושי","🍣 Sushi"],
+  ["Kanada-Ya","ראמן יפני אמיתי • 8 דק׳ מהמלון","Proper Japanese ramen • 8 min from the hotel","https://www.kanada-ya.com","hotel","Kanada-Ya Panton Street London","🍜 ראמן","🍜 Ramen"],
+  ["SUSHISAMBA – Covent Garden","סושי יפני-ברזילאי, מעל השוק • יוקרתי, להזמין","Japanese-Brazilian sushi above the market • upscale, book ahead","https://www.sushisamba.com","d3","SUSHISAMBA Covent Garden London","🍣 סושי","🍣 Sushi"],
+  ["Sticks'n'Sushi – Battersea","סושי ושיפודי יאקיטורי, בתוך תחנת הכוח","Sushi and yakitori, inside the power station","https://sticksnsushi.com/gb/en/restaurants/battersea","d4","Sticks'n'Sushi Battersea London","🍣 סושי","🍣 Sushi"],
+  ["itsu – Battersea Power Station","סושי מהיר וזול, בתוך תחנת הכוח","Quick, affordable sushi inside the power station","https://www.itsu.com/location/south-london/battersea-power-station/","d4","itsu Battersea Power Station London","🍣 סושי","🍣 Sushi"]
 ];
 
 const PACK = [
@@ -827,6 +840,26 @@ function morningCard(){
     <div class="row"><a class="act primary" href="https://wa.me/?text=${encodeURIComponent(txt)}" target="_blank" rel="noopener">💬 ${he?"שליחה לקבוצה בוואטסאפ":"Send to the WhatsApp group"}</a><button class="act" id="mCopy">📋 ${he?"העתקה":"Copy"}</button></div>
     <div class="muted small">${he?"באנגלית למשפחת אלון – מחליפים שפה למעלה (EN) ושולחים שוב.":"Hebrew version – switch language at the top and send again."}</div>`;
 }
+let QUERY = "";
+function searchResults(q){
+  const he = LANG === "he", t = q.trim().toLowerCase();
+  const people = IDS.filter(id => [P[id].he, P[id].en, nm(id)].some(n => n && String(n).toLowerCase().includes(t)));
+  const hits = E.filter(e => { const p = e.pl ? PL[e.pl] : null;
+    const hay = [e.ti.he, e.ti.en, e.su && e.su.he, e.su && e.su.en, p && p.he, p && p.en].join(" ").toLowerCase();
+    return hay.includes(t) || e.who.some(w => people.includes(w)); });
+  const html = DAYS.map((d,i) => { const h = hits.filter(e => e.d === i); return h.length ? `<h3 style="margin-bottom:0">${L(d)}</h3><div class="stack">${h.map(e => evCard(e)).join("")}</div>` : ""; }).join("");
+  return html ? `<div class="muted small">${he?`נמצאו ${hits.length} פעילויות${people.length?` • כולל כל מה שקשור ל${people.map(nm).join(", ")}`:""}`:`${hits.length} activities found${people.length?` • including everything with ${people.map(nm).join(", ")}`:""}`}</div>${html}` : `<div class="card muted">${he?"לא נמצא – נסו מילה אחרת":"Nothing found – try another word"}</div>`;
+}
+/* ---- "what changed" banner – shows for 48 hours after each update ---- */
+const CHANGES = [
+  {at:"2026-11-03T20:15:00Z", he:"עודכן: שני – חילופי המשמר ב-11:00 • שלישי – שעות חזרה מווינטר וונדרלנד • רביעי – הצעה לקטנים אחה״צ • חמישי – ארוחה משפחתית אחרונה ב-18:00 • חיפוש בלו״ז • מסעדות חדשות כולל סושי", en:"Updated: Mon – Changing of the Guard at 11:00 • Tue – times for leaving Winter Wonderland • Wed – afternoon idea for the little ones • Thu – last family dinner at 18:00 • search in the schedule • new restaurants incl. sushi"}
+];
+function changesBanner(){
+  const now = Date.now(), seen = store.get("gl_seen_ch", "");
+  const fresh = CHANGES.filter(c => now - Date.parse(c.at) < 48*3600e3 && c.at > seen);
+  if(!fresh.length) return "";
+  return `<div class="chbar"><span>🔔</span><div style="flex:1;min-width:0">${fresh.map(c => esc(L(c))).join("<br>")}</div><button class="tbtn" id="chOk" aria-label="${LANG==="he"?"הבנתי":"Got it"}">✕</button></div>`;
+}
 function evCard(e, isNow){
   const p = e.pl ? PL[e.pl] : null;
   const tile = `var(--c${(E.indexOf(e) % 6) + 1})`;
@@ -877,6 +910,7 @@ function kidView(id){
 function viewNow(){
   if(KID && KIDS.includes(KID)) return kidView(KID);
   const n = londonNow(), he = LANG === "he", out = [];
+  const cb = changesBanner(); if(cb) out.push(cb);
   if(L(STATE.announce)) out.push(`<div class="notice"><h3>${T("fromOrganizer")} <span class="muted small mono">${esc(STATE.announceDate||"")}</span></h3><div>${esc(L(STATE.announce))}</div></div>`);
   out.push(`<div class="row">${STATE.waGroup?`<a class="act primary" href="${esc(STATE.waGroup)}" target="_blank" rel="noopener">💬 ${he?"קבוצת הוואטסאפ":"WhatsApp group"}</a>`:""}<a class="act" href="${ASK_YONI()}" target="_blank" rel="noopener">❓ ${he?"שאלה ליוני":"Ask Yoni"}</a></div>`);
   const kidsCard = `<div class="card row" style="justify-content:space-between"><span>${he?"מצב ילדים":"Kids' mode"}</span><span class="row" style="gap:6px">${KIDS.map(k => `<button class="chip" data-kid="${k}">${nm(k)}</button>`).join("")}</span></div>`;
@@ -936,11 +970,14 @@ function viewSchedule(){
     const nowIdx = n.date === d.date ? evs.map(e => e.t <= n.time).lastIndexOf(true) : -1;
     body = evs.length ? `<div class="stack">${evs.map((e,i) => evCard(e, i === nowIdx)).join("")}</div>` : `<div class="card muted">${LANG==="he"?"אין פעילויות לבחירה הזו ביום הזה":"Nothing for this selection on this day"}</div>`;
   }
-  if(SCHMODE === "attr") return `<div class="stack"><div class="row" style="justify-content:space-between">${mode}</div>${body}</div>`;
-  return `<div class="stack"><div class="days" role="group">${days}</div>
+  const he = LANG === "he";
+  const top = `${changesBanner()}<input id="schQ" type="search" autocomplete="off" placeholder="${he?"🔎 חיפוש בלו״ז – מקום, פעילות או שם":"🔎 Search the plan – place, activity or name"}" value="${esc(QUERY)}" style="width:100%;font:inherit;padding:11px 14px;border-radius:14px;background:var(--surface);color:var(--ink);border:1px solid var(--line)">`;
+  if(QUERY) return `<div class="stack">${top}<div id="schBody" class="stack">${searchResults(QUERY)}</div></div>`;
+  if(SCHMODE === "attr") return `<div class="stack">${top}<div id="schBody" class="stack"><div class="row" style="justify-content:space-between">${mode}</div>${body}</div></div>`;
+  return `<div class="stack">${top}<div id="schBody" class="stack"><div class="days" role="group">${days}</div>
     <div class="muted small" style="text-align:center;margin-top:-6px">${LANG==="he"?"⇆ מחליקים לצדדים כדי לעבור בין הימים":"⇆ Swipe sideways to change day"}</div>
     <div class="row" style="justify-content:space-between;flex-wrap:nowrap;align-items:flex-end"><div style="min-width:0"><h2>${L(d)}</h2><div class="muted">${LANG==="he"?d.tHe:d.tEn}${d.n?` • ${LANG==="he"?"נר":"candle"} ${d.n}`:""}</div>${wxLine(d.date)?`<div style="margin-top:6px">${wxLine(d.date)}</div>`:""}</div>${d.n?`<div style="width:120px;flex:none">${menorah(d.n)}</div>`:""}</div>
-    <div class="row" style="justify-content:space-between">${mode}</div>${body}</div>`;
+    <div class="row" style="justify-content:space-between">${mode}</div>${body}</div></div>`;
 }
 
 /* map */
@@ -1172,7 +1209,7 @@ function viewMore(){
       <div class="conv"><label>£ GBP<input id="gbp" type="number" inputmode="decimal" value="10"></label><label>${CUR.sym} ${CUR.code}<input id="ils" type="number" inputmode="decimal" value="${(10*rate).toFixed(2)}"></label></div>
       <label class="field"><span>${he?"שער (1 ליש״ט בשקלים) – אפשר לעדכן":"Rate ($ per £1) – you can change it"}</span><input id="rate" type="number" step="0.01" value="${rate}"></label>
       <div class="muted small">${he?"ברירת מחדל: 4.08, לפי השער ב-27.10.2026. במסעדות מתווספים לרוב 12.5% דמי שירות.":"Default 1.33, the rate on 27 Oct 2026. Restaurants usually add a 12.5% service charge."}</div>`)}
-    ${sec("food",he?"🍽️ איפה לאכול":"🍽️ Where to eat",`<a class="act" style="justify-self:start;background:#DA291C;border-color:#DA291C;color:#FFC72C;margin-bottom:8px" href="https://www.google.com/maps/search/?api=1&query=McDonald%27s%20near%20me" target="_blank" rel="noopener">🍟 ${he?"המקדונלדס הקרוב אליי":"Nearest McDonald's"}</a><div class="muted small">${he?"ארוחת בוקר כל יום במלון • צהריים וערב חופשיים":"Breakfast at the hotel daily • lunch and dinner are free time"}</div>${FOOD_GROUPS.map(g => `<div class="row" style="justify-content:space-between;margin-top:10px"><b style="color:var(--gold)">${he?g.he:g.en}</b>${g.d!==null?`<button class="act" data-goday="${g.d}">${he?"ללו״ז של היום":"See that day"}</button>`:""}</div>${FOOD.filter(f => f[4]===g.k).map(f => `<div class="row" style="justify-content:space-between;border-top:1px solid var(--line);padding-top:8px"><div style="min-width:0"><b dir="ltr">${f[0]}</b><div class="muted small">${he?f[1]:f[2]}</div></div><div class="actions"><a class="act" href="${f[3]}" target="_blank" rel="noopener">${he?"תפריט":"Menu"}</a><a class="act" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(f[5])}" target="_blank" rel="noopener">${ICON.pin} ${he?"מפה":"Map"}</a></div></div>`).join("")}`).join("")}`)}
+    ${sec("food",he?"🍽️ איפה לאכול":"🍽️ Where to eat",`<a class="act" style="justify-self:start;background:#DA291C;border-color:#DA291C;color:#FFC72C;margin-bottom:8px" href="https://www.google.com/maps/search/?api=1&query=McDonald%27s%20near%20me" target="_blank" rel="noopener">🍟 ${he?"המקדונלדס הקרוב אליי":"Nearest McDonald's"}</a><div class="muted small">${he?"ארוחת בוקר כל יום במלון • צהריים וערב חופשיים":"Breakfast at the hotel daily • lunch and dinner are free time"}</div>${FOOD_GROUPS.map(g => `<div class="row" style="justify-content:space-between;margin-top:10px"><b style="color:var(--gold)">${he?g.he:g.en}</b>${g.d!==null?`<button class="act" data-goday="${g.d}">${he?"ללו״ז של היום":"See that day"}</button>`:""}</div>${FOOD.filter(f => f[4]===g.k).map(f => `<div class="row" style="justify-content:space-between;border-top:1px solid var(--line);padding-top:8px"><div style="min-width:0"><b dir="ltr">${f[0]}</b> <span class="pill" style="background:var(--surface-2);color:var(--ink);margin-inline-start:4px">${he?f[6]:f[7]}</span><div class="muted small">${he?f[1]:f[2]}</div></div><div class="actions"><a class="act" href="${f[3]}" target="_blank" rel="noopener">${he?"תפריט":"Menu"}</a><a class="act" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(f[5])}" target="_blank" rel="noopener">${ICON.pin} ${he?"מפה":"Map"}</a></div></div>`).join("")}`).join("")}`)}
     ${sec("album",he?"📸 אלבום משותף":"📸 Shared album",S.album?`<a class="act primary" style="justify-self:start" href="${esc(S.album)}" target="_blank" rel="noopener">${he?"פתיחת האלבום":"Open the album"}</a><ol style="margin:0;padding-inline-start:20px;display:grid;gap:4px"><li>${he?"פותחים את האלבום (בפעם הראשונה לוחצים ״הצטרפות״).":"Open the album (the first time, tap \"Join\")."}</li><li>${he?"לוחצים על + או על סמל התמונה עם הפלוס.":"Tap + or the add-photos icon."}</li><li>${he?"בוחרים תמונות מהגלריה ולוחצים ״הוספה״ – וכולם רואים.":"Pick photos from your gallery and tap \"Add\" – everyone sees them."}</li></ol><div class="muted small">${he?"מצלמים כרגיל במצלמת הטלפון, ואז מוסיפים לאלבום. צריך חשבון גוגל כדי להעלות.":"Take photos with your phone camera as usual, then add them to the album. You need a Google account to upload."}</div>`:`<div class="muted">${he?"יוני יוסיף כאן קישור לאלבום ב-Google Photos.":"Yoni will add a Google Photos album link here."}</div>`)}
     ${sec("pack",he?"🧳 רשימת ציוד (בטלפון הזה)":"🧳 Packing list (on this phone)",PACK.map((p,i) => `<label class="check ${packDone[i]?"done":""}"><input type="checkbox" data-pack="${i}" ${packDone[i]?"checked":""}><span class="lbl">${he?p[0]:p[1]}</span></label>`).join(""))}
     ${sec("kids",he?"🧒 לילדים: ציד אוצרות בלונדון":"🧒 Kids: London treasure hunt",`<div class="row"><div class="bar" style="flex:1"><i style="width:${Math.round(huntN/HUNT.length*100)}%"></i></div><span class="mono small">${huntN}/${HUNT.length}</span></div>${HUNT.map((h,i) => `<label class="check ${huntDone[i]?"done":""}"><input type="checkbox" data-hunt="${i}" ${huntDone[i]?"checked":""}><span class="lbl">${he?h[0]:h[1]}</span></label>`).join("")}`)}
@@ -1193,6 +1230,8 @@ function wire(v){
   v.querySelectorAll("[data-mode]").forEach(b => b.onclick = () => { SCHMODE = b.dataset.mode; store.set("gl_schmode",SCHMODE); renderView(); });
   const as = v.querySelector("#attrSel"); if(as) as.onchange = () => { ATTR = as.value; store.set("gl_attr", ATTR); renderView(); };
   v.querySelectorAll("[data-mapmode]").forEach(b => b.onclick = () => { MAPMODE = b.dataset.mapmode; renderView(); });
+  const sq = v.querySelector("#schQ"); if(sq) sq.oninput = () => { QUERY = sq.value; if(QUERY.trim()){ const b = $("schBody"); b.innerHTML = searchResults(QUERY); wire(v); } else { renderView(); const s2 = $("schQ"); if(s2) s2.focus(); } };
+  const co = v.querySelector("#chOk"); if(co) co.onclick = () => { store.set("gl_seen_ch", CHANGES.map(c => c.at).sort().slice(-1)[0]); renderView(); };
   v.querySelectorAll("[data-mapday]").forEach(b => b.onclick = () => { MAPDAY = b.dataset.mapday; renderView(); });
   v.querySelectorAll("[data-cardev]").forEach(b => b.onclick = ev => { if(ev.target.closest("a,button,select,input")) return; openEvent(+b.dataset.cardev); });
   const ig = v.querySelector("#icsGo"); if(ig) ig.onclick = () => { const id = v.querySelector("#icsMe").value; if(!id){ v.querySelector("#icsMe").focus(); return; } store.set("gl_me", id); downloadICS(id, ig); };
@@ -1380,7 +1419,7 @@ window.addEventListener("hashchange", () => { closeSheet(); renderTabs(); render
   v.addEventListener("touchstart", e => {
     sx = null;
     const kid = route() === "now" && KID && KIDS.includes(KID);
-    if(!(kid || (route() === "schedule" && SCHMODE !== "attr")) || e.touches.length !== 1) return;
+    if(!(kid || (route() === "schedule" && SCHMODE !== "attr" && !QUERY)) || e.touches.length !== 1) return;
     if(e.target.closest(".grid-who, .days, select, input, textarea")) return;
     sx = e.touches[0].clientX; sy = e.touches[0].clientY;
   }, {passive:true});
