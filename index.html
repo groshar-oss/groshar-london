@@ -313,6 +313,24 @@ const PL = {
     tHe:"קו Piccadilly ישיר מהמלון • תיק עד A4 בלבד, אין שמירת חפצים • להגיע שעה לפני",tEn:"Piccadilly line direct from the hotel • bags A4 size max, no storage • arrive an hour early"},
   battersea:{n:23,m:2,day:"4",he:"תחנת הכוח באטרסי – Lift 109",en:"Battersea Power Station – Lift 109",ll:[51.4818,-0.1445],w:"https://batterseapowerstation.co.uk",
     tHe:"Lift 109 בכרטיס עם שעה • החלקה Glide – לוודא שפועל",tEn:"Lift 109 is timed-ticket • Glide ice rink – check it's open"},
+  burlington:{n:36,m:1,day:"r",he:"Burlington Arcade",en:"Burlington Arcade",ll:[51.5088,-0.1404],w:"https://www.burlingtonarcade.com",
+    tHe:"פסאז׳ מקורה משנת 1819, 3 דק׳ מהמלון • בלי הזמנה • יפה במיוחד בחג",tEn:"Covered arcade from 1819, 3 min from the hotel • no booking • lovely at Christmas"},
+  chinatown:{n:37,m:1,day:"r",he:"צ׳יינה טאון",en:"Chinatown",ll:[51.5115,-0.1316],w:"https://chinatown.co.uk",
+    tHe:"צמוד ללסטר סקוור • פנסים, מאפים וקינוחים • בלי הזמנה",tEn:"Next to Leicester Square • lanterns, bakeries and desserts • no booking"},
+  coventmkt:{n:38,m:1,day:"r",he:"שווקי קובנט גארדן ו-Seven Dials",en:"Covent Garden markets & Seven Dials",ll:[51.5120,-0.1225],w:"https://www.coventgarden.london",
+    tHe:"Apple Market ו-Jubilee Market כל יום, שוק חג המולד ואמני רחוב • Seven Dials ו-Neal's Yard הצבעוני 5 דק׳ הליכה",tEn:"Apple and Jubilee markets daily, Christmas market and street performers • Seven Dials and colourful Neal's Yard 5 min away"},
+  stkat:{n:39,m:2,day:"r",he:"St Katharine Docks",en:"St Katharine Docks",ll:[51.5067,-0.0718],w:"https://www.skdocks.co.uk",
+    tHe:"מרינה שקטה 5 דק׳ מגשר טאואר • סירות, בתי קפה • בלי הזמנה",tEn:"Quiet marina 5 min from Tower Bridge • boats, cafés • no booking"},
+  diana:{n:40,m:2,day:"r",he:"גן המשחקים של הנסיכה דיאנה",en:"Diana Memorial Playground",ll:[51.5070,-0.1883],w:"https://www.royalparks.org.uk/visit/parks/kensington-gardens/diana-memorial-playground",
+    tHe:"ספינת פיראטים ענקית לקטנים, בכניסה חופשית • נסגר עם החשכה (בדצמבר בסביבות 15:45) • 15 דק׳ הליכה מווינטר וונדרלנד",tEn:"A giant pirate ship for little ones, free entry • closes at dusk (about 3:45pm in December) • 15 min walk to Winter Wonderland"},
+  camden:{n:41,m:2,day:"r",he:"שוק קמדן",en:"Camden Market",ll:[51.5415,-0.1460],w:"https://www.camdenmarket.com",
+    tHe:"שוק אלטרנטיבי ענק עם מאות דוכנים ואוכל רחוב • כל יום, בלי הזמנה • קו Northern ל-Camden Town",tEn:"Huge alternative market with hundreds of stalls and street food • daily, no booking • Northern line to Camden Town"},
+  liberty:{n:42,m:1,day:"r",he:"Liberty – חנות חג המולד",en:"Liberty – Christmas shop",ll:[51.5140,-0.1401],w:"https://www.libertylondon.com",
+    tHe:"בניין טיודור מעץ, 3 דק׳ מ-Hamleys • קומת קישוטי חג • בלי הזמנה",tEn:"Tudor-style timber building, 3 min from Hamleys • a whole Christmas floor • no booking"},
+  selfridges:{n:43,m:1,day:"r",he:"Selfridges ומרילבון",en:"Selfridges & Marylebone",ll:[51.5144,-0.1527],w:"https://www.selfridges.com",
+    tHe:"חלונות חג מפורסמים וקומת חג המולד • Marylebone High Street בדרך מטוסו, 15 דק׳ הליכה",tEn:"Famous Christmas windows and Christmas shop • Marylebone High Street on the way from Tussauds, 15 min walk"},
+  spitalfields:{n:44,m:2,day:"r",he:"שוק ספיטלפילדס ובריק ליין",en:"Spitalfields Market & Brick Lane",ll:[51.5196,-0.0754],w:"https://oldspitalfieldsmarket.com",
+    tHe:"שוק מקורה עם מעצבים ואוכל, כל יום • בריק ליין: גרפיטי ובייגל המפורסם • 15 דק׳ מהמצודה",tEn:"Covered market with designers and food, daily • Brick Lane: street art and the famous bagels • 15 min from the Tower"},
   southbank:{n:32,m:1,day:"1",he:"שוק החורף בסאות׳בנק",en:"Southbank Centre Winter Market",ll:[51.5062,-0.1167],w:"https://www.southbankcentre.co.uk",
     tHe:"5 דק׳ הליכה מה-London Eye • דוכני אוכל ומתנות • 11:00–22:00 • כניסה חופשית",tEn:"5 min walk from the London Eye • food and gift stalls • 11:00–22:00 • free entry"},
   leicester:{n:33,m:1,day:"1",he:"לסטר סקוור – שוק חג המולד ורחבת החלקה",en:"Leicester Square – Christmas market & ice rink",ll:[51.5103,-0.1301],w:"https://www.leicestersquare.london",
@@ -344,6 +362,7 @@ const ev = (d,t,who,he,en,suHe,suEn,pl,k) => E.push({d,t,who,ti:{he,en},su:{he:s
 ev(0,"10:40",ALONF,"משפחת אלון נוחתת בהית׳רו","Alon's family lands at Heathrow","Delta 5921 • הסעה 1005790 למלון","Delta 5921 • transfer 1005790 to the hotel","lhr","b");
 ev(0,"12:30",ALONF,"הגעה למלון והשארת מזוודות","Arrive at the hotel, leave bags","אחה״צ חופשי ליד המלון: גרין פארק, Fortnum & Mason","Free afternoon nearby: Green Park, Fortnum & Mason","hotel","f");
 ev(0,"14:30",ALONF,"המלצה: חלונות החג של Fortnum & Mason","Idea: Fortnum & Mason Christmas windows","3 דק׳ הליכה מהמלון • חנות הממתקים והתה המפורסמת","3 min walk from the hotel • the famous tea and sweets shop","fortnum","r");
+ev(0,"15:30",ALONF,"המלצה: Burlington Arcade","Idea: Burlington Arcade","ממש ליד Fortnum, בלי הזמנה","Right next to Fortnum, no booking","burlington","r");
 ev(0,"16:30",ALONF,"המלצה: Christmas at Kew – שביל אורות","Idea: Christmas at Kew light trail","כ-40 דק׳ ברכבת • מבוגר מ-£25, ילד מ-£20, עד גיל 4 חינם • רק אם יש כוח אחרי הטיסה","~40 min by train • adult from £25, child from £20, under-4s free • only if you have energy after the flight","kew","r");
 ev(0,"17:00",ALONF,"אופציה לערב: אורות ושוק בלסטר סקוור","Evening option: lights and market in Leicester Square","7 דק׳ הליכה מהמלון, פתוח עד 22:00 • לחזור מוקדם, מחר יום מלא","7 min walk from the hotel, open until 22:00 • back early, big day tomorrow","leicester","s");
 ev(0,"15:00",ISR,"המראה מתל אביב – LY317","Take-off from Tel Aviv – LY317","17:00 שעון ישראל • YCWT59 + YDVYSX","17:00 Israel time • YCWT59 + YDVYSX","","b");
@@ -359,6 +378,7 @@ ev(1,"15:00",ALL,"London Eye","London Eye","הזמנה R128336856 • 19 כרט�
 ev(1,"16:00",LITTLE.concat(["dani","hadar","liz"]),"פעוטות חוזרים למלון","Little ones back to the hotel","מ-Waterloo בקו Jubilee לגרין פארק, או מונית • מנוחה ואמבטיה ומגיעים ישר למסעדה ב-19:00","Jubilee line from Waterloo to Green Park, or a taxi • rest and bath, then straight to the restaurant at 19:00","hotel","s");
 ev(1,"16:00",without(ALL,LITTLE.concat(["dani","hadar","liz"])),"שוק החורף בסאות׳בנק","Southbank Centre Winter Market","5 דק׳ הליכה מה-Eye • משהו חם לשתות ולנשנש","5 min walk from the Eye • something warm to drink and a snack","southbank","f");
 ev(1,"17:00",without(ALL,LITTLE.concat(["dani","hadar","liz"])),"הליכה באורות החג: לסטר סקוור, ריג׳נט וקרנבי","Christmas lights walk: Leicester Sq, Regent St & Carnaby","חוצים את הנהר בגשר הרגלי Hungerford ← טרפלגר ← לסטר סקוור (LEGO, M&M's) ← ריג׳נט וקרנבי • משם 5 דק׳ למסעדה","Cross the river on the Hungerford footbridge → Trafalgar Sq → Leicester Sq (LEGO, M&M's) → Regent St & Carnaby • then 5 min to the restaurant","leicester","f");
+ev(1,"17:30",without(ALL,LITTLE.concat(["dani","hadar","liz"])),"המלצה: צ׳יינה טאון או שווקי קובנט גארדן","Idea: Chinatown or the Covent Garden markets","שניהם על מסלול ההליכה, בלי הזמנה","Both on the walking route, no booking","chinatown","r");
 ev(1,"19:00",ALL,"ארוחת ערב משפחתית – כל ה-19","Family dinner – all 19 of us","Cicchetti Piccadilly, חדר פרטי • נפגשים ישר במסעדה","Cicchetti Piccadilly, private room • meet at the restaurant","cicchetti","p");
 ev(1,"20:45",ALL,"נר רביעי במלון","4th candle at the hotel","5 דק׳ מהמסעדה • מדליקים יחד ואז מי שרוצה ממשיך","5 min from the restaurant • light together, then whoever wants carries on","hotel");
 ev(1,"21:00",TEENS,"המלצה: החלקה בסומרסט האוס","Idea: skating at Somerset House","סשן 21:00–21:45 • 10 דק׳ במונית • מבוגר מ-£13, ילד מ-£11 • להזמין מראש","21:00–21:45 session • 10 min by taxi • adult from £13, child from £11 • book ahead","somerset","r");
@@ -367,23 +387,27 @@ ev(1,"21:00",TEENS,"אופציה לצעירים: לסטר סקוור בלילה"
 ev(2,"08:00",ALL,"ארוחת בוקר במלון","Breakfast at the hotel","","","hotel");
 ev(2,"09:00",ALL,"מצודת לונדון","Tower of London","קודם תכשיטי הכתר","Crown Jewels first","tower","p");
 ev(2,"11:30",ALL,"גשר טאואר","Tower Bridge","","","towerbridge");
+ev(2,"12:00",ALL,"המלצה: St Katharine Docks או שוק ספיטלפילדס","Idea: St Katharine Docks or Spitalfields Market","המרינה 5 דק׳ מגשר טאואר • ספיטלפילדס ובריק ליין 15 דק׳ – צהריים בשוק • בלי הזמנה","The marina is 5 min from Tower Bridge • Spitalfields and Brick Lane 15 min – lunch at the market • no booking","stkat","r");
 ev(2,"12:30",ALL,"המלצה: שוק לידנהול + תצפית Sky Garden","Idea: Leadenhall Market + Sky Garden viewpoint","10 דק׳ הליכה מהמצודה • Sky Garden חינם אבל חובה להזמין מראש","10 min walk from the Tower • Sky Garden is free but must be booked ahead","leadenhall","r");
 ev(2,"12:30",ALL,"צהריים חופשי","Free lunch","הצעה: שוק בורו, 15 דק׳ לאורך הנהר","Idea: Borough Market, 15 min along the river","borough","f");
 ev(2,"14:00",without(ALL,["dor","niv","itamar","eitan"]),"חזרה למלון למנוחה","Back to the hotel to rest","שנ״צ לקטנים, בגדים חמים","Naps for the little ones, warm clothes","hotel");
 ev(2,"14:00",without(ALL,["dor","niv","itamar","eitan"]),"המלצה: מוזיאון הטבע – הדינוזאורים","Idea: Natural History Museum – dinosaurs","במקום מנוחה, למי שרוצה • חינם, כדאי להזמין שעה • ליד ה-Wonderlab ו-15 דק׳ הליכה לווינטר וונדרלנד","Instead of resting, for anyone keen • free, book a slot • next to Wonderlab and 15 min walk to Winter Wonderland","nhm","r");
 ev(2,"14:00",["dor","niv","itamar","eitan"],"Wonderlab במוזיאון המדע","Wonderlab at the Science Museum","מטאואר היל בקו District ישר לסאות׳ קנזינגטון • ב-8.12 נסגר ב-16:00 • ב-15:50 הולכים 15 דק׳ לווינטר וונדרלנד • מבוגר מלווה: ___","District line from Tower Hill straight to South Kensington • closes 16:00 on 8 Dec • at 15:50 walk 15 min to Winter Wonderland • adult with them: ___","science","p");
+ev(2,"14:30",["imri","raz","ziv","dani","hadar","liz"],"המלצה: גן המשחקים של דיאנה","Idea: Diana Memorial Playground","במקום מנוחה, לקטנים שערים • חינם, נסגר בסביבות 15:45 • משם 15 דק׳ לווינטר וונדרלנד","Instead of resting, if the little ones are awake • free, closes about 3:45pm • 15 min walk to Winter Wonderland","diana","r");
 ev(2,"16:00",ALL,"Winter Wonderland","Winter Wonderland","כניסה בין 16:00 ל-17:00 • הזמנה 130427698 • 15 דק׳ הליכה","Entry between 16:00 and 17:00 • booking 130427698 • 15 min walk","ww","b");
 ev(2,"19:30",without(ALL,LITTLE),"המלצה: Paddington המחזמר","Idea: Paddington The Musical","תיאטרון Savoy, 5 דק׳ מהמלון • במקום הערב בווינטר וונדרלנד, למי שרוצה • לבדוק מקומות ומחירים","Savoy Theatre, 5 min from the hotel • instead of the evening at Winter Wonderland, for anyone keen • check seats and prices","savoy","r");
 ev(2,"19:00",ALL,"ערב חופשי ונר חמישי","Free evening & 5th candle","אפשר לאכול במתחם • פעוטות חוזרים ראשונים","Eat inside the park • little ones head back first","ww","f");
 // Day 3
 ev(3,"08:00",ALL,"ארוחת בוקר במלון","Breakfast at the hotel","","","hotel");
 ev(3,"10:00",TEENS,"שופינג באוקספורד סטריט וקרנבי","Shopping on Oxford St & Carnaby","מי שרוצה יכול להישאר לשופינג כל היום","Anyone who prefers can shop all day","regent");
+ev(3,"10:00",TEENS,"המלצה: שוק קמדן במקום אוקספורד סטריט","Idea: Camden Market instead of Oxford St","שוק אלטרנטיבי ענק, אוכל רחוב • 15 דק׳ בקו Northern • בלי הזמנה","Huge alternative market, street food • 15 min on the Northern line • no booking","camden","r");
 ev(3,"12:30",TEENS,"צהריים חופשי","Free lunch","הצעה: Kingly Court בקרנבי","Idea: Kingly Court in Carnaby","regent","f");
 ev(3,"13:30",TEENS,"נסיעה ל-Gravity Wandsworth","Head to Gravity Wandsworth","כ-40 דק׳ בתחבורה ציבורית • מבוגר מלווה: ___","~40 min by public transport • adult with them: ___","gravity");
 ev(3,"14:15",TEENS,"Gravity: קארטינג, באולינג ו-VR","Gravity: karting, bowling & VR","כל השישה מעל גיל 12 – מתאים לקארטינג Pro • להזמין מראש","All six are 12+ – fine for Pro karting • book ahead","gravity","p");
 ev(3,"16:30",TEENS,"חזרה למלון","Back to the hotel","מלך האריות יוצאים ב-17:30, ארסנל ב-18:30","Lion King group leaves 17:30, Arsenal 18:30","hotel");
 const TRACKB = without(ALL,TEENS);
 ev(3,"10:00",TRACKB,"Hamleys ברחוב ריג׳נט","Hamleys on Regent Street","","","hamleys");
+ev(3,"11:15",TRACKB,"המלצה: Liberty – חנות חג המולד","Idea: Liberty Christmas shop","3 דק׳ מ-Hamleys, בלי הזמנה","3 min from Hamleys, no booking","liberty","r");
 ev(3,"12:30",TRACKB,"צהריים חופשי","Free lunch","הצעה: Arcade Food Hall ב-Centre Point","Idea: Arcade Food Hall at Centre Point","arcadecp","f");
 ev(3,"14:00",TRACKB,"שנ״צ במלון | קובנט גארדן","Naps at the hotel | Covent Garden","עץ האשוח ואמני רחוב","The big tree and street performers","covent","s");
 ev(3,"17:30",["yoni","dani","dan","hadar"],"יציאה ל-Mamma Mia! The Party","Leave for Mamma Mia! The Party","קו Jubilee מגרין פארק","Jubilee line from Green Park","o2","p");
@@ -403,6 +427,7 @@ ev(4,"14:30",["alon","liz","ziv","sandra","dor","niv"],"מאדאם טוסו","Ma
 ev(4,"14:30",["amber","tatiana","davidj","rose","itamar","eitan","yoni"],"F1 Arcade","F1 Arcade","ליד סנט פול • מתחת לגיל 18 רק עד 18:00 – לסיים עד 17:45","Near St Paul's • under-18s only until 6pm – finish by 5:45pm","f1","p");
 ev(4,"14:00",["david","dani","dan","hadar","imri","raz"],"Uber Boat מבאטרסי ל-London Eye","Uber Boat from Battersea to the London Eye","מהרציף של תחנת הכוח ישר לרציף London Eye • כ-20 דק׳, נוח עם עגלות","From the Power Station pier straight to London Eye pier • ~20 min, easy with buggies","pier");
 ev(4,"14:30",["david","dani","dan","hadar","imri","raz"],"האקווריום SEA LIFE","SEA LIFE London Aquarium","כרישים, פינגווינים ומנהרת דגים • כשעה וחצי • משם 15 דק׳ במונית/Jubilee חזרה למלון לשנ״צ","Sharks, penguins and a fish tunnel • about 1½ hours • then 15 min by taxi/Jubilee line back to the hotel for naps","sealife","p");
+ev(4,"16:30",["alon","liz","ziv","sandra","dor","niv"],"המלצה: Selfridges ומרילבון","Idea: Selfridges & Marylebone","אחרי טוסו, 15 דק׳ הליכה • חלונות החג וקומת חג המולד","After Tussauds, 15 min walk • Christmas windows and Christmas shop","selfridges","r");
 ev(4,"17:30",ALL,"ארוחת ערב חופשית – מוקדם","Early free dinner","כולם במלון עד 19:30","Everyone back by 19:30","","f");
 ev(4,"19:30",ALL,"נר שביעי, אריזה ושינה","7th candle, packing, bed","מזוודות סגורות עד 20:00 • ארוחות בוקר ארוזות","Bags closed by 20:00 • packed breakfasts","hotel");
 // Day 5
@@ -671,6 +696,7 @@ function viewSchedule(){
   }
   if(SCHMODE === "attr") return `<div class="stack"><div class="row" style="justify-content:space-between">${mode}</div>${body}</div>`;
   return `<div class="stack"><div class="days" role="group">${days}</div>
+    <div class="muted small" style="text-align:center;margin-top:-6px">${LANG==="he"?"⇆ מחליקים לצדדים כדי לעבור בין הימים":"⇆ Swipe sideways to change day"}</div>
     <div class="row" style="justify-content:space-between;flex-wrap:nowrap;align-items:flex-end"><div style="min-width:0"><h2>${L(d)}</h2><div class="muted">${LANG==="he"?d.tHe:d.tEn}${d.n?` • ${LANG==="he"?"נר":"candle"} ${d.n}`:""}</div></div>${d.n?`<div style="width:120px;flex:none">${menorah(d.n)}</div>`:""}</div>
     <div class="row" style="justify-content:space-between">${mode}</div>${body}</div>`;
 }
@@ -1036,6 +1062,28 @@ async function send(){
 try{ if(store.get("gl_big",false)) document.documentElement.classList.add("big"); }catch(e){}
 try{ const t = sessionStorage.getItem("gl_tab"); if(t){ sessionStorage.removeItem("gl_tab"); if(!location.hash) location.hash = t; } }catch(e){}
 window.addEventListener("hashchange", () => { closeSheet(); renderTabs(); renderView(); window.scrollTo(0,0); });
+(function(){
+  let sx = null, sy = 0;
+  const v = $("view");
+  v.addEventListener("touchstart", e => {
+    sx = null;
+    if(route() !== "schedule" || SCHMODE === "attr" || e.touches.length !== 1) return;
+    if(e.target.closest(".grid-who, .days, select, input, textarea")) return;
+    sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+  }, {passive:true});
+  v.addEventListener("touchend", e => {
+    if(sx === null) return;
+    const t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy; sx = null;
+    if(Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+    const next = LANG === "he" ? dx > 0 : dx < 0;
+    const nd = Math.max(0, Math.min(DAYS.length - 1, DAY + (next ? 1 : -1)));
+    if(nd === DAY) return;
+    DAY = nd; renderView();
+    const vv = $("view"); vv.style.transition = "none"; vv.style.opacity = ".35"; vv.style.transform = `translateX(${(dx > 0 ? -1 : 1) * 24}px)`;
+    requestAnimationFrame(() => { vv.style.transition = "opacity .2s, transform .2s"; vv.style.opacity = "1"; vv.style.transform = "none"; });
+    const days = vv.querySelector(".days [aria-pressed=\"true\"]"); if(days) days.scrollIntoView({block:"nearest", inline:"center"});
+  }, {passive:true});
+})();
 renderAll();
 (async () => {
   try{
