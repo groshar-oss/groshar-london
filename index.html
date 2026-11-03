@@ -313,6 +313,22 @@ const PL = {
     tHe:"קו Piccadilly ישיר מהמלון • תיק עד A4 בלבד, אין שמירת חפצים • להגיע שעה לפני",tEn:"Piccadilly line direct from the hotel • bags A4 size max, no storage • arrive an hour early"},
   battersea:{n:23,m:2,day:"4",he:"תחנת הכוח באטרסי – Lift 109",en:"Battersea Power Station – Lift 109",ll:[51.4818,-0.1445],w:"https://batterseapowerstation.co.uk",
     tHe:"Lift 109 בכרטיס עם שעה • החלקה Glide – לוודא שפועל",tEn:"Lift 109 is timed-ticket • Glide ice rink – check it's open"},
+  hippodrome:{n:48,m:1,day:"r",he:"קזינו Hippodrome",en:"The Hippodrome Casino",ll:[51.5112,-0.1291],w:"https://www.hippodromecasino.com",
+    tHe:"בלסטר סקוור, 7 דק׳ מהמלון • פתוח 24/7, כניסה חופשית • 18+ – חובה דרכון",tEn:"Leicester Square, 7 min from the hotel • open 24/7, free entry • 18+ – bring your passport"},
+  harp:{n:49,m:1,day:"r",he:"פאבים בקובנט גארדן: The Harp ו-Lamb & Flag",en:"Covent Garden pubs: The Harp & Lamb & Flag",ll:[51.5096,-0.1253],w:"https://www.harpcoventgarden.com",
+    tHe:"שני פאבים ותיקים ואהובים, 3 דק׳ זה מזה • בלי הזמנה",tEn:"Two much-loved old pubs, 3 min apart • no booking"},
+  churchill:{n:50,m:2,day:"r",he:"The Churchill Arms",en:"The Churchill Arms",ll:[51.5069,-0.1946],w:"https://www.churchillarmskensington.co.uk",
+    tHe:"הפאב המפורסם עם אלפי פרחים ואורות חג על החזית • 20 דק׳ הליכה מווינטר וונדרלנד",tEn:"The famous pub covered in flowers and Christmas lights • 20 min walk from Winter Wonderland"},
+  redlion:{n:51,m:1,day:"r",he:"The Red Lion, Crown Passage",en:"The Red Lion, Crown Passage",ll:[51.5059,-0.1386],w:"https://www.redlionlondon.co.uk",
+    tHe:"פאב קטן ועתיק בסמטה בסנט ג׳יימס, 5 דק׳ מהמלון",tEn:"A tiny old pub in a St James's alley, 5 min from the hotel"},
+  yegrapes:{n:52,m:1,day:"r",he:"Ye Grapes – Shepherd Market",en:"Ye Grapes – Shepherd Market",ll:[51.5059,-0.1474],w:"https://www.yegrapes.com",
+    tHe:"פאב ויקטוריאני בכיכר קטנה במייפייר, 5 דק׳ מהמלון",tEn:"Victorian pub on a little Mayfair square, 5 min from the hotel"},
+  kingly:{n:45,m:1,day:"r",he:"Kingly Court – חצר אוכל בקרנבי",en:"Kingly Court – Carnaby food courtyard",ll:[51.5128,-0.1394],w:"https://www.carnaby.co.uk/kingly-court",
+    tHe:"חצר מקורה עם מסעדות על שלוש קומות, 8 דק׳ מהמלון • בלי הזמנה",tEn:"Covered courtyard with three floors of restaurants, 8 min from the hotel • no booking"},
+  natgallery:{n:46,m:1,day:"r",he:"הגלריה הלאומית וכיכר טרפלגר",en:"National Gallery & Trafalgar Square",ll:[51.5089,-0.1283],w:"https://www.nationalgallery.org.uk",
+    tHe:"כניסה חופשית, 10 דק׳ הליכה • עץ האשוח הגדול של טרפלגר בחוץ • מקורה ושקט – טוב לג׳ט לג",tEn:"Free entry, 10 min walk • the big Trafalgar Square tree outside • indoors and calm – good for jet lag"},
+  onenew:{n:47,m:2,day:"r",he:"One New Change – גג תצפית על סנט פול",en:"One New Change – rooftop view of St Paul's",ll:[51.5136,-0.0956],w:"https://www.onenewchange.com",
+    tHe:"באותו בניין של F1 Arcade • מרפסת גג חינם עם נוף לכיפת סנט פול • משם גשר המילניום, 5 דק׳",tEn:"Same building as F1 Arcade • free roof terrace facing St Paul's dome • Millennium Bridge 5 min away"},
   burlington:{n:36,m:1,day:"r",he:"Burlington Arcade",en:"Burlington Arcade",ll:[51.5088,-0.1404],w:"https://www.burlingtonarcade.com",
     tHe:"פסאז׳ מקורה משנת 1819, 3 דק׳ מהמלון • בלי הזמנה • יפה במיוחד בחג",tEn:"Covered arcade from 1819, 3 min from the hotel • no booking • lovely at Christmas"},
   chinatown:{n:37,m:1,day:"r",he:"צ׳יינה טאון",en:"Chinatown",ll:[51.5115,-0.1316],w:"https://chinatown.co.uk",
@@ -361,6 +377,9 @@ const ev = (d,t,who,he,en,suHe,suEn,pl,k) => E.push({d,t,who,ti:{he,en},su:{he:s
 // Day 0
 ev(0,"10:40",ALONF,"משפחת אלון נוחתת בהית׳רו","Alon's family lands at Heathrow","Delta 5921 • הסעה 1005790 למלון","Delta 5921 • transfer 1005790 to the hotel","lhr","b");
 ev(0,"12:30",ALONF,"הגעה למלון והשארת מזוודות","Arrive at the hotel, leave bags","אחה״צ חופשי ליד המלון: גרין פארק, Fortnum & Mason","Free afternoon nearby: Green Park, Fortnum & Mason","hotel","f");
+ev(0,"13:00",ALONF,"המלצה לצהריים: Kingly Court בקרנבי","Lunch idea: Kingly Court in Carnaby","חצר מסעדות מקורה, 8 דק׳ הליכה • יש לכל טעם","Covered courtyard of restaurants, 8 min walk • something for everyone","kingly","r");
+ev(0,"14:30",ALONF,"המלצה: הגלריה הלאומית ועץ האשוח בטרפלגר","Idea: National Gallery & the Trafalgar Square tree","חינם, בלי הזמנה • מקורה ורגוע – טוב אחרי טיסת לילה","Free, no booking • indoors and calm – good after an overnight flight","natgallery","r");
+ev(0,"16:00",ALONF,"המלצה: קובנט גארדן – עץ, שוק ואמני רחוב","Idea: Covent Garden – tree, market and street performers","10 דק׳ מהגלריה • ביום ראשון השוק עד 17:00","10 min from the gallery • on Sundays the market runs until 5pm","covent","r");
 ev(0,"14:30",ALONF,"המלצה: חלונות החג של Fortnum & Mason","Idea: Fortnum & Mason Christmas windows","3 דק׳ הליכה מהמלון • חנות הממתקים והתה המפורסמת","3 min walk from the hotel • the famous tea and sweets shop","fortnum","r");
 ev(0,"15:30",ALONF,"המלצה: Burlington Arcade","Idea: Burlington Arcade","ממש ליד Fortnum, בלי הזמנה","Right next to Fortnum, no booking","burlington","r");
 ev(0,"16:30",ALONF,"המלצה: Christmas at Kew – שביל אורות","Idea: Christmas at Kew light trail","כ-40 דק׳ ברכבת • מבוגר מ-£25, ילד מ-£20, עד גיל 4 חינם • רק אם יש כוח אחרי הטיסה","~40 min by train • adult from £25, child from £20, under-4s free • only if you have energy after the flight","kew","r");
@@ -368,6 +387,7 @@ ev(0,"17:00",ALONF,"אופציה לערב: אורות ושוק בלסטר סקו
 ev(0,"15:00",ISR,"המראה מתל אביב – LY317","Take-off from Tel Aviv – LY317","17:00 שעון ישראל • YCWT59 + YDVYSX","17:00 Israel time • YCWT59 + YDVYSX","","b");
 ev(0,"20:25",ISR,"נחיתה בהית׳רו, טרמינל 4","Land at Heathrow Terminal 4","אחרי המזוודות: לצאת לנקודת App & Private Hire Pick-Up, Zone 1, ולהתקשר לנהג","After bags: go out to App & Private Hire Pick-Up, Zone 1, and call the driver","lhr","b");
 ev(0,"21:25",ISR,"2 רכבים למלון","Two vans to the hotel","1005001 + 1005005 • £128 לרכב במזומן • כ-50 דק׳","1005001 + 1005005 • £128 per van in cash • ~50 min","lhr","b");
+ev(0,"21:00",["alon","liz"],"המלצה למבוגרים: Ye Grapes ב-Shepherd Market","Grown-ups' idea: Ye Grapes in Shepherd Market","5 דק׳ מהמלון • טטיאנה עם הילדים • ביום ראשון פאבים נסגרים מוקדם","5 min from the hotel • Tatiana with the kids • pubs close early on Sundays","yegrapes","r");
 ev(0,"22:30",ALL,"צ׳ק-אין ונר שלישי של חנוכה","Check-in and 3rd Hanukkah candle","6 חדרים • חנוכייה חשמלית","6 rooms • electric menorah","hotel");
 // Day 1
 ev(1,"08:30",ALL,"ארוחת בוקר במלון","Breakfast at the hotel","","","hotel");
@@ -382,6 +402,8 @@ ev(1,"17:30",without(ALL,LITTLE.concat(["dani","hadar","liz"])),"המלצה: צ�
 ev(1,"19:00",ALL,"ארוחת ערב משפחתית – כל ה-19","Family dinner – all 19 of us","Cicchetti Piccadilly, חדר פרטי • נפגשים ישר במסעדה","Cicchetti Piccadilly, private room • meet at the restaurant","cicchetti","p");
 ev(1,"20:45",ALL,"נר רביעי במלון","4th candle at the hotel","5 דק׳ מהמסעדה • מדליקים יחד ואז מי שרוצה ממשיך","5 min from the restaurant • light together, then whoever wants carries on","hotel");
 ev(1,"21:00",TEENS,"המלצה: החלקה בסומרסט האוס","Idea: skating at Somerset House","סשן 21:00–21:45 • 10 דק׳ במונית • מבוגר מ-£13, ילד מ-£11 • להזמין מראש","21:00–21:45 session • 10 min by taxi • adult from £13, child from £11 • book ahead","somerset","r");
+ev(1,"21:15",["yoni","dani","dan","hadar","alon","liz"],"המלצה למבוגרים: The Harp או Lamb & Flag","Grown-ups' idea: The Harp or Lamb & Flag","פאבים ותיקים בקובנט גארדן, 10 דק׳ הליכה • בלי הזמנה","Classic Covent Garden pubs, 10 min walk • no booking","harp","r");
+ev(1,"21:15",["yoni","dani","dan","hadar","alon","liz"],"המלצה למבוגרים: קזינו Hippodrome","Grown-ups' idea: The Hippodrome Casino","לסטר סקוור, 7 דק׳ • פתוח 24/7 • 18+ עם דרכון","Leicester Square, 7 min • open 24/7 • 18+ with passport","hippodrome","r");
 ev(1,"21:00",TEENS,"אופציה לצעירים: לסטר סקוור בלילה","Option for the young ones: Leicester Square at night","שוק חג המולד ורחבת החלקה עד 22:00, 7 דק׳ הליכה • או החלקה בסומרסט האוס (סשן 21:00) • כל מי שרוצה מצטרף • מבוגר אחראי: ___","Christmas market and ice rink until 22:00, 7 min walk • or skating at Somerset House (21:00 session) • anyone can join • adult in charge: ___","leicester","s");
 // Day 2
 ev(2,"08:00",ALL,"ארוחת בוקר במלון","Breakfast at the hotel","","","hotel");
@@ -396,6 +418,7 @@ ev(2,"14:00",["dor","niv","itamar","eitan"],"Wonderlab במוזיאון המדע
 ev(2,"14:30",["imri","raz","ziv","dani","hadar","liz"],"המלצה: גן המשחקים של דיאנה","Idea: Diana Memorial Playground","במקום מנוחה, לקטנים שערים • חינם, נסגר בסביבות 15:45 • משם 15 דק׳ לווינטר וונדרלנד","Instead of resting, if the little ones are awake • free, closes about 3:45pm • 15 min walk to Winter Wonderland","diana","r");
 ev(2,"16:00",ALL,"Winter Wonderland","Winter Wonderland","כניסה בין 16:00 ל-17:00 • הזמנה 130427698 • 15 דק׳ הליכה","Entry between 16:00 and 17:00 • booking 130427698 • 15 min walk","ww","b");
 ev(2,"19:30",without(ALL,LITTLE),"המלצה: Paddington המחזמר","Idea: Paddington The Musical","תיאטרון Savoy, 5 דק׳ מהמלון • במקום הערב בווינטר וונדרלנד, למי שרוצה • לבדוק מקומות ומחירים","Savoy Theatre, 5 min from the hotel • instead of the evening at Winter Wonderland, for anyone keen • check seats and prices","savoy","r");
+ev(2,"21:00",["yoni","dani","dan","hadar","alon","liz"],"המלצה למבוגרים: The Churchill Arms","Grown-ups' idea: The Churchill Arms","הפאב המקושט בלונדון, 20 דק׳ הליכה מווינטר וונדרלנד • מי שנשאר עם הילדים: ___","London's most decorated pub, 20 min walk from Winter Wonderland • who stays with the kids: ___","churchill","r");
 ev(2,"19:00",ALL,"ערב חופשי ונר חמישי","Free evening & 5th candle","אפשר לאכול במתחם • פעוטות חוזרים ראשונים","Eat inside the park • little ones head back first","ww","f");
 // Day 3
 ev(3,"08:00",ALL,"ארוחת בוקר במלון","Breakfast at the hotel","","","hotel");
@@ -416,19 +439,25 @@ ev(3,"17:30",["tatiana","davidj","rose","amber","dor","niv"],"ארוחה מוק�
 ev(3,"19:30",["tatiana","davidj","rose","amber","dor","niv"],"מלך האריות","The Lion King","תיאטרון Lyceum • כשעתיים וחצי","Lyceum Theatre • about 2½ hours","lyceum","p");
 ev(3,"18:30",["david","itamar","eitan"],"יציאה לאמירויות","Leave for the Emirates","קו Piccadilly ישיר","Piccadilly line, direct","emirates");
 ev(3,"20:00",["david","itamar","eitan"],"ארסנל – ריאל מדריד","Arsenal v Real Madrid","ליגת האלופות • כרטיסים בידיים ✓","Champions League • tickets in hand ✓","emirates","b");
+ev(3,"21:00",["alon","liz"],"המלצה למבוגרים: The Red Lion, Crown Passage","Grown-ups' idea: The Red Lion, Crown Passage","5 דק׳ מהמלון • סבתא סנדרה עם הקטנים","5 min from the hotel • Grandma Sandra with the little ones","redlion","r");
+ev(3,"23:00",["yoni","dani","dan","hadar"],"המלצה: קזינו Hippodrome אחרי Mamma Mia","Idea: the Hippodrome Casino after Mamma Mia","פתוח 24/7 • קו Jubilee מה-O2 ל-Green Park ו-7 דק׳ הליכה • 18+ עם דרכון","Open 24/7 • Jubilee line from the O2 to Green Park, then 7 min walk • 18+ with passport","hippodrome","r");
 ev(3,"18:00",["sandra","alon","liz","imri","raz","ziv"],"ערב במלון ונר שישי","Evening at the hotel & 6th candle","עם הפעוטות","With the little ones","hotel");
 // Day 4
 ev(4,"08:00",ALL,"ארוחת בוקר במלון","Breakfast at the hotel","","","hotel");
 ev(4,"09:30",ALL,"Uber Boat לבאטרסי","Uber Boat to Battersea","מרציף וסטמינסטר","From Westminster Pier","pier");
 ev(4,"10:30",ALL,"Lift 109 והחלקה על הקרח","Lift 109 & ice skating","מעלית בתוך הארובה","A lift inside the chimney","battersea","p");
 ev(4,"12:30",ALL,"צהריים חופשי","Free lunch","הצעה: Arcade Battersea בתוך תחנת הכוח","Idea: Arcade Battersea inside the power station","battersea","f");
+ev(4,"12:00",ALL,"המלצה: קניות בתחנת הכוח באטרסי","Idea: shopping at Battersea Power Station","יותר מ-100 חנויות ובתי אוכל באותו מקום, בלי הזמנה","Over 100 shops and places to eat right there, no booking","battersea","r");
 ev(4,"14:00",["alon","liz","ziv","sandra","dor","niv"],"יציאה למאדאם טוסו","Leave for Madame Tussauds","מבאטרסי: קו Northern לאמבנקמנט, ואז Bakerloo ל-Baker Street • כ-30 דק׳","From Battersea: Northern line to Embankment, then Bakerloo to Baker Street • ~30 min","tussauds");
 ev(4,"14:30",["alon","liz","ziv","sandra","dor","niv"],"מאדאם טוסו","Madame Tussauds","כשעתיים • כרטיסים עם שעת כניסה: ___","About 2 hours • timed tickets: ___","tussauds","p");
 ev(4,"14:30",["amber","tatiana","davidj","rose","itamar","eitan","yoni"],"F1 Arcade","F1 Arcade","ליד סנט פול • מתחת לגיל 18 רק עד 18:00 – לסיים עד 17:45","Near St Paul's • under-18s only until 6pm – finish by 5:45pm","f1","p");
 ev(4,"14:00",["david","dani","dan","hadar","imri","raz"],"Uber Boat מבאטרסי ל-London Eye","Uber Boat from Battersea to the London Eye","מהרציף של תחנת הכוח ישר לרציף London Eye • כ-20 דק׳, נוח עם עגלות","From the Power Station pier straight to London Eye pier • ~20 min, easy with buggies","pier");
 ev(4,"14:30",["david","dani","dan","hadar","imri","raz"],"האקווריום SEA LIFE","SEA LIFE London Aquarium","כרישים, פינגווינים ומנהרת דגים • כשעה וחצי • משם 15 דק׳ במונית/Jubilee חזרה למלון לשנ״צ","Sharks, penguins and a fish tunnel • about 1½ hours • then 15 min by taxi/Jubilee line back to the hotel for naps","sealife","p");
 ev(4,"16:30",["alon","liz","ziv","sandra","dor","niv"],"המלצה: Selfridges ומרילבון","Idea: Selfridges & Marylebone","אחרי טוסו, 15 דק׳ הליכה • חלונות החג וקומת חג המולד","After Tussauds, 15 min walk • Christmas windows and Christmas shop","selfridges","r");
-ev(4,"17:30",ALL,"ארוחת ערב חופשית – מוקדם","Early free dinner","כולם במלון עד 19:30","Everyone back by 19:30","","f");
+ev(4,"16:00",["david","dani","dan","hadar","imri","raz"],"המלצה: שוק החורף בסאות׳בנק","Idea: Southbank Winter Market","ממש ליד האקווריום, לפני שחוזרים למלון","Right next to the aquarium, before heading back","southbank","r");
+ev(4,"17:45",["amber","tatiana","davidj","rose","itamar","eitan","yoni"],"המלצה: גג One New Change וגשר המילניום","Idea: One New Change rooftop & Millennium Bridge","באותו בניין של F1 • 10 דק׳ על הגג עם נוף לסנט פול ואז לארוחה","Same building as F1 • 10 min on the roof facing St Paul's, then dinner","onenew","r");
+ev(4,"18:00",ALL,"ארוחת ערב חופשית – מוקדם","Early free dinner","כולם במלון עד 19:30","Everyone back by 19:30","","f");
+ev(4,"21:00",["yoni","dani","dan","hadar","alon","liz"],"המלצה: משקה אחרון בבר של המלון","Idea: a last drink at the hotel bar","קצר – ההשכמה ב-03:15/04:30 • בלי לצאת מהמלון","Keep it short – wake-up at 03:15/04:30 • no need to leave the hotel","hotel","r");
 ev(4,"19:30",ALL,"נר שביעי, אריזה ושינה","7th candle, packing, bed","מזוודות סגורות עד 20:00 • ארוחות בוקר ארוזות","Bags closed by 20:00 • packed breakfasts","hotel");
 // Day 5
 ev(5,"03:15",ALONF,"השכמה למשפחת אלון","Wake-up – Alon's family","","","hotel");
