@@ -1,5 +1,5 @@
 // Offline support: keep the app and its fonts on the phone so it opens without internet.
-const CACHE = "groshar-london-v3";
+const CACHE = "groshar-london-v4";
 const CORE = ["./", "index.html", "manifest.webmanifest", "icon-192.png", "icon-512.png", "apple-touch-icon.png"];
 
 self.addEventListener("install", e => {
