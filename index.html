@@ -727,7 +727,6 @@ function quickRow(){
     ${b(g("Boots pharmacy near me"), he?"💊 בית מרקחת":"💊 Pharmacy")}
     ${b(g("ATM cash machine near me"), he?"🏧 כספומט":"🏧 ATM")}
     ${b(g("McDonald's near me"), he?"🍟 מקדונלדס":"🍟 McDonald's", "background:#DA291C;border-color:#DA291C;color:#FFC72C")}
-    <button class="qa" data-live="1" style="cursor:pointer;font:inherit">📡 ${he?"מיקום חי":"Live location"}</button>
   </div>`;
 }
 /* ---- Cicchetti: menus in Hebrew + pre-order picker ---- */
@@ -870,32 +869,6 @@ function openCic(){
   }));
   const cp = (btn, txt) => { if(btn) btn.onclick = async () => { try{ await navigator.clipboard.writeText(txt); btn.textContent = "✓"; }catch(e){ btn.textContent = "✗"; } }; };
   cp($("cicCopy"), famText); cp($("cicCopyAll"), cicText(""));
-}
-/* ---- live location ---- */
-function openLive(){
-  const he = LANG === "he";
-  $("sheet").innerHTML = `<div class="scrim" id="scrim"><div class="sheet stack" role="dialog" aria-modal="true" aria-label="Live location">
-    <button class="tbtn close" id="closeSheet">${T("close")}</button>
-    <h2 style="margin:0">📡 ${he?"שיתוף מיקום חי עם הקבוצה":"Share live location with the group"}</h2>
-    <div>${he?"בימים שמתפצלים כל אחד יכול לראות איפה השאר נמצאים. וואטסאפ לא מאפשר לפתוח את זה ישירות מקישור, אז זה 4 לחיצות:":"On split days everyone can see where the others are. WhatsApp can't start this from a link, so it's 4 taps:"}</div>
-    <ol style="margin:0;padding-inline-start:20px;display:grid;gap:6px">
-      <li>${he?"פותחים את קבוצת הוואטסאפ (כפתור למטה).":"Open the WhatsApp group (button below)."}</li>
-      <li>${he?"לוחצים על ➕ (אייפון) או 📎 (אנדרואיד) ליד שורת ההקלדה.":"Tap ➕ (iPhone) or 📎 (Android) next to the message box."}</li>
-      <li>${he?"בוחרים ״מיקום״ ← ״שיתוף מיקום בזמן אמת״.":"Choose \"Location\" → \"Share Live Location\"."}</li>
-      <li>${he?"בוחרים <b>שעה אחת</b> (או 8 שעות ליום שלם) ושולחים.":"Pick <b>1 hour</b> (or 8 hours for a full day) and send."}</li></ol>
-    <div class="actions">${STATE.waGroup?`<a class="act primary" href="${esc(STATE.waGroup)}" target="_blank" rel="noopener">💬 ${he?"פתיחת קבוצת הוואטסאפ":"Open the WhatsApp group"}</a>`:""}<button class="act" id="liveOnce">📍 ${he?"שליחת המיקום שלי עכשיו (פעם אחת)":"Send where I am now (once)"}</button></div>
-    <div id="liveMsg" class="small"></div>
-    <div class="muted small">${he?"שיתוף חי מפסיק מעצמו בסוף הזמן שבחרתם, ואפשר לעצור אותו קודם. הוא צורך מעט סוללה.":"Live sharing stops by itself when the time runs out, and you can stop it earlier. It uses a little battery."}</div>
-  </div></div>`;
-  $("closeSheet").onclick = closeSheet; $("scrim").onclick = ev => { if(ev.target.id === "scrim") closeSheet(); };
-  $("liveOnce").onclick = () => {
-    const m = $("liveMsg"); m.textContent = he ? "מאתר מיקום…" : "Finding your location…";
-    const go = (txt) => { const url = "https://wa.me/?text=" + encodeURIComponent(txt); m.innerHTML = `<a class="act primary" href="${url}" target="_blank" rel="noopener">💬 ${he?"בחירת הקבוצה ושליחה":"Pick the group and send"}</a>`; try{ window.location.href = url; }catch(e){} };
-    if(!navigator.geolocation){ m.textContent = he ? "הטלפון לא מאפשר מיקום מהדף – השתמשו בשלבים למעלה." : "Location isn't available from this page – use the steps above."; return; }
-    navigator.geolocation.getCurrentPosition(pos => go((he ? "📍 אני כאן: " : "📍 I'm here: ") + `https://maps.google.com/?q=${pos.coords.latitude.toFixed(5)},${pos.coords.longitude.toFixed(5)}`),
-      () => { m.textContent = he ? "לא התקבלה הרשאת מיקום – השתמשו בשלבים למעלה." : "No location permission – use the steps above."; },
-      {enableHighAccuracy:true, timeout:7000, maximumAge:120000});
-  };
 }
 /* ---- rainy-day plan ---- */
 const RAIN = {
@@ -1091,7 +1064,7 @@ function searchResults(q){
 }
 /* ---- "what changed" banner – shows for 48 hours after each update ---- */
 const CHANGES = [
-  {at:"2026-11-04T20:40:00Z", he:"חדש: תפריט Cicchetti בעברית ובחירת מנות לכל משפחה • 📡 שיתוף מיקום חי • ☔ תכנית לגשם • 🚇 תחבורה בלונדון • 🎞️ סיכום טיול", en:"New: Cicchetti menu & dish choices for each family • 📡 live location • ☔ rainy-day plan • 🚇 getting around • 🎞️ trip recap"},
+  {at:"2026-11-04T20:40:00Z", he:"חדש: תפריט Cicchetti בעברית ובחירת מנות לכל משפחה • ☔ תכנית לגשם • 🚇 תחבורה בלונדון • 🎞️ סיכום טיול", en:"New: Cicchetti menu & dish choices for each family • ☔ rainy-day plan • 🚇 getting around • 🎞️ trip recap"},
   {at:"2026-11-04T12:30:00Z", he:"עודכן: נשלחו בקשות לשתי הארוחות המשפחתיות – Cicchetti בשני ו-Pizza Pilgrims בחמישי (מחכים לאישור)", en:"Updated: requests sent for both family dinners – Cicchetti on Monday and Pizza Pilgrims on Thursday (awaiting confirmation)"},
   {at:"2026-11-04T04:45:00Z", he:"עודכן: הטלפון של רוז נוסף לספר הטלפונים", en:"Updated: Rose's phone number is now in the phone book"},
   {at:"2026-11-03T20:15:00Z", he:"עודכן: שני – חילופי המשמר ב-11:00 • שלישי – שעות חזרה מווינטר וונדרלנד • רביעי – הצעה לקטנים אחה״צ • חמישי – ארוחה משפחתית אחרונה ב-18:00 • חיפוש בלו״ז • מסעדות חדשות כולל סושי", en:"Updated: Mon – Changing of the Guard at 11:00 • Tue – times for leaving Winter Wonderland • Wed – afternoon idea for the little ones • Thu – last family dinner at 18:00 • search in the schedule • new restaurants incl. sushi"}
@@ -1187,7 +1160,6 @@ function viewNow(){
       ${cur && cur.pl ? `<div class="actions"><a class="act" href="${dirUrl(PL[cur.pl])}" target="_blank" rel="noopener">🧭 ${he?"הגעה":"Directions"}</a>${docLinks(cur)}</div>` : ""}</div>`);
     out.push(quickRow());
     if(rainy(n.date)){ const rc = rainCardToday(d); if(rc) out.push(rc); }
-    if(d === 2 || d === 3) out.push(`<div class="card row" style="justify-content:space-between"><span>📡 ${he?"היום מתפצלים – כדאי לשתף מיקום חי בקבוצה":"We split up today – share your live location in the group"}</span><button class="act" data-live="1">${he?"איך ›":"How ›"}</button></div>`);
     out.push(tubeCard());
     if(nxt.length) out.push(`<h3>${T("next")}</h3><div class="nextlist">${nxt.map(e => evCard(e)).join("")}</div>`);
     if(DAYS[d].n) out.push(`<div class="menorah-card">${menorah(DAYS[d].n)}<div>${he?`הערב נר ${DAYS[d].n} של חנוכה • השקיעה בסביבות 15:52`:`Tonight: Hanukkah candle ${DAYS[d].n} • sunset around 15:52`}</div></div>`);
@@ -1444,7 +1416,6 @@ function viewMore(){
       <div class="card small"><b>${he?"ילד הלך לאיבוד":"If a child gets lost"}</b><br>${he?"1. הילד נשאר במקום ופונה לעובד עם תג או לשוטר ומראה את כרטיס החירום. 2. המבוגר האחראי מתקשר מיד לכולם בקבוצה. 3. בודקים AirTag ב-Find My. 4. בכל אטרקציה קובעים מראש נקודת מפגש.":"1. The child stays put, finds a staff member or police officer and shows their emergency card. 2. The adult in charge calls the group right away. 3. Check the AirTag in Find My. 4. Agree a meeting point at every attraction."}</div>`,true)}
     ${sec("contacts",he?"📞 טלפונים של כולם":"📞 Everyone's phone numbers",["y","d","a","g"].map(f => `<div class="stack" style="gap:6px"><b style="color:${FAM[f].c}">${L(FAM[f])}</b>${fam(f).filter(i => !P[i].kid).map(i => { const ph = S.phones[i]||""; const dig = ph.replace(/[^0-9]/g,""); return `<div style="display:grid;grid-template-columns:minmax(70px,auto) 1fr auto;gap:8px;align-items:center;border-top:1px solid var(--line);padding-top:6px"><span>${nm(i)}</span>${EDIT ? `<input type="tel" data-phone="${i}" value="${esc(ph)}" dir="ltr" style="width:100%;border:1px solid var(--line);border-radius:10px;padding:7px 9px;background:var(--bg);font-size:1rem">` : `<span class="mono small" dir="ltr" style="text-align:end">${esc(ph||"___")}</span>`}${dig&&!EDIT?`<a class="act" href="https://wa.me/${dig}" target="_blank" rel="noopener">WhatsApp</a>`:"<span></span>"}</div>`; }).join("")}</div>`).join("")+`<div class="muted small">${he?"בחו״ל מחייגים עם הקידומת הבינלאומית, כמו שמופיע כאן.":"Abroad, dial with the international prefix as shown."}</div>`,true)}
     ${sec("transport",he?"🚇 תחבורה בלונדון – מחירים, ילדים ועגלות":"🚇 Getting around – fares, kids & buggies",transportCard())}
-    ${sec("live",he?"📡 שיתוף מיקום חי":"📡 Live location",`<button class="act primary" data-live="1" style="justify-self:start">${he?"איך משתפים מיקום חי בקבוצה":"How to share live location in the group"}</button>`)}
     ${sec("rain",he?"☔ תכנית ליום גשם":"☔ Rainy-day plan",`<div class="muted small">${he?"כשהתחזית צופה גשם, החלופה מופיעה אוטומטית בכרטיס הפעילות ובמסך ״עכשיו״.":"When rain is forecast, the alternative shows up automatically on the activity card and the Now screen."}</div>`+Object.keys(RAIN).filter(k => PL[k]).map(k => `<div class="stack" style="gap:4px"><b class="small">📍 ${esc(L(PL[k]))}</b>${rainBox({pl:k})}</div>`).join(""))}
     ${sec("taxi",he?"🚕 כרטיס לנהג מונית":"🚕 Show the taxi driver",`<div class="taxi"><div style="font-size:.9em">Please take me to</div><div class="a">The Dilly Hotel</div><div class="a" style="font-size:1.4em">21 Piccadilly</div><div class="a" style="font-size:1.4em">London W1J 0BH</div><div style="margin-top:6px">Near Piccadilly Circus</div></div>`)}
     ${sec("track",he?"📍 AirTag ושיתוף מיקום":"📍 AirTag & location sharing",`
@@ -1481,7 +1452,6 @@ function wire(v){
   v.querySelectorAll("[data-day]").forEach(b => b.onclick = () => { DAY = +b.dataset.day; renderView(); });
   v.querySelectorAll("[data-sos]").forEach(b => b.onclick = openSOS);
   v.querySelectorAll("[data-cic]").forEach(b => b.onclick = openCic);
-  v.querySelectorAll("[data-live]").forEach(b => b.onclick = openLive);
   v.querySelectorAll("[data-goday]").forEach(b => b.onclick = () => { DAY = +b.dataset.goday; if(SCHMODE === "attr"){ SCHMODE = "list"; store.set("gl_schmode","list"); } location.hash = "schedule"; });
   v.querySelectorAll("[data-kday]").forEach(b => b.onclick = () => { KDAY = +b.dataset.kday; renderView(); });
   v.querySelectorAll("[data-kid]").forEach(b => b.onclick = () => { KID = b.dataset.kid; store.set("gl_kid", KID); renderView(); window.scrollTo(0,0); });
