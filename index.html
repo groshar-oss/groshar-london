@@ -414,7 +414,7 @@ ev(1,"16:00",LITTLE.concat(["dani","hadar","liz"]),"פעוטות חוזרים ל
 ev(1,"16:00",without(ALL,LITTLE.concat(["dani","hadar","liz"])),"שוק החורף בסאות׳בנק","Southbank Centre Winter Market","5 דק׳ הליכה מה-Eye • משהו חם לשתות ולנשנש","5 min walk from the Eye • something warm to drink and a snack","southbank","f");
 ev(1,"17:00",without(ALL,LITTLE.concat(["dani","hadar","liz"])),"הליכה באורות החג: לסטר סקוור, ריג׳נט וקרנבי","Christmas lights walk: Leicester Sq, Regent St & Carnaby","חוצים את הנהר בגשר הרגלי Hungerford ← טרפלגר ← לסטר סקוור (LEGO, M&M's) ← ריג׳נט וקרנבי • משם 5 דק׳ למסעדה","Cross the river on the Hungerford footbridge → Trafalgar Sq → Leicester Sq (LEGO, M&M's) → Regent St & Carnaby • then 5 min to the restaurant","leicester","f");
 ev(1,"17:30",without(ALL,LITTLE.concat(["dani","hadar","liz"])),"המלצה: צ׳יינה טאון או שווקי קובנט גארדן","Idea: Chinatown or the Covent Garden markets","שניהם על מסלול ההליכה, בלי הזמנה","Both on the walking route, no booking","chinatown","r");
-ev(1,"19:00",ALL,"ארוחת ערב משפחתית – כל ה-19","Family dinner – all 19 of us","Cicchetti Piccadilly, חדר פרטי • טופס הבקשה מוכן, ממתין לשליחה • נפגשים ישר במסעדה","Cicchetti Piccadilly, private room • meet at the restaurant","cicchetti","p");
+ev(1,"19:00",ALL,"ארוחת ערב משפחתית – כל ה-19","Family dinner – all 19 of us","Cicchetti Piccadilly, חדר פרטי • הבקשה נשלחה ב-4.11, מחכים לאישור במייל • נפגשים ישר במסעדה","Cicchetti Piccadilly, private room • request sent on 4 Nov, awaiting confirmation by email • meet at the restaurant","cicchetti","p");
 ev(1,"20:45",ALL,"נר רביעי במלון","4th candle at the hotel","5 דק׳ מהמסעדה • מדליקים יחד ואז מי שרוצה ממשיך","5 min from the restaurant • light together, then whoever wants carries on","hotel");
 ev(1,"21:00",TEENS,"המלצה: החלקה בסומרסט האוס","Idea: skating at Somerset House","סשן 21:00–21:45 • 10 דק׳ במונית • מבוגר מ-£13, ילד מ-£11 • להזמין מראש","21:00–21:45 session • 10 min by taxi • adult from £13, child from £11 • book ahead","somerset","r");
 ev(1,"21:15",["yoni","dani","dan","hadar","alon","liz"],"המלצה למבוגרים: The Harp או Lamb & Flag","Grown-ups' idea: The Harp or Lamb & Flag","פאבים ותיקים בקובנט גארדן, 10 דק׳ הליכה • בלי הזמנה","Classic Covent Garden pubs, 10 min walk • no booking","harp","r");
@@ -488,7 +488,7 @@ ev(5,"07:55",ISR,"המראה LY312","Take-off LY312","נחיתה בנתב״ג 14
 E.sort((a,b) => a.d - b.d || a.t.localeCompare(b.t));
 
 const TODO = [
-  {id:"cicchetti",he:"ארוחה משפחתית – Cicchetti Piccadilly, שני 7.12 19:00",en:"Family dinner – Cicchetti Piccadilly, Mon 7 Dec 19:00",u:"https://sancarlo.co.uk/private-group-bookings/"},
+  {id:"cicchetti",he:"ארוחה משפחתית – Cicchetti Piccadilly, שני 7.12 19:00 • הבקשה נשלחה, מחכים לאישור",en:"Family dinner – Cicchetti Piccadilly, Mon 7 Dec 19:00",u:"https://sancarlo.co.uk/private-group-bookings/"},
   {id:"luton",he:"להקדים איסוף ללוטון ל-04:15 (מומלץ)",en:"Move the Luton pickup to 04:15 (recommended)",u:"https://www.airport-pickups-london.com/manage-booking.html"},
   {id:"mammamia",he:"Mamma Mia! The Party – 4 כרטיסים Tier A + Platinum",en:"Mamma Mia! The Party – 4 Tier A + Platinum tickets",u:"https://mammamiatheparty.com/london/tickets/"},
   {id:"gravity",he:"Gravity Wandsworth לנוער – רביעי 14:15 (קארטינג Pro, באולינג, VR)",en:"Gravity Wandsworth for the teens – Wed 14:15 (Pro karting, bowling, VR)",u:"https://gravity-global.com/max/wandsworth"},
@@ -852,7 +852,7 @@ function searchResults(q){
 }
 /* ---- "what changed" banner – shows for 48 hours after each update ---- */
 const CHANGES = [
-  {at:"2026-11-04T12:20:00Z", he:"עודכן: הארוחה המשפחתית האחרונה בחמישי – Pizza Pilgrims בקרנבי (מחכים לאישור)", en:"Updated: Thursday's last family dinner – Pizza Pilgrims in Carnaby (awaiting confirmation)"},
+  {at:"2026-11-04T12:30:00Z", he:"עודכן: נשלחו בקשות לשתי הארוחות המשפחתיות – Cicchetti בשני ו-Pizza Pilgrims בחמישי (מחכים לאישור)", en:"Updated: requests sent for both family dinners – Cicchetti on Monday and Pizza Pilgrims on Thursday (awaiting confirmation)"},
   {at:"2026-11-04T04:45:00Z", he:"עודכן: הטלפון של רוז נוסף לספר הטלפונים", en:"Updated: Rose's phone number is now in the phone book"},
   {at:"2026-11-03T20:15:00Z", he:"עודכן: שני – חילופי המשמר ב-11:00 • שלישי – שעות חזרה מווינטר וונדרלנד • רביעי – הצעה לקטנים אחה״צ • חמישי – ארוחה משפחתית אחרונה ב-18:00 • חיפוש בלו״ז • מסעדות חדשות כולל סושי", en:"Updated: Mon – Changing of the Guard at 11:00 • Tue – times for leaving Winter Wonderland • Wed – afternoon idea for the little ones • Thu – last family dinner at 18:00 • search in the schedule • new restaurants incl. sushi"}
 ];
