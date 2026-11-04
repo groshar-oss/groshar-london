@@ -237,7 +237,7 @@ h2,h3{color:var(--gold)}
 <div class="wrap"><nav class="who" id="who" aria-label="Who"></nav><main id="view"></main></div>
 <nav class="tabs" aria-label="Sections"><div class="wrap" id="tabs"></div></nav>
 <div id="sheet"></div>
-<script type="application/json" id="state">{"announce": {"he": "שלום לכולם, אשמח להערות שלכם והצעות לשיפור לפני הטיסה", "en": "Hi everyone, I'd love your comments and suggestions for improvements before the flight."}, "announceDate": "2026-11-03", "album": "https://photos.app.goo.gl/qavX1LHXGVLppSWY7", "done": {"cicchetti": false, "luton": false, "mammamia": false, "gravity": false, "lionking": false, "arsenal": true, "wonderlab": false, "tower": false, "lift109": false, "eta": false, "cash": false, "wwinfant": false, "boxes": false}, "phones": {"david": "+972 54-752-8210", "sandra": "+972 50-752-8210", "yoni": "+972 54-755-9298", "dani": "+972 50-533-5795", "amber": "+972 54-478-5736", "itamar": "+972 53-420-8651", "dan": "+972 54-539-1558", "hadar": "+972 50-823-9094", "alon": "+1 305-748-7775", "liz": "+1 941-218-2336", "tatiana": "+1 941-290-8059", "davidj": "+1 941-290-2688", "rose": "", "eitan": "+1 941-302-4406"}, "buddies": {"imri": "dani", "raz": "hadar", "ziv": "liz", "dor": "hadar", "niv": "dan", "itamar": "yoni", "eitan": "alon"}, "waGroup": "https://chat.whatsapp.com/D2eT3VeS55v5BrL108KNuO"}</script>
+<script type="application/json" id="state">{"announce": {"he": "שלום לכולם, אשמח להערות שלכם והצעות לשיפור לפני הטיסה", "en": "Hi everyone, I'd love your comments and suggestions for improvements before the flight."}, "announceDate": "2026-11-03", "album": "https://photos.app.goo.gl/qavX1LHXGVLppSWY7", "done": {"cicchetti": false, "luton": false, "mammamia": false, "gravity": false, "lionking": false, "arsenal": true, "wonderlab": false, "tower": false, "lift109": false, "eta": false, "cash": false, "wwinfant": false, "boxes": false}, "phones": {"david": "+972 54-752-8210", "sandra": "+972 50-752-8210", "yoni": "+972 54-755-9298", "dani": "+972 50-533-5795", "amber": "+972 54-478-5736", "itamar": "+972 53-420-8651", "dan": "+972 54-539-1558", "hadar": "+972 50-823-9094", "alon": "+1 305-748-7775", "liz": "+1 941-218-2336", "tatiana": "+1 941-290-8059", "davidj": "+1 941-290-2688", "rose": "+1 941-233-3668", "eitan": "+1 941-302-4406"}, "buddies": {"imri": "dani", "raz": "hadar", "ziv": "liz", "dor": "hadar", "niv": "dan", "itamar": "yoni", "eitan": "alon"}, "waGroup": "https://chat.whatsapp.com/D2eT3VeS55v5BrL108KNuO"}</script>
 <script id="app-script">
 (function(){
 "use strict";
@@ -852,6 +852,7 @@ function searchResults(q){
 }
 /* ---- "what changed" banner – shows for 48 hours after each update ---- */
 const CHANGES = [
+  {at:"2026-11-04T04:45:00Z", he:"עודכן: הטלפון של רוז נוסף לספר הטלפונים", en:"Updated: Rose's phone number is now in the phone book"},
   {at:"2026-11-03T20:15:00Z", he:"עודכן: שני – חילופי המשמר ב-11:00 • שלישי – שעות חזרה מווינטר וונדרלנד • רביעי – הצעה לקטנים אחה״צ • חמישי – ארוחה משפחתית אחרונה ב-18:00 • חיפוש בלו״ז • מסעדות חדשות כולל סושי", en:"Updated: Mon – Changing of the Guard at 11:00 • Tue – times for leaving Winter Wonderland • Wed – afternoon idea for the little ones • Thu – last family dinner at 18:00 • search in the schedule • new restaurants incl. sushi"}
 ];
 function changesBanner(){
