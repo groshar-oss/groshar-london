@@ -767,28 +767,38 @@ const CIC = {
 const CIC_ORDER = ["xmas","m1","m2","m3"];
 function cicState(){ const s = store.get("gl_cic", {}); s.picks = s.picks || {}; s.kids = s.kids || {}; return s; }
 function cicMenuKey(){ return (STATE.cicMenu && CIC.menus[STATE.cicMenu]) ? STATE.cicMenu : (cicState().menu || "xmas"); }
-function cicPersonLine(id, mk, st){
-  if(P[id].kid){ const k = st.kids[id] || {}, it = (c) => (k[c] >= 0 && CIC.kids[c][k[c]]) ? CIC.kids[c][k[c]][0] : null;
-    const parts = ["a","s","d"].map(it).filter(Boolean); return parts.length ? `${P[id].en} (kids' menu): ${parts.join(" / ")}` : null; }
+function cicMenuOf(id, st){ const m = (st.menuOf || {})[id]; const opts = cicOptions(); return (m && opts.includes(m)) ? m : (P[id].kid ? "kids" : cicMenuKey()); }
+function cicOptions(){ return STATE.cicMenu && CIC.menus[STATE.cicMenu] ? [STATE.cicMenu, "kids"] : CIC_ORDER.concat(["kids"]); }
+function cicMenuName(mk, lang){ const he = (lang || LANG) === "he"; return mk === "kids" ? (he ? "תפריט ילדים" : "Kids' menu") : (he ? CIC.menus[mk].he : CIC.menus[mk].en); }
+function cicPersonCost(id, st){
+  const mk = cicMenuOf(id, st);
+  if(mk === "kids"){ const k = st.kids[id] || {}; return ["a","s","d"].reduce((t,c) => t + ((k[c] >= 0 && CIC.kids[c][k[c]]) ? CIC.kids[c][k[c]][1] : 0), 0); }
+  const k = (st.picks[mk] || {})[id] || {}; return Object.keys(k).length ? CIC.menus[mk].price : 0;
+}
+function cicPersonLine(id, st){
+  const mk = cicMenuOf(id, st);
+  if(mk === "kids"){ const k = st.kids[id] || {}, parts = ["a","s","d"].map(c => (k[c] >= 0 && CIC.kids[c][k[c]]) ? CIC.kids[c][k[c]][0] : null).filter(Boolean);
+    return parts.length ? `${P[id].en} (Kids' menu): ${parts.join(" / ")}` : null; }
   const k = (st.picks[mk] || {})[id] || {}, M = CIC.menus[mk];
   const parts = ["a","p","s"].map(c => (k[c] >= 0 && M[c][k[c]]) ? M[c][k[c]][0] : null);
-  return parts.some(Boolean) ? `${P[id].en}: ${parts.map(x => x || "–").join(" / ")}` : null;
+  return parts.some(Boolean) ? `${P[id].en} (${M.en}): ${parts.map(x => x || "–").join(" / ")}` : null;
 }
 function cicText(famKey){
-  const mk = cicMenuKey(), st = cicState(), fams = famKey ? [famKey] : ["g","y","d","a"];
-  const lines = [`Cicchetti Piccadilly – Mon 7 Dec 19:00 – Groshar party – ${CIC.menus[mk].en}`];
-  fams.forEach(f => { const ls = fam(f).map(id => cicPersonLine(id, mk, st)).filter(Boolean); if(ls.length){ lines.push("", FAM[f].en + ":"); ls.forEach(l => lines.push("• " + l)); } });
+  const st = cicState(), fams = famKey ? [famKey] : ["g","y","d","a"];
+  const lines = ["Cicchetti Piccadilly – Mon 7 Dec 19:00 – Groshar party (19)"];
+  fams.forEach(f => { const ls = fam(f).map(id => cicPersonLine(id, st)).filter(Boolean); if(ls.length){ lines.push("", FAM[f].en + ":"); ls.forEach(l => lines.push("• " + l)); } });
   return lines.join("\n");
 }
 function cicCounts(){
-  const mk = cicMenuKey(), st = cicState(), M = CIC.menus[mk], cnt = {};
+  const st = cicState(), cnt = {}; let done = 0, cost = 0;
   const add = (k) => { cnt[k] = (cnt[k] || 0) + 1; };
   IDS.forEach(id => {
-    if(P[id].kid){ const k = st.kids[id] || {}; ["a","s","d"].forEach(c => { if(k[c] >= 0 && CIC.kids[c][k[c]]) add("Kids – " + CIC.kids[c][k[c]][0]); }); }
-    else { const k = (st.picks[mk] || {})[id] || {}; ["a","p","s"].forEach(c => { if(k[c] >= 0 && M[c][k[c]]) add(M[c][k[c]][0]); }); }
+    const mk = cicMenuOf(id, st), line = cicPersonLine(id, st); if(line) done++;
+    cost += cicPersonCost(id, st);
+    if(mk === "kids"){ const k = st.kids[id] || {}; ["a","s","d"].forEach(c => { if(k[c] >= 0 && CIC.kids[c][k[c]]) add("Kids – " + CIC.kids[c][k[c]][0]); }); }
+    else { const k = (st.picks[mk] || {})[id] || {}, M = CIC.menus[mk]; if(Object.keys(k).length) add("◆ " + M.en + " (menus)"); ["a","p","s"].forEach(c => { if(k[c] >= 0 && M[c][k[c]]) add(M[c][k[c]][0]); }); }
   });
-  const done = IDS.filter(id => P[id].kid ? Object.keys(st.kids[id]||{}).length : Object.keys((st.picks[mk]||{})[id]||{}).length).length;
-  return {cnt, done};
+  return {cnt, done, cost};
 }
 function cicMenuHtml(mk){
   const he = LANG === "he", M = CIC.menus[mk];
@@ -805,50 +815,59 @@ function cicKidsHtml(){
     ${course(he?"ראשונות":"Starters",K.a)}${course(he?"עיקריות (אפשר צ׳יפס במקום תפוחי אדמה)":"Mains (fries instead of potatoes on request)",K.s)}${course(he?"קינוחים":"Desserts",K.d)}</div>`;
 }
 function openCic(){
-  const he = LANG === "he", st = cicState(), mk = cicMenuKey(), M = CIC.menus[mk];
+  const he = LANG === "he", st = cicState(), opts = cicOptions();
+  let view = st.view && (opts.includes(st.view)) ? st.view : (opts[0]);
   let fk = st.fam || (WHO.startsWith("f:") ? WHO.slice(2) : (WHO.startsWith("p:") ? P[WHO.slice(2)].f : "y"));
   if(!FAM[fk]) fk = "y";
+  const priceTxt = (mk) => mk === "kids" ? (he ? "לפי מנה" : "per dish") : "£" + (CIC.menus[mk].price % 1 ? CIC.menus[mk].price.toFixed(2) : CIC.menus[mk].price);
   const sel = (id, c, arr, cur, lbl) => `<label class="field" style="gap:2px"><span class="small muted">${lbl}</span><select data-cicpick="${id}|${c}" style="padding:8px 10px">
     <option value="-1">${he?"– לבחור –":"– choose –"}</option>${arr.map((x,i) => `<option value="${i}" ${cur===i?"selected":""}>${esc(he ? (x.length===3 ? `${x[2]} (£${x[1].toFixed(2)})` : x[1]) : (x.length===3 ? `${x[0]} (£${x[1].toFixed(2)})` : x[0]))}</option>`).join("")}</select></label>`;
   const rows = fam(fk).map(id => {
-    if(P[id].kid){ const k = st.kids[id] || {};
-      return `<div class="card stack" style="gap:6px"><b>${nm(id)} <span class="muted small">(${P[id].age}) • ${he?"תפריט ילדים":"kids' menu"}</span></b>
-        ${sel(id,"a",CIC.kids.a,k.a,he?"ראשונה (לא חובה)":"Starter (optional)")}${sel(id,"s",CIC.kids.s,k.s,he?"עיקרית":"Main")}${sel(id,"d",CIC.kids.d,k.d,he?"קינוח":"Dessert")}</div>`; }
-    const k = (st.picks[mk] || {})[id] || {};
-    return `<div class="card stack" style="gap:6px"><b>${nm(id)}</b>${sel(id,"a",M.a,k.a,he?"מנה ראשונה":"Antipasti")}${sel(id,"p",M.p,k.p,he?"פסטה / פיצה":"Primi")}${sel(id,"s",M.s,k.s,he?"עיקרית":"Secondi")}</div>`;
+    const mk = cicMenuOf(id, st);
+    const menuSel = `<label class="field" style="gap:2px"><span class="small muted">${he?"תפריט":"Menu"}</span><select data-cicmenuof="${id}" style="padding:8px 10px;font-weight:700">${opts.map(o => `<option value="${o}" ${o===mk?"selected":""}>${cicMenuName(o)} – ${priceTxt(o)}</option>`).join("")}</select></label>`;
+    let body;
+    if(mk === "kids"){ const k = st.kids[id] || {};
+      body = sel(id,"a",CIC.kids.a,k.a,he?"ראשונה (לא חובה)":"Starter (optional)") + sel(id,"s",CIC.kids.s,k.s,he?"עיקרית":"Main") + sel(id,"d",CIC.kids.d,k.d,he?"קינוח":"Dessert"); }
+    else { const k = (st.picks[mk] || {})[id] || {}, M = CIC.menus[mk];
+      body = sel(id,"a",M.a,k.a,he?"מנה ראשונה":"Antipasti") + sel(id,"p",M.p,k.p,he?"פסטה / פיצה":"Primi") + sel(id,"s",M.s,k.s,he?"עיקרית":"Secondi"); }
+    const c = cicPersonCost(id, st);
+    return `<div class="card stack" style="gap:6px"><div class="row" style="justify-content:space-between"><b>${nm(id)}${P[id].age?` <span class="muted small">(${P[id].age})</span>`:""}</b>${c?`<span class="mono small">£${c.toFixed(2)}</span>`:""}</div>${menuSel}${body}</div>`;
   }).join("");
-  const {cnt, done} = cicCounts();
+  const famCost = fam(fk).reduce((t,id) => t + cicPersonCost(id, st), 0);
+  const {cnt, done, cost} = cicCounts();
   const cntRows = Object.keys(cnt).sort((a,b) => cnt[b]-cnt[a]).map(k => `<div class="row" style="justify-content:space-between;flex-wrap:nowrap"><span dir="ltr">${esc(k)}</span><b class="mono">×${cnt[k]}</b></div>`).join("");
   const famText = cicText(fk);
   $("sheet").innerHTML = `<div class="scrim" id="scrim"><div class="sheet stack" role="dialog" aria-modal="true" aria-label="Cicchetti">
     <button class="tbtn close" id="closeSheet">${T("close")}</button>
     <h2 style="margin:0">🍝 ${he?"Cicchetti – תפריט ובחירת מנות":"Cicchetti – menu & pre-order"}</h2>
-    <div class="small">${he?"שני 7.12, 19:00, חדר פרטי. המסעדה מבקשת את בחירות כולם מראש – <b>עד 2.12</b>. כל אחד בוחר מנה ראשונה, פסטה או פיצה, ועיקרית; תוספות וקינוחים מוגשים לשולחן.":"Mon 7 Dec, 19:00, private room. The restaurant needs everyone's choices in advance – <b>by 2 Dec</b>. Each person picks a starter, a pasta or pizza, and a main; sides and desserts are shared."}</div>
-    ${STATE.cicMenu ? "" : `<div class="card small" style="border-color:var(--gold)">${he?"יוני עוד בוחר בין התפריטים. אפשר לעיין ולבחור כבר עכשיו – הבחירה נשמרת לכל תפריט בנפרד.":"Yoni is still choosing between the menus. Browse and pick now – choices are kept per menu."}</div>
-      <div class="row" style="gap:6px">${CIC_ORDER.map(k => `<button class="chip ${k===mk?"on":""}" data-cicmenu="${k}" ${k===mk?'aria-pressed="true"':""}>${he?CIC.menus[k].he:CIC.menus[k].en} • £${CIC.menus[k].price % 1 ? CIC.menus[k].price.toFixed(2) : CIC.menus[k].price}</button>`).join("")}</div>`}
-    ${cicMenuHtml(mk)}
-    <details class="sec"><summary>${he?"🧒 תפריט הילדים":"🧒 Kids' menu"}</summary><div class="in">${cicKidsHtml()}</div></details>
+    <div class="small">${he?"שני 7.12, 19:00, חדר פרטי. המסעדה מבקשת את הבחירות של כולם מראש – <b>עד 2.12</b>. כל אחד בוחר תפריט, ובו מנה ראשונה, פסטה או פיצה, ועיקרית. התוספות והקינוחים מוגשים לשולחן.":"Mon 7 Dec, 19:00, private room. The restaurant needs everyone's choices in advance – <b>by 2 Dec</b>. Each person picks a menu, then a starter, a pasta or pizza, and a main; sides and desserts are shared."}</div>
+    <div class="card small" style="border-color:var(--gold)">${he?"כל אחד יכול לבחור תפריט אחר – גם מבוגרים את תפריט הילדים. ייתכן שהמסעדה תבקש תפריט אחד לכל השולחן; שאלנו ונעדכן.":"Everyone can pick a different menu – adults can take the kids' menu too. The restaurant may ask for one menu for the whole table; we've asked and will update."}</div>
+    <b class="small">${he?"עיון בתפריטים:":"Browse the menus:"}</b>
+    <div class="row" style="gap:6px">${opts.map(k => `<button class="chip" data-cicview="${k}" ${k===view?'aria-pressed="true"':""}>${cicMenuName(k)} • ${priceTxt(k)}</button>`).join("")}</div>
+    ${view === "kids" ? cicKidsHtml() : cicMenuHtml(view)}
     <h3 style="margin:6px 0 0">${he?"הבחירות של המשפחה":"Your family's choices"}</h3>
-    <div class="row" style="gap:6px">${["g","y","d","a"].map(f => `<button class="chip ${f===fk?"on":""}" data-cicfam="${f}" ${f===fk?'aria-pressed="true"':""} style="border-color:${FAM[f].c}">${L(FAM[f])}</button>`).join("")}</div>
+    <div class="row" style="gap:6px">${["g","y","d","a"].map(f => `<button class="chip" data-cicfam="${f}" ${f===fk?'aria-pressed="true"':""} style="border-color:${FAM[f].c}">${L(FAM[f])}</button>`).join("")}</div>
     ${rows}
-    <div class="muted small">${he?"בני נוער – שאלנו אם אפשר להזמין מתפריט הילדים, נעדכן.":"Teens – we've asked whether they can order from the kids' menu; will update."}</div>
+    ${famCost?`<div class="small">${he?"עלות משוערת למשפחה":"Estimated family cost"}: <b class="mono">£${famCost.toFixed(2)}</b> ${he?"+ 13.5% שירות, בלי שתייה":"+ 13.5% service, drinks extra"} ≈ <b class="mono">£${(famCost*1.135).toFixed(0)}</b></div>`:""}
     <div class="actions"><a class="act primary" href="https://wa.me/972547559298?text=${encodeURIComponent(famText)}" target="_blank" rel="noopener">💬 ${he?"שליחת הבחירות ליוני":"Send our choices to Yoni"}</a><button class="act" id="cicCopy">📋 ${he?"העתקה":"Copy"}</button></div>
     <details class="sec"><summary>${he?`📊 סיכום לכל הקבוצה (${done}/19 בטלפון הזה)`:`📊 Whole-group summary (${done}/19 on this phone)`}</summary><div class="in stack" style="gap:6px">
       ${cntRows || `<div class="muted small">${he?"עוד לא נבחרו מנות בטלפון הזה.":"Nothing chosen on this phone yet."}</div>`}
+      ${cost?`<div class="small">${he?"אוכל בלבד":"Food only"}: <b class="mono">£${cost.toFixed(2)}</b> • ${he?"כולל 13.5%":"with 13.5%"}: <b class="mono">£${(cost*1.135).toFixed(0)}</b></div>`:""}
       <div class="card small" dir="ltr" style="white-space:pre-wrap;text-align:left">${esc(cicText(""))}</div>
       <button class="act" id="cicCopyAll" style="justify-self:start">📋 ${he?"העתקת הרשימה המלאה (באנגלית, למסעדה)":"Copy the full list (for the restaurant)"}</button></div></details>
     <div class="muted small">${he?"המחירים לפי התפריטים ששלחה המסעדה ב-4.11. מתווספים 13.5% דמי שירות.":"Prices from the menus the restaurant sent on 4 Nov. A 13.5% service charge is added."}</div>
   </div></div>`;
   $("closeSheet").onclick = closeSheet; $("scrim").onclick = ev => { if(ev.target.id === "scrim") closeSheet(); };
   const keep = () => { const y = document.querySelector("#sheet .sheet"); const top = y ? y.scrollTop : 0; openCic(); const y2 = document.querySelector("#sheet .sheet"); if(y2) y2.scrollTop = top; };
-  document.querySelectorAll("[data-cicmenu]").forEach(b => b.onclick = () => { const s = cicState(); s.menu = b.dataset.cicmenu; store.set("gl_cic", s); keep(); });
-  document.querySelectorAll("[data-cicfam]").forEach(b => b.onclick = () => { const s = cicState(); s.fam = b.dataset.cicfam; store.set("gl_cic", s); keep(); });
-  document.querySelectorAll("[data-cicpick]").forEach(x => x.onchange = () => {
-    const [id, c] = x.dataset.cicpick.split("|"), v = +x.value, s = cicState(), m = cicMenuKey();
-    const bucket = P[id].kid ? (s.kids[id] = s.kids[id] || {}) : ((s.picks[m] = s.picks[m] || {})[id] = s.picks[m][id] || {});
+  const upd = (fn) => { const s = cicState(); fn(s); store.set("gl_cic", s); keep(); };
+  document.querySelectorAll("[data-cicview]").forEach(b => b.onclick = () => upd(s => { s.view = b.dataset.cicview; }));
+  document.querySelectorAll("[data-cicfam]").forEach(b => b.onclick = () => upd(s => { s.fam = b.dataset.cicfam; }));
+  document.querySelectorAll("[data-cicmenuof]").forEach(x => x.onchange = () => upd(s => { s.menuOf = s.menuOf || {}; s.menuOf[x.dataset.cicmenuof] = x.value; }));
+  document.querySelectorAll("[data-cicpick]").forEach(x => x.onchange = () => upd(s => {
+    const [id, c] = x.dataset.cicpick.split("|"), v = +x.value, m = cicMenuOf(id, s);
+    const bucket = m === "kids" ? (s.kids[id] = s.kids[id] || {}) : ((s.picks[m] = s.picks[m] || {})[id] = s.picks[m][id] || {});
     if(v < 0) delete bucket[c]; else bucket[c] = v;
-    store.set("gl_cic", s); keep();
-  });
+  }));
   const cp = (btn, txt) => { if(btn) btn.onclick = async () => { try{ await navigator.clipboard.writeText(txt); btn.textContent = "✓"; }catch(e){ btn.textContent = "✗"; } }; };
   cp($("cicCopy"), famText); cp($("cicCopyAll"), cicText(""));
 }
