@@ -311,9 +311,9 @@ const PL = {
   trafalgar:{n:15,m:1,day:"r",he:"כיכר טרפלגר",en:"Trafalgar Square",ll:[51.5080,-0.1281],
     tHe:"עץ חג המולד הנורווגי • ChanukahLIVE – לבדוק תאריך 2026 באתר JLC",tEn:"Norwegian Christmas tree • check the JLC site for ChanukahLIVE 2026"},
   tower:{n:16,m:2,day:"2",he:"מצודת לונדון",en:"Tower of London",ll:[51.5081,-0.0759],w:"https://www.hrp.org.uk/tower-of-london/",
-    tHe:"קודם תכשיטי הכתר, לפני התורים • סיורי Beefeater חינם מהכניסה",tEn:"Crown Jewels first, before the queues • free Beefeater tours from the entrance"},
+    tHe:"בלי כניסה – מסתובבים סביב החומות והתעלה • 5 דק׳ מתחנת טאואר היל",tEn:"No ticket – walk around the walls and the moat • 5 min from Tower Hill station"},
   towerbridge:{n:17,m:2,day:"2",he:"גשר טאואר",en:"Tower Bridge",ll:[51.5055,-0.0754],w:"https://www.towerbridge.org.uk",
-    tHe:"חוצים ברגל • רצפת הזכוכית למעלה בתשלום",tEn:"Walk across • glass floor upstairs is ticketed"},
+    tHe:"חוצים ברגל בחינם • התצוגה ורצפת הזכוכית למעלה בתשלום – לא נכנסים",tEn:"Walk across for free • the exhibition and glass floor upstairs are ticketed – we skip them"},
   borough:{n:18,m:2,day:"2",he:"שוק בורו",en:"Borough Market",ll:[51.5055,-0.0910],w:"https://boroughmarket.org.uk",
     tHe:"הכי עמוס 12:00–14:00 • מעט מקומות ישיבה",tEn:"Busiest 12:00–14:00 • little seating"},
   ww:{n:19,m:2,day:"2",he:"Winter Wonderland – הייד פארק",en:"Winter Wonderland – Hyde Park",ll:[51.5072,-0.1570],w:"https://hydeparkwinterwonderland.com",
@@ -422,8 +422,8 @@ ev(1,"21:15",["yoni","dani","dan","hadar","alon","liz"],"המלצה למבוגר
 ev(1,"21:00",TEENS,"אופציה לצעירים: לסטר סקוור בלילה","Option for the young ones: Leicester Square at night","שוק חג המולד ורחבת החלקה עד 22:00, 7 דק׳ הליכה • או החלקה בסומרסט האוס (סשן 21:00) • כל מי שרוצה מצטרף • מבוגר אחראי: ___","Christmas market and ice rink until 22:00, 7 min walk • or skating at Somerset House (21:00 session) • anyone can join • adult in charge: ___","leicester","s");
 // Day 2
 ev(2,"08:00",ALL,"ארוחת בוקר במלון","Breakfast at the hotel","","","hotel");
-ev(2,"09:00",ALL,"מצודת לונדון","Tower of London","קודם תכשיטי הכתר","Crown Jewels first","tower","p");
-ev(2,"11:30",ALL,"גשר טאואר","Tower Bridge","","","towerbridge");
+ev(2,"09:30",ALL,"מצודת לונדון – מבחוץ","Tower of London – from outside","בלי כניסה • מסתובבים סביב החומות והתעלה, רואים את השומרים בשער • קו District או Circle לטאואר היל","No ticket • walk around the walls and the moat, see the guards at the gate • District or Circle line to Tower Hill","tower");
+ev(2,"10:30",ALL,"הליכה על גשר טאואר","Walk across Tower Bridge","חוצים ברגל לצד הדרומי – תמונות מהגשר ומהטיילת • בלי כניסה לתערוכה","Walk across to the south bank – photos from the bridge and the riverside • no exhibition ticket","towerbridge");
 ev(2,"12:00",ALL,"המלצה: St Katharine Docks או שוק ספיטלפילדס","Idea: St Katharine Docks or Spitalfields Market","המרינה 5 דק׳ מגשר טאואר • ספיטלפילדס ובריק ליין 15 דק׳ – צהריים בשוק • בלי הזמנה","The marina is 5 min from Tower Bridge • Spitalfields and Brick Lane 15 min – lunch at the market • no booking","stkat","r");
 ev(2,"12:30",ALL,"המלצה: שוק לידנהול + תצפית Sky Garden","Idea: Leadenhall Market + Sky Garden viewpoint","10 דק׳ הליכה מהמצודה • Sky Garden חינם אבל חובה להזמין מראש","10 min walk from the Tower • Sky Garden is free but must be booked ahead","leadenhall","r");
 ev(2,"12:30",ALL,"צהריים חופשי","Free lunch","הצעה: שוק בורו, 15 דק׳ לאורך הנהר","Idea: Borough Market, 15 min along the river","borough","f");
@@ -499,7 +499,6 @@ const TODO = [
   {id:"lastdinner",he:"Pizza Pilgrims Carnaby – חמישי 18:00, 19 איש • הבקשה נשלחה, מחכים לאישור",en:"Pizza Pilgrims Carnaby – Thu 18:00, 19 people • request sent, awaiting confirmation",u:"https://www.pizzapilgrims.co.uk/pizzerias/carnaby/"},
   {id:"tussauds",he:"מאדאם טוסו – 6 כרטיסים, חמישי 14:30 (סנדרה, אלון, ליז, זיו, דור וניב)",en:"Madame Tussauds – 6 tickets, Thu 14:30 (Sandra, Alon, Liz, Ziv, Dor, Niv)",u:"https://www.madametussauds.com/london/"},
   {id:"f1",he:"F1 Arcade – 7 נהגים, חמישי 14:30 (יוני, אמבר, איתמר, טטיאנה, דיוויד, רוז ואיתן)",en:"F1 Arcade – 7 drivers, Thu 14:30 (Yoni, Amber, Itamar, Tatiana, David, Rose, Eitan)",u:"https://f1arcade.com/uk/london"},
-  {id:"tower",he:"מצודת לונדון – שלישי 09:00",en:"Tower of London – Tue 09:00",u:"https://www.hrp.org.uk/tower-of-london/"},
   {id:"lift109",he:"Lift 109 + Glide – חמישי",en:"Lift 109 + Glide – Thu",u:"https://batterseapowerstation.co.uk"},
   {id:"eta",he:"ETA – אישור כניסה לכל 19 המשתתפים",en:"UK ETA for all 19 travellers",u:"https://www.gov.uk/guidance/apply-for-an-electronic-travel-authorisation-eta"},
   {id:"wwinfant",he:"Winter Wonderland – לבדוק כרטיסי תינוק לאימרי, זיו ורז",en:"Winter Wonderland – check infant tickets for Imri, Ziv and Raz",u:"https://hydeparkwinterwonderland.com"},
@@ -877,7 +876,7 @@ const RAIN = {
   regent:{he:"האורות יפים גם בגשם. מסתתרים בארקייד ברלינגטון, בחנות Liberty או ב-Hamleys – כולם על אותו מסלול.", en:"The lights still look great in the rain. Shelter in Burlington Arcade, Liberty or Hamleys – all on the same route.", pl:"hamleys"},
   covent:{he:"הפיאצה מקורה בחלקה. חלופה מעולה לילדים ממש שם: London Transport Museum – אוטובוסים ורכבות לטפס עליהם.", en:"The Piazza is partly covered. Great kids' option right there: London Transport Museum – buses and trains to climb on.", q:"London Transport Museum"},
   trafalgar:{he:"נכנסים לגלריה הלאומית שבכיכר – חינם ומקורה.", en:"Pop into the National Gallery on the square – free and dry.", pl:"natgallery"},
-  towerbridge:{he:"במקום לחצות ברגל – Tower Bridge Exhibition: המעברים העליונים מקורים (בתשלום).", en:"Instead of walking across – the Tower Bridge Exhibition: the high walkways are covered (paid).", pl:"towerbridge"},
+  towerbridge:{he:"בגשם חזק מקצרים: חוצים מהר ונכנסים לבית קפה ב-St Katharine Docks, 5 דק׳ מהגשר.", en:"In heavy rain keep it short: cross quickly and duck into a café at St Katharine Docks, 5 min from the bridge.", pl:"stkat"},
   borough:{he:"השוק מקורה בחלקו, אבל צפוף ורטוב. חלופה: Mercato Metropolitano ב-Elephant & Castle, מקורה לגמרי עם הרבה מקומות ישיבה.", en:"The market is partly covered but crowded and wet. Alternative: Mercato Metropolitano at Elephant & Castle – fully covered with lots of seating.", q:"Mercato Metropolitano London"},
   ww:{he:"וינטר וונדרלנד פועל גם בגשם (רוב המתקנים פתוחים), ונסגר רק ברוח חזקה – בודקים באתר לפני היציאה. חלופה מקורה בשכונה: מוזיאון הטבע או מוזיאון המדע בדרום קנזינגטון – חינם, מומלץ לשריין שעה.", en:"Winter Wonderland runs in the rain (most rides open) and closes only in high winds – check the website before you go. Covered alternative nearby: the Natural History or Science Museum in South Kensington – free, booking a slot recommended.", q:"Natural History Museum London"},
   somerset:{he:"ההחלקה פועלת בגשם קל ונעצרת בגשם חזק – Somerset House שולחים עדכון במייל. חלופה: Queens Ice & Bowl בבייזווטר, מקורה.", en:"Skating runs in light rain and pauses in heavy rain – Somerset House emails updates. Alternative: Queens Ice & Bowl in Bayswater, indoors.", q:"Queens Ice and Bowl London"},
@@ -1064,6 +1063,7 @@ function searchResults(q){
 }
 /* ---- "what changed" banner – shows for 48 hours after each update ---- */
 const CHANGES = [
+  {at:"2026-11-05T08:45:00Z", he:"עודכן: שלישי – מצודת לונדון מבחוץ בלי כניסה (09:30) והליכה על גשר טאואר (10:30)", en:"Updated: Tuesday – Tower of London from outside, no ticket (09:30), and a walk across Tower Bridge (10:30)"},
   {at:"2026-11-04T20:40:00Z", he:"חדש: תפריט Cicchetti בעברית ובחירת מנות לכל משפחה • ☔ תכנית לגשם • 🚇 תחבורה בלונדון • 🎞️ סיכום טיול", en:"New: Cicchetti menu & dish choices for each family • ☔ rainy-day plan • 🚇 getting around • 🎞️ trip recap"},
   {at:"2026-11-04T12:30:00Z", he:"עודכן: נשלחו בקשות לשתי הארוחות המשפחתיות – Cicchetti בשני ו-Pizza Pilgrims בחמישי (מחכים לאישור)", en:"Updated: requests sent for both family dinners – Cicchetti on Monday and Pizza Pilgrims on Thursday (awaiting confirmation)"},
   {at:"2026-11-04T04:45:00Z", he:"עודכן: הטלפון של רוז נוסף לספר הטלפונים", en:"Updated: Rose's phone number is now in the phone book"},
@@ -1588,7 +1588,7 @@ function renderFab(){
 function fabLabel(){ const t = $("fabTxt"); if(t) t.textContent = LANG==="he" ? "שאלו את Claude" : "Ask Claude"; }
 function openChat(){
   const he = LANG === "he";
-  const sugs = he ? ["איך מגיעים מהמלון למצודת לונדון?","מה הלו״ז שלי מחר?","איפה אוכלים ליד קובנט גארדן עם פעוטות?","מה לעשות אם יורד גשם?"] : ["How do I get from the hotel to the Tower of London?","What's my plan tomorrow?","Where can we eat near Covent Garden with toddlers?","What can we do if it rains?"];
+  const sugs = he ? ["איך מגיעים מהמלון לגשר טאואר?","מה הלו״ז שלי מחר?","איפה אוכלים ליד קובנט גארדן עם פעוטות?","מה לעשות אם יורד גשם?"] : ["How do I get from the hotel to Tower Bridge?","What's my plan tomorrow?","Where can we eat near Covent Garden with toddlers?","What can we do if it rains?"];
   $("sheet").innerHTML = `<div class="scrim" id="scrim"><div class="sheet" role="dialog" aria-modal="true" aria-label="Ask Claude">
     <div class="row" style="justify-content:space-between"><h2>${he?"שאלו את Claude":"Ask Claude"}</h2><button class="tbtn" id="closeSheet">${T("close")}</button></div>
     <div class="chat"><div class="msgs" id="msgs"></div>
