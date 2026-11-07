@@ -688,6 +688,20 @@ function docLinks(e){
   const d = DOCS.find(x => x.m.test(e.ti.en)); if(!d) return "";
   return d.l.map(([he,en,u]) => `<a class="act doc" href="${u}" target="_blank" rel="noopener">🎟️ ${LANG==="he"?`פתיחת ${he}`:`Open ${en.toLowerCase()}`} ↗</a>`).join("");
 }
+/* quick buy links for things bought on the day */
+const BUY = {
+  science:{u:"https://www.sciencemuseum.org.uk/wonderlab", he:"קניית כרטיס Wonderlab", en:"Buy Wonderlab tickets"},
+  sealife:{u:"https://www.visitsealife.com/london/tickets-prices/", he:"קניית כרטיס SEA LIFE", en:"Buy SEA LIFE tickets"},
+  battersea:{u:"https://thechimneylift.co.uk", he:"כרטיס Lift 109", en:"Lift 109 tickets", u2:"https://glidebatterseapowerstation.co.uk", he2:"כרטיס החלקה Glide", en2:"Glide skating tickets"},
+  gravity:{u:"https://gravity-global.com/max/wandsworth", he:"Gravity – מחירים והזמנה", en:"Gravity – prices & booking"},
+  f1:{u:"https://f1arcade.com/uk/booking/venue/london", he:"F1 Arcade – הזמנה", en:"F1 Arcade – booking"},
+  lyceum:{u:"https://officiallondontheatre.com/todays-tickets/", he:"כרטיסים מוזלים להיום", en:"Today's discounted tickets"}
+};
+function buyBtns(e){
+  const b = e && e.pl && BUY[e.pl]; if(!b || e.k === "r" || e.k === "f") return "";
+  const he = LANG === "he", a = (u,t) => `<a class="act doc" href="${u}" target="_blank" rel="noopener">🎟️ ${t}</a>`;
+  return a(b.u, he?b.he:b.en) + (b.u2 ? a(b.u2, he?b.he2:b.en2) : "");
+}
 function docBtns(e){ const l = docLinks(e); return l ? `<div class="actions">${l}</div>` : ""; }
 const dirUrl = p => `https://www.google.com/maps/dir/?api=1&destination=${p.ll[0]},${p.ll[1]}&travelmode=transit`;
 /* ---- weather (Open-Meteo, free, no key) ---- */
@@ -1059,6 +1073,7 @@ function searchResults(q){
 }
 /* ---- "what changed" banner – shows for 48 hours after each update ---- */
 const CHANGES = [
+  {at:"2026-11-07T16:00:00Z", he:"חדש: כפתור 🎟️ לקניית כרטיס ישירות מהפעילות – Wonderlab, SEA LIFE, Lift 109, החלקה, Gravity, F1 והצגה ברביעי", en:"New: a 🎟️ button to buy tickets straight from the activity – Wonderlab, SEA LIFE, Lift 109, skating, Gravity, F1 and Wednesday's show"},
   {at:"2026-11-07T15:55:00Z", he:"עודכן: Gravity, SEA LIFE ו-Lift 109 – בלי הזמנה מראש, קונים באותו יום • Wonderlab – אופציה ליום גשם", en:"Updated: Gravity, SEA LIFE and Lift 109 – no advance booking, buy on the day • Wonderlab – a rainy-day option"},
   {at:"2026-11-07T15:50:00Z", he:"עודכן: Cicchetti מאושר ✓ פיקדון שולם • המבוגר האחראי בכל פעילות ייקבע באותו יום", en:"Updated: Cicchetti confirmed ✓ deposit paid • the adult in charge for each activity is decided on the day"},
   {at:"2026-11-07T15:35:00Z", he:"מאדאם טוסו – 8 כרטיסים לחמישי 14:30 נקנו ✓ (הכרטיסים בכפתור 🎟️)", en:"Madame Tussauds – 8 tickets for Thu 14:30 bought ✓ (tickets under the 🎟️ button)"},
@@ -1085,7 +1100,7 @@ function evCard(e, isNow){
     ${travelLine(e)}
     ${rainy(DAYS[e.d].date) ? rainBox(e, true) : ""}
     ${avatars(e.who)}
-    ${p?`<div class="row" style="justify-content:space-between;gap:6px;flex-wrap:nowrap"><span class="sub" style="min-width:0">📍 ${esc(L(p))}</span><span class="morehint">${LANG==="he"?"פרטים ›":"Details ›"}</span></div><div class="actions"><a class="act primary" href="${dirUrl(p)}" target="_blank" rel="noopener">🧭 ${LANG==="he"?"הגעה":"Directions"}</a>${docLinks(e)}</div>`:docBtns(e)}
+    ${p?`<div class="row" style="justify-content:space-between;gap:6px;flex-wrap:nowrap"><span class="sub" style="min-width:0">📍 ${esc(L(p))}</span><span class="morehint">${LANG==="he"?"פרטים ›":"Details ›"}</span></div><div class="actions">${buyBtns(e)}<a class="act primary" href="${dirUrl(p)}" target="_blank" rel="noopener">🧭 ${LANG==="he"?"הגעה":"Directions"}</a>${docLinks(e)}</div>`:docBtns(e)}
   </div></div>`;
 }
 function menorah(n){
@@ -1318,6 +1333,7 @@ function openEvent(i){
     ${travelLine(e)}
     ${p?`<div class="card stack" style="gap:6px"><b>📍 ${esc(L(p))}</b>${(he?p.tHe:p.tEn)?`<div class="muted small">${esc(he?p.tHe:p.tEn)}</div>`:""}${placeActions(e.pl,false)}</div>`:""}
     ${docBtns(e)}
+    ${buyBtns(e) ? `<div class="actions">${buyBtns(e)}</div>` : ""}
     ${e.pl === "cicchetti" ? `<button class="act primary" data-cic="1" style="justify-self:start">🍝 ${he?"תפריט בעברית ובחירת מנות":"Menu & pre-order"}</button>` : ""}
     ${rainBox(e) ? (rainy(DAYS[e.d].date) ? rainBox(e) : `<details class="sec"><summary>☔ ${he?"תכנית לגשם":"Rain plan"}</summary><div class="in">${rainBox(e)}</div></details>`) : ""}
     ${eventDetail(e,false).replace(/<div class="row" style="justify-content:space-between;gap:6px"><b class="mono"[\s\S]*?<\/div>\s*<b>[\s\S]*?<\/b>/, "")}
