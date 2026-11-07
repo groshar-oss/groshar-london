@@ -298,8 +298,8 @@ const PL = {
     tHe:"דוכני אוכל מכל העולם, הזמנה מהשולחן",tEn:"Food stalls from around the world, order from your table"},
   covent:{n:9,m:1,day:"3",he:"קובנט גארדן – עץ האשוח",en:"Covent Garden – Christmas tree",ll:[51.5117,-0.1240],w:"https://www.coventgarden.london",
     tHe:"עץ ענק ואמני רחוב בפיאצה",tEn:"Giant tree and street performers in the Piazza"},
-  lyceum:{n:10,m:1,day:"3",he:"מלך האריות – תיאטרון Lyceum",en:"The Lion King – Lyceum Theatre",ll:[51.5115,-0.1199],w:"https://thelionking.co.uk",
-    tHe:"גיל 3+ • אין כניסה עם עגלות • להגיע 30 דק׳ לפני • לבקש כריות הגבהה",tEn:"Age 3+ • no buggies inside • arrive 30 min early • ask for booster cushions"},
+  lyceum:{n:10,m:1,day:"3",he:"הצגה בווסט אנד – קיוסק TKTS בלסטר סקוור",en:"West End show – TKTS booth, Leicester Square",ll:[51.5103,-0.1301],w:"https://officiallondontheatre.com/todays-tickets/",
+    tHe:"כרטיסים לאותו יום עד 50% הנחה • הקיוסק הרשמי בבניין השעון, צד דרום של הכיכר • שני–שבת 10:30–18:00 • 7 דק׳ מהמלון",tEn:"Same-day tickets up to 50% off • the official booth in the Clocktower building, south side of the square • Mon–Sat 10:30–18:00 • 7 min from the hotel"},
   pier:{n:11,m:1,day:"4",he:"רציף וסטמינסטר – Uber Boat",en:"Westminster Pier – Uber Boat",ll:[51.5017,-0.1235],w:"https://www.thamesclippers.com",
     tHe:"משלמים בכרטיס אשראי בשער • שייט לבאטרסי",tEn:"Tap in with a card • boat to Battersea"},
   fortnum:{n:12,m:1,day:"r",he:"Fortnum & Mason – חלונות חג",en:"Fortnum & Mason – Christmas windows",ll:[51.5083,-0.1378],w:"https://www.fortnumandmason.com",
@@ -439,12 +439,13 @@ ev(2,"18:30",without(ALL,LITTLE.concat(["dani","hadar","liz"])),"ערב חופש
 ev(2,"20:30",without(ALL,LITTLE.concat(["dani","hadar","liz"])),"חזרה למלון ונר חמישי","Back to the hotel & 5th candle","15 דק׳ הליכה דרך הייד פארק קורנר או קו Piccadilly","15 min walk via Hyde Park Corner or the Piccadilly line","hotel");
 // Day 3
 ev(3,"08:00",ALL,"ארוחת בוקר במלון","Breakfast at the hotel","","","hotel");
+ev(3,"09:00",["yoni","tatiana","davidj","rose","amber","dor","niv"],"⏰ לבחור הצגה לערב ולקנות כרטיסים","⏰ Choose tonight's show and buy tickets","בודקים באתר הרשמי מה מוזל היום (מתעדכן כל לילה ב-00:01) • או בקיוסק TKTS בלסטר סקוור מ-10:30 • לא ב״קיוסקים״ האחרים בכיכר","Check the official site for today's discounts (updated nightly at 00:01) • or the TKTS booth in Leicester Square from 10:30 • not the other kiosks on the square","lyceum");
 ev(3,"10:00",TEENS,"שופינג באוקספורד סטריט וקרנבי","Shopping on Oxford St & Carnaby","מי שרוצה יכול להישאר לשופינג כל היום","Anyone who prefers can shop all day","regent");
 ev(3,"10:00",TEENS,"המלצה: שוק קמדן במקום אוקספורד סטריט","Idea: Camden Market instead of Oxford St","שוק אלטרנטיבי ענק, אוכל רחוב • 15 דק׳ בקו Northern • בלי הזמנה","Huge alternative market, street food • 15 min on the Northern line • no booking","camden","r");
 ev(3,"12:30",TEENS,"צהריים חופשי","Free lunch","הצעה: Kingly Court בקרנבי","Idea: Kingly Court in Carnaby","regent","f");
 ev(3,"13:30",TEENS,"נסיעה ל-Gravity Wandsworth","Head to Gravity Wandsworth","כ-40 דק׳ בתחבורה ציבורית • מבוגר מלווה: ___","~40 min by public transport • adult with them: ___","gravity");
 ev(3,"14:15",TEENS,"Gravity: קארטינג, באולינג ו-VR","Gravity: karting, bowling & VR","כל השישה מעל גיל 12 – מתאים לקארטינג Pro • להזמין מראש","All six are 12+ – fine for Pro karting • book ahead","gravity","p");
-ev(3,"16:30",TEENS,"חזרה למלון","Back to the hotel","מלך האריות יוצאים ב-17:30, ארסנל ב-18:30","Lion King group leaves 17:30, Arsenal 18:30","hotel");
+ev(3,"16:30",TEENS,"חזרה למלון","Back to the hotel","יוצאים להצגה ב-17:30, ארסנל ב-18:30","Show group leaves 17:30, Arsenal 18:30","hotel");
 const TRACKB = without(ALL,TEENS);
 ev(3,"10:00",TRACKB,"Hamleys ברחוב ריג׳נט","Hamleys on Regent Street","","","hamleys");
 ev(3,"11:15",TRACKB,"המלצה: Liberty – חנות חג המולד","Idea: Liberty Christmas shop","3 דק׳ מ-Hamleys, בלי הזמנה","3 min from Hamleys, no booking","liberty","r");
@@ -453,7 +454,7 @@ ev(3,"14:00",TRACKB,"שנ״צ במלון | קובנט גארדן","Naps at the h
 ev(3,"17:30",["yoni","dani","dan","hadar"],"יציאה ל-Mamma Mia! The Party","Leave for Mamma Mia! The Party","קו Jubilee מגרין פארק","Jubilee line from Green Park","o2","p");
 ev(3,"18:30",["yoni","dani","dan","hadar"],"Mamma Mia! The Party","Mamma Mia! The Party","Tier A + Platinum • ארוחה כלולה • חזרה ~23:00","Tier A + Platinum • dinner included • back ~23:00","o2","p");
 ev(3,"17:30",["tatiana","davidj","rose","amber","dor","niv"],"ארוחה מוקדמת בקובנט גארדן","Early dinner in Covent Garden","טטיאנה המבוגרת האחראית","Tatiana is the adult in charge","covent","f");
-ev(3,"19:30",["tatiana","davidj","rose","amber","dor","niv"],"מלך האריות","The Lion King","תיאטרון Lyceum • כשעתיים וחצי","Lyceum Theatre • about 2½ hours","lyceum","p");
+ev(3,"19:00",["tatiana","davidj","rose","amber","dor","niv"],"הצגה בווסט אנד – נבחר באותו בוקר","West End show – chosen that morning","מקום פנוי בלו״ז • כרטיסים מוזלים לאותו יום • רעיונות: Matilda (19:00), Wicked, The Snowman לקטנים (14:30) • עד 15 צריך לשבת ליד מבוגר 18+","Kept free • discounted same-day tickets • ideas: Matilda (19:00), Wicked, The Snowman for the little ones (14:30) • 15 and under sit next to an adult 18+","lyceum","f");
 ev(3,"18:30",["david","itamar","eitan"],"יציאה לאמירויות","Leave for the Emirates","קו Piccadilly ישיר","Piccadilly line, direct","emirates");
 ev(3,"20:00",["david","itamar","eitan"],"ארסנל – ריאל מדריד","Arsenal v Real Madrid","ליגת האלופות • כרטיסים בידיים ✓","Champions League • tickets in hand ✓","emirates","b");
 ev(3,"21:00",["alon","liz"],"המלצה למבוגרים: The Red Lion, Crown Passage","Grown-ups' idea: The Red Lion, Crown Passage","5 דק׳ מהמלון • סבתא סנדרה עם הקטנים","5 min from the hotel • Grandma Sandra with the little ones","redlion","r");
@@ -492,7 +493,6 @@ const TODO = [
   {id:"luton",he:"להקדים איסוף ללוטון ל-04:15 (מומלץ)",en:"Move the Luton pickup to 04:15 (recommended)",u:"https://www.airport-pickups-london.com/manage-booking.html"},
   {id:"mammamia",he:"Mamma Mia! The Party – 4 כרטיסים Tier A + Platinum",en:"Mamma Mia! The Party – 4 Tier A + Platinum tickets",u:"https://mammamiatheparty.com/london/tickets/"},
   {id:"gravity",he:"Gravity Wandsworth לנוער – רביעי 14:15 (קארטינג Pro, באולינג, VR)",en:"Gravity Wandsworth for the teens – Wed 14:15 (Pro karting, bowling, VR)",u:"https://gravity-global.com/max/wandsworth"},
-  {id:"lionking",he:"מלך האריות – 6 כרטיסים, רביעי 19:30",en:"The Lion King – 6 tickets, Wed 19:30",u:"https://thelionking.co.uk"},
   {id:"arsenal",he:"ארסנל – ריאל מדריד: 3 כרטיסים",en:"Arsenal v Real Madrid: 3 tickets",u:"https://www.arsenal.com/tickets"},
   {id:"wonderlab",he:"Wonderlab – 4 ילדים + מלווה, שלישי 8.12 14:30 (נסגר ב-16:00 באותו יום)",en:"Wonderlab – 4 kids + an adult, Tue 8 Dec 14:30 (closes 16:00 that day)",u:"https://www.sciencemuseum.org.uk"},
   {id:"sealife",he:"SEA LIFE – חמישי 14:30: סבא דוד, דני, דן, הדר + אימרי ורז (לבדוק כרטיס חינם מתחת לגיל 3)",en:"SEA LIFE – Thu 14:30: Grandpa David, Dani, Dan, Hadar + Imri and Raz (check free under-3 entry)",u:"https://www.visitsealife.com/london/"},
@@ -526,14 +526,14 @@ const FOOD = [
   ["Borough Market","דוכנים מכל העולם • אוכלים בעמידה","Stalls from all over the world • eat as you walk","https://boroughmarket.org.uk","d2","Borough Market London","🥪 שוק אוכל","🥪 Food market"],
   ["Arcade Food Hall – Centre Point","דוכנים מכל העולם • ליד Hamleys","Food stalls from around the world • near Hamleys","https://www.arcade-london.com/food-and-drink","d3","Arcade Food Hall Centre Point London","🍽️ פוד-הול","🍽️ Food hall"],
   ["Seven Dials Market","שוק אוכל מקורה • 5 דק׳ מהתיאטרון","Covered food market • 5 min from the theatre","https://www.sevendialsmarket.com/traders/","d3","Seven Dials Market London","🍽️ שוק אוכל","🍽️ Food market"],
-  ["Dishoom Covent Garden","הודי, תפריט קבוצתי • ארוחה לפני מלך האריות","Indian, group feast menu • dinner before The Lion King","https://www.dishoom.com/journal/covent-garden-menu/","d3","Dishoom Covent Garden London","🍛 הודי","🍛 Indian"],
+  ["Dishoom Covent Garden","הודי, תפריט קבוצתי • ארוחה לפני ההצגה","Indian, group feast menu • dinner before the show","https://www.dishoom.com/journal/covent-garden-menu/","d3","Dishoom Covent Garden London","🍛 הודי","🍛 Indian"],
   ["Arcade Battersea","פוד-הול בתוך תחנת הכוח","Food hall inside the power station","https://www.arcade-london.com/battersea-kitchens","d4","Arcade Battersea Power Station London","🍽️ פוד-הול","🍽️ Food hall"],
   ["Poppies Fish & Chips – Soho","פיש אנד צ׳יפס בריטי קלאסי • 10 דק׳ מהמלון","Classic British fish & chips • 10 min from the hotel","https://www.poppiesfishandchips.co.uk","hotel","Poppies Fish and Chips Soho London","🐟 פיש אנד צ׳יפס","🐟 Fish & chips"],
   ["Rosa's Thai – Carnaby","תאילנדי, מנות לילדים • 8 דק׳","Thai, kids' portions • 8 min","https://rosasthaicafe.com","hotel","Rosa's Thai Carnaby London","🍜 תאילנדי","🍜 Thai"],
   ["wagamama – Royal Festival Hall","נודלס וראמן, תפריט ילדים • 5 דק׳ מה-Eye","Noodles and ramen, kids' menu • 5 min from the Eye","https://www.wagamama.com","d1","wagamama Royal Festival Hall London","🍜 אסייתי","🍜 Asian"],
   ["Padella – Borough Market","פסטה טרייה, בלי הזמנה (יש תור) • בשוק","Fresh pasta, no bookings (expect a queue) • in the market","https://www.padella.co","d2","Padella Borough Market London","🍝 פסטה","🍝 Pasta"],
   ["Bread Ahead – Borough Market","הסופגניות המפורסמות – קינוח בחנוכה","The famous doughnuts – perfect for Hanukkah","https://www.breadahead.com","d2","Bread Ahead Borough Market London","🍩 מאפייה","🍩 Bakery"],
-  ["Shake Shack – Covent Garden","המבורגרים, בתוך השוק • לפני מלך האריות","Burgers, inside the market • before The Lion King","https://shakeshack.co.uk","d3","Shake Shack Covent Garden London","🍔 המבורגרים","🍔 Burgers"],
+  ["Shake Shack – Covent Garden","המבורגרים, בתוך השוק • לפני ההצגה","Burgers, inside the market • before the show","https://shakeshack.co.uk","d3","Shake Shack Covent Garden London","🍔 המבורגרים","🍔 Burgers"],
   ["Flat Iron – Covent Garden","סטייק במחיר שפוי, בלי הזמנה • 5 דק׳ מהתיאטרון","Good-value steak, walk-in • 5 min from the theatre","https://flatironsteak.co.uk","d3","Flat Iron Covent Garden London","🥩 סטייקים","🥩 Steak"],
   ["The Golden Hind – Marylebone","פיש אנד צ׳יפס ותיק משנת 1914 • 10 דק׳ מטוסו","Fish & chips since 1914 • 10 min from Tussauds","https://www.goldenhindrestaurant.com","d4b","The Golden Hind Marylebone London","🐟 פיש אנד צ׳יפס","🐟 Fish & chips"],
   ["One New Change – מסעדות","כמה מסעדות באותו בניין של F1","Several restaurants in the same building as F1","https://www.onenewchange.com","d4b","One New Change London restaurants","🍽️ מגוון","🍽️ Mixed"],
@@ -1063,6 +1063,7 @@ function searchResults(q){
 }
 /* ---- "what changed" banner – shows for 48 hours after each update ---- */
 const CHANGES = [
+  {at:"2026-11-07T15:05:00Z", he:"עודכן: רביעי – במקום מלך האריות, ערב פנוי להצגה שנבחר באותו בוקר בכרטיסים מוזלים (תזכורת ב-09:00)", en:"Updated: Wednesday – instead of The Lion King, the evening is kept free for a show we pick that morning with discounted tickets (reminder at 09:00)"},
   {at:"2026-11-05T08:45:00Z", he:"עודכן: שלישי – מצודת לונדון מבחוץ בלי כניסה (09:30) והליכה על גשר טאואר (10:30)", en:"Updated: Tuesday – Tower of London from outside, no ticket (09:30), and a walk across Tower Bridge (10:30)"},
   {at:"2026-11-04T20:40:00Z", he:"חדש: תפריט Cicchetti בעברית ובחירת מנות לכל משפחה • ☔ תכנית לגשם • 🚇 תחבורה בלונדון • 🎞️ סיכום טיול", en:"New: Cicchetti menu & dish choices for each family • ☔ rainy-day plan • 🚇 getting around • 🎞️ trip recap"},
   {at:"2026-11-04T12:30:00Z", he:"עודכן: נשלחו בקשות לשתי הארוחות המשפחתיות – Cicchetti בשני ו-Pizza Pilgrims בחמישי (מחכים לאישור)", en:"Updated: requests sent for both family dinners – Cicchetti on Monday and Pizza Pilgrims on Thursday (awaiting confirmation)"},
