@@ -1388,6 +1388,7 @@ function viewBookings(){
   </div>`;
 }
 
+
 function viewMore(){
   const he = LANG === "he", S = EDIT ? DRAFT : STATE;
   const sec = (id, title, inner) => `<details class="sec" id="sec-${id}"><summary>${title}</summary><div class="in">${inner}</div></details>`;
@@ -1403,6 +1404,7 @@ function viewMore(){
   const kidCards = Object.keys(parentsOf).map(k => `<div class="card stack" style="direction:ltr;text-align:left"><b style="font-size:1.1em">My name is ${P[k].en} (${P[k].he})</b><div>I'm staying at <b>The Dilly hotel, 21 Piccadilly, London W1J 0BH</b></div><div>Please call my parents:<br>${parentsOf[k].map(p => `${P[p].en}: <span class="mono">${esc(S.phones[p]||"___")}</span>`).join("<br>")}</div><button class="act" data-card="${k}">${he?"שמירה כתמונה להדפסה":"Save as image to print"}</button></div>`).join("");
   return `<div class="stack">
     ${EDIT?sec("announce",he?"✏️ עדכון מהמארגן":"✏️ Organizer update",`<label class="field"><span>עברית</span><textarea id="annHe" rows="3">${esc(S.announce.he)}</textarea></label><label class="field"><span>English – ${he?"מתורגם אוטומטית מהעברית כששומרים":"translated automatically from Hebrew on save"}</span><textarea id="annEn" rows="3" dir="ltr">${esc(S.announce.en)}</textarea></label><div class="row"><button class="act" id="transBtn">🌐 ${he?"תרגום לאנגלית עכשיו":"Translate to English now"}</button><span class="muted small" id="transMsg"></span></div><label class="field"><span>${he?"קישור לאלבום תמונות":"Photo album link"}</span><input id="albumIn" type="url" dir="ltr" value="${esc(S.album)}"></label><label class="field"><span>${he?"קישור הזמנה לקבוצת הוואטסאפ":"WhatsApp group invite link"}</span><input id="waIn" type="url" dir="ltr" value="${esc(S.waGroup||"")}" placeholder="https://chat.whatsapp.com/..."></label>`,true):""}
+    ${typeof expensesHtml === "function" ? sec("expenses","💷 הוצאות הטיול – רק לי",expensesHtml()) : ""}
     ${sec("cic",he?"🍝 Cicchetti – תפריט בעברית ובחירת מנות":"🍝 Cicchetti – menu & pre-order",`<div class="small">${he?"הארוחה המשפחתית בשני 7.12. בוחרים מנות עד 2.12.":"The family dinner on Mon 7 Dec. Choose dishes by 2 Dec."}</div><button class="act primary" data-cic="1" style="justify-self:start">${he?"פתיחת התפריט ובחירה":"Open menu & choose"}</button>`)}
     ${sec("ics",he?"📅 הלו״ז שלי ביומן של הטלפון":"📅 My schedule in my phone's calendar",icsCard())}
     ${sec("morning",he?"📋 הודעת בוקר לקבוצה":"📋 Morning message for the group",morningCard())}
