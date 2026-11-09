@@ -279,7 +279,7 @@ const DAYS = [
 /* places: n = pin number, m = 1 central map / 2 wide map / 0 off-map, day = colour, w = website */
 const PL = {
   hotel:{n:0,m:1,day:"h",he:"המלון – The Dilly",en:"Hotel – The Dilly",q:"The Dilly Hotel, 21 Piccadilly, London W1J 0BH",ll:[51.5094,-0.1365],
-    tHe:"21 Piccadilly • ארוחת בוקר כלולה כל בוקר",tEn:"21 Piccadilly • breakfast included every morning"},
+    tHe:"21 Piccadilly • ארוחת בוקר כלולה כל בוקר • יש בריכה – להביא בגד ים",tEn:"21 Piccadilly • breakfast included every morning • there's a pool – bring a swimsuit"},
   buckingham:{n:1,m:1,day:"1",he:"ארמון בקינגהאם",en:"Buckingham Palace",ll:[51.5014,-0.1419],w:"https://www.rct.uk/visit/buckingham-palace",
     tHe:"10 דק׳ הליכה דרך גרין פארק • סנט ג׳יימס פארק ליד: שקנאים וסנאים",tEn:"10 min walk through Green Park • St James's Park next door has pelicans and squirrels"},
   bigben:{n:2,m:1,day:"1",he:"ביג בן והפרלמנט",en:"Big Ben & Parliament",ll:[51.5007,-0.1246],w:"https://www.parliament.uk/bigben",
@@ -541,7 +541,7 @@ const FOOD = [
 ];
 
 const PACK = [
-  ["דרכונים בתוקף","Valid passports"],["ETA מאושר לכל אחד","Approved ETA for everyone"],["מזומן ליש״ט להסעות","Pounds in cash for transfers"],
+  ["🏊 בגדי ים לכולם – יש בריכה במלון","🏊 Swimsuits for everyone – the hotel has a pool"],["דרכונים בתוקף","Valid passports"],["ETA מאושר לכל אחד","Approved ETA for everyone"],["מזומן ליש״ט להסעות","Pounds in cash for transfers"],
   ["מתאם חשמל בריטי (3 פינים)","UK plug adapter (3-pin)"],["חנוכייה חשמלית","Electric menorah"],["מעילי גשם וכיסוי לעגלה","Rain jackets and buggy rain cover"],
   ["כובעים, כפפות וצעיפים","Hats, gloves and scarves"],["נעליים נוחות להליכה","Comfortable walking shoes"],["מטען נייד","Power bank"],
   ["AirTag לילדים הקטנים","AirTags for the little ones"],["כרטיסי חירום מודפסים לילדים","Printed emergency cards for the kids"],["תרופות קבועות ומדחום","Regular medicines and a thermometer"]
@@ -1074,6 +1074,7 @@ function searchResults(q){
 }
 /* ---- "what changed" banner – shows for 48 hours after each update ---- */
 const CHANGES = [
+  {at:"2026-11-09T10:00:00Z", he:"🏊 לא לשכוח בגדי ים – יש בריכה במלון! (נוסף לרשימת הציוד)", en:"🏊 Don't forget swimsuits – the hotel has a pool! (added to the packing list)"},
   {at:"2026-11-07T18:40:00Z", he:"עודכן: שני 16:00 – אופציה לקבוצת האקווריום ללכת ל-SEA LIFE כבר ביום שני, ליד ה-London Eye (בתוכנית נשאר בחמישי)", en:"Updated: Mon 16:00 – option for the aquarium group to visit SEA LIFE on Monday, next to the London Eye (the plan stays Thursday)"},
   {at:"2026-11-07T16:00:00Z", he:"חדש: כפתור 🎟️ לקניית כרטיס ישירות מהפעילות – Wonderlab, SEA LIFE, Lift 109, החלקה, Gravity, F1 והצגה ברביעי", en:"New: a 🎟️ button to buy tickets straight from the activity – Wonderlab, SEA LIFE, Lift 109, skating, Gravity, F1 and Wednesday's show"},
   {at:"2026-11-07T15:55:00Z", he:"עודכן: Gravity, SEA LIFE ו-Lift 109 – בלי הזמנה מראש, קונים באותו יום • Wonderlab – אופציה ליום גשם", en:"Updated: Gravity, SEA LIFE and Lift 109 – no advance booking, buy on the day • Wonderlab – a rainy-day option"},
@@ -1155,6 +1156,7 @@ function viewNow(){
     const days = Math.ceil((Date.UTC(2026,11,6) - Date.now()) / 864e5);
     out.push(`<div class="hero"><div class="lbl">${he?"ספירה לאחור":"Countdown"}</div><div class="big">${days} <span style="font-size:.45em">${T("countdown")}</span></div><div>${he?"ראשון 6.12 – המראה ב-17:00 (LY317) • משפחת אלון נוחתת ב-10:40":"Sun 6 Dec – LY317 takes off 17:00 Israel time • Alon's family lands 10:40"}</div><a class="act" style="justify-self:start" href="#schedule">${he?"ללו״ז המלא ›":"Full schedule ›"}</a></div>`);
     if(n.date <= "2026-12-02") out.push(`<div class="card row" style="justify-content:space-between;border:2px solid var(--gold)"><span>🍝 ${he?"ארוחה משפחתית בשני – בוחרים מנות עד 2.12":"Monday family dinner – choose your dishes by 2 Dec"}</span><button class="act primary" data-cic="1">${he?"לתפריט ובחירה ›":"Menu & choices ›"}</button></div>`);
+    out.push(`<div class="card row" style="justify-content:space-between"><span>🏊 ${he?"לא לשכוח בגד ים לכל אחד – יש בריכה במלון!":"Don't forget a swimsuit for everyone – the hotel has a pool!"}</span></div>`);
     out.push(icsCard());
     out.push(wxCard(DAYS));
     out.push(kidsCard);
